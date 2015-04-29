@@ -125,6 +125,16 @@ namespace HazeronWatcher
                 _id = id;
             }
 
+            public HazeronWatcher.Player ToNewPlayer()
+            {
+                HazeronWatcher.Player newPlayer = new HazeronWatcher.Player();
+                newPlayer.ID = _id;
+                newPlayer.Name = _name;
+                newPlayer.Relation = _relation;
+                newPlayer.Watch = _watch;
+                return newPlayer;
+            }
+
             public override string ToString()
             {
                 return _name;

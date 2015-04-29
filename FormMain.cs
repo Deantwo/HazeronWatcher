@@ -38,23 +38,38 @@ namespace HazeronWatcher
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
 #if OldSettingsUpdate
-            if (File.Exists(Path.Combine(_appdataFolder, "Settings.xml")))
+            // If there is no "HazeronWatcherSettings.xml" and there is a "Settings.xml".
+            if (!File.Exists(Path.Combine(_appdataFolder, SETTINGS)) && File.Exists(Path.Combine(_appdataFolder, "Settings.xml")))
             {
-                HazeronWatcherOLD.HazeronWatcherSettings oldSettingsXml = HazeronWatcherOLD.HazeronWatcherSettings.Load(Path.Combine(_appdataFolder, "Settings.xml"));
-                _settingsXml = new HazeronWatcherSettings();
-                foreach (HazeronWatcherOLD.Player oldPlayer in oldSettingsXml.PlayerList)
+                if (!File.Exists(Path.Combine(_appdataFolder, "Settings (v1.1 backup).xml")))
                 {
-                    Player newPlayer = new Player(oldPlayer.Name, oldPlayer.ID);
-                    newPlayer.Relation = oldPlayer.Relation;
-                    newPlayer.Watch = oldPlayer.Watch;
-                    _settingsXml.PlayerList.Player.Add(newPlayer);
+                    // Load the old "Settings.xml".
+                    HazeronWatcherOLD.HazeronWatcherSettings oldSettingsXml = HazeronWatcherOLD.HazeronWatcherSettings.Load(Path.Combine(_appdataFolder, "Settings.xml"));
+                    // Convert the old "Settings.xml" into a new "HazeronWatcherSettings.xml".
+                    _settingsXml = new HazeronWatcherSettings();
+                    foreach (HazeronWatcherOLD.Player oldPlayer in oldSettingsXml.PlayerList)
+                        _settingsXml.PlayerList.Player.Add(oldPlayer.ToNewPlayer());
+                    _settingsXml.Options.ShowIdColumn = oldSettingsXml.ShowIdColumn;
+                    _settingsXml.Options.ShowWatchHighlight = oldSettingsXml.ShowWatchHighlight;
+                    _settingsXml.Options.ShowNonWatched = oldSettingsXml.ShowNonWatched;
+                    _settingsXml.Options.PlaySound = oldSettingsXml.PlaySound;
+                    // Rename the old "Settings.xml" to "Settings (v1.1 backup).xml".
+                    File.Move(Path.Combine(_appdataFolder, "Settings.xml"), Path.Combine(_appdataFolder, "Settings (v1.1 backup).xml"));
+                    // Save the new "HazeronWatcherSettings.xml" and continue as if this never happened.
+                    _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
                 }
-                _settingsXml.Options.ShowIdColumn = oldSettingsXml.ShowIdColumn;
-                _settingsXml.Options.ShowWatchHighlight = oldSettingsXml.ShowWatchHighlight;
-                _settingsXml.Options.ShowNonWatched = oldSettingsXml.ShowNonWatched;
-                _settingsXml.Options.PlaySound = oldSettingsXml.PlaySound;
-                _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
-                File.Move(Path.Combine(_appdataFolder, "Settings.xml"), Path.Combine(_appdataFolder, "Settings (v1.1 backup).xml"));
+                else
+                {
+                    DialogResult question = MessageBox.Show(this,
+                        "It seems that both \"Settings.xml\" and \"Settings (v1.1 backup).xml\" files exist." + Environment.NewLine +
+                        "In fear of messing up your settings, please go to HazeronWatcher's AppData folder and remove the incorrect file." + Environment.NewLine +
+                        "" + Environment.NewLine +
+                        "Would you like to open HazeronWatcher's AppData folder now?"
+                        , "Settings File Update Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    if (question == DialogResult.Yes)
+                        System.Diagnostics.Process.Start(_appdataFolder);
+                    throw new FileLoadException("Cannot convert the \"Settings.xml\" file because a \"Settings (v1.1 backup).xml\" file already exist.", Path.Combine(_appdataFolder, "Settings.xml"));
+                }
             }
 #endif
             // Load the settings XML file if there is one.
