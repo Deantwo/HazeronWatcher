@@ -7,18 +7,20 @@ namespace HazeronWatcher
 {
     public class Player
     {
-        protected string _name;
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
         protected string _id;
+        [System.Xml.Serialization.XmlAttribute]
         public string ID
         {
             get { return _id; }
             set { _id = value; }
+        }
+
+        protected string _name;
+        [System.Xml.Serialization.XmlAttribute]
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
         }
 
         protected bool _online;
@@ -30,6 +32,7 @@ namespace HazeronWatcher
         }
 
         protected int _relation;
+        [System.Xml.Serialization.XmlAttribute]
         public int Relation
         {
             get { return _relation; }
@@ -53,6 +56,7 @@ namespace HazeronWatcher
         }
 
         protected bool _watch;
+        [System.Xml.Serialization.XmlAttribute]
         public bool Watch
         {
             get { return _watch; }
@@ -77,11 +81,13 @@ namespace HazeronWatcher
 
         public Player()
         {
+            //_id = "A";
+            //_name = "";
         }
         public Player(string name, string id)
         {
-            _name = name;
             _id = id;
+            _name = name;
         }
 
         public override string ToString()

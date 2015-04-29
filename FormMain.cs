@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define OldSettingsUpdate
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +15,7 @@ namespace HazeronWatcher
     public partial class FormMain : Form
     {
         string _appdataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HazeronWatcher"); // %USERPROFILE%\AppData\Roaming\HazeronWatcher
-        const string SETTINGS = "Settings.xml";
+        const string SETTINGS = "HazeronWatcherSettings.xml";
         const string NOTIFICATION = "Notification.wav";
         HazeronWatcherSettings _settingsXml;
 
@@ -36,27 +37,39 @@ namespace HazeronWatcher
             // Make sure the AppData folder exist.
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
+#if OldSettingsUpdate
+            if (File.Exists(Path.Combine(_appdataFolder, "Settings.xml")))
+            {
+                HazeronWatcherOLD.HazeronWatcherSettings oldSettingsXml = HazeronWatcherOLD.HazeronWatcherSettings.Load(Path.Combine(_appdataFolder, "Settings.xml"));
+                _settingsXml = new HazeronWatcherSettings();
+                foreach (HazeronWatcherOLD.Player oldPlayer in oldSettingsXml.PlayerList)
+                {
+                    Player newPlayer = new Player(oldPlayer.Name, oldPlayer.ID);
+                    newPlayer.Relation = oldPlayer.Relation;
+                    newPlayer.Watch = oldPlayer.Watch;
+                    _settingsXml.PlayerList.Player.Add(newPlayer);
+                }
+                _settingsXml.Options.ShowIdColumn = oldSettingsXml.ShowIdColumn;
+                _settingsXml.Options.ShowWatchHighlight = oldSettingsXml.ShowWatchHighlight;
+                _settingsXml.Options.ShowNonWatched = oldSettingsXml.ShowNonWatched;
+                _settingsXml.Options.PlaySound = oldSettingsXml.PlaySound;
+                _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
+                File.Move(Path.Combine(_appdataFolder, "Settings.xml"), Path.Combine(_appdataFolder, "Settings (v1.1 backup).xml"));
+            }
+#endif
             // Load the settings XML file if there is one.
             if (File.Exists(Path.Combine(_appdataFolder, SETTINGS)))
-            {
                 _settingsXml = HazeronWatcherSettings.Load(Path.Combine(_appdataFolder, SETTINGS));
-                _playerList = _settingsXml.PlayerList.ToDictionary(x => x.ID);
-                foreach (Player player in _playerList.Values)
-                    AddPlayer(player);
-                menuStrip1OptionsPlayerIds.Checked = _settingsXml.ShowIdColumn;
-                menuStrip1OptionsWatchHighlight.Checked = _settingsXml.ShowWatchHighlight;
-                menuStrip1OptionsNonWatched.Checked = _settingsXml.ShowNonWatched;
-                menuStrip1OptionsNotificationSound.Checked = _settingsXml.PlaySound;
-            }
             else
-            {
                 _settingsXml = new HazeronWatcherSettings();
-                _playerList = new Dictionary<string, Player>();
-                menuStrip1OptionsPlayerIds.Checked = false;
-                menuStrip1OptionsWatchHighlight.Checked = true;
-                menuStrip1OptionsNonWatched.Checked = true;
-                menuStrip1OptionsNotificationSound.Checked = true;
-            }
+            // Get data from the settings.
+            _playerList = _settingsXml.PlayerList.Player.ToDictionary(x => x.ID);
+            foreach (Player player in _playerList.Values)
+                AddPlayer(player);
+            menuStrip1OptionsPlayerIds.Checked = _settingsXml.Options.ShowIdColumn;
+            menuStrip1OptionsWatchHighlight.Checked = _settingsXml.Options.ShowWatchHighlight;
+            menuStrip1OptionsNonWatched.Checked = _settingsXml.Options.ShowNonWatched;
+            menuStrip1OptionsNotificationSound.Checked = _settingsXml.Options.PlaySound;
 
             //// Create the "Notification.wav" file if it doesn't exist.
             //if (!File.Exists(Path.Combine(_appdataFolder, NOTIFICATION)))
@@ -613,11 +626,11 @@ namespace HazeronWatcher
             timer1.Stop();
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
-            _settingsXml.ShowIdColumn = menuStrip1OptionsPlayerIds.Checked;
-            _settingsXml.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
-            _settingsXml.ShowNonWatched = menuStrip1OptionsNonWatched.Checked;
-            _settingsXml.PlaySound = menuStrip1OptionsNotificationSound.Checked;
-            _settingsXml.PlayerList = _playerList.Values.Where(x => x.Watch || x.Relation != 0).ToList();
+            _settingsXml.PlayerList.Player = _playerList.Values.Where(x => x.Watch || x.Relation != 0).ToList();
+            _settingsXml.Options.ShowIdColumn = menuStrip1OptionsPlayerIds.Checked;
+            _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
+            _settingsXml.Options.ShowNonWatched = menuStrip1OptionsNonWatched.Checked;
+            _settingsXml.Options.PlaySound = menuStrip1OptionsNotificationSound.Checked;
             _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
         }
     }

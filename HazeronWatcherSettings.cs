@@ -11,19 +11,16 @@ namespace HazeronWatcher
     public class HazeronWatcherSettings
     {
         [XmlElement]
-        public bool ShowIdColumn { get; set; }
+        public HazeronWatcherSettingsOptions Options { get; set; }
 
         [XmlElement]
-        public bool ShowWatchHighlight { get; set; }
+        public HazeronWatcherSettingsPlayers PlayerList { get; set; }
 
-        [XmlElement]
-        public bool ShowNonWatched { get; set; }
-
-        [XmlElement]
-        public bool PlaySound { get; set; }
-
-        [XmlElement]
-        public List<Player> PlayerList { get; set; }
+        public HazeronWatcherSettings()
+        {
+            Options = new HazeronWatcherSettingsOptions();
+            PlayerList = new HazeronWatcherSettingsPlayers();
+        }
 
         public void Save(string filePath)
         {
@@ -41,6 +38,44 @@ namespace HazeronWatcher
             reader.Close();
 
             return data;
+        }
+    }
+
+    public class HazeronWatcherSettingsOptions
+    {
+        [XmlAttribute]
+        public int Version { get; set; }
+
+        [XmlElement]
+        public bool ShowIdColumn { get; set; }
+
+        [XmlElement]
+        public bool ShowWatchHighlight { get; set; }
+
+        [XmlElement]
+        public bool ShowNonWatched { get; set; }
+
+        [XmlElement]
+        public bool PlaySound { get; set; }
+
+        public HazeronWatcherSettingsOptions()
+        {
+            Version = 0;
+            ShowIdColumn = false;
+            ShowWatchHighlight = true;
+            ShowNonWatched = true;
+            PlaySound = true;
+        }
+    }
+
+    public class HazeronWatcherSettingsPlayers
+    {
+        [XmlElement]
+        public List<Player> Player { get; set; }
+
+        public HazeronWatcherSettingsPlayers()
+        {
+            Player = new List<Player>();
         }
     }
 }
