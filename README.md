@@ -33,22 +33,22 @@ How to use
 1. Go to the [avatar list](http://www.hazeron.com/EmpireStandings2015/Avatars.html) on [www.Hazeron.com](http://www.Hazeron.com)
 2. Get the ID of the avatar
 3. Start HazeronWatcher (if you hadn't already)
-4. Go to Edit -> Add Player
+4. Go to *Edit -> Add Player*
 5. Enter the avatar's ID
 6. Click OK
 
 **Change notification sound:**
 
 1. Open HazeronWatcher's AppData folder<br>
-Windows: %USERPROFILE%\AppData\Roaming\HazeronWatcher
+Windows: ```%USERPROFILE%\AppData\Roaming\HazeronWatcher```
 2. Move the desired .wav file to the folder
-3. Rename the file to "notification.wav"
+3. Rename the file to ```notification.wav```
 
 Features
 ==============
 
 - Color code players so you can easily see them on the list (be it friend or foe)
-- Get notifications when your friends come online
+- Get notifications when selected players come online
 - Customizable notification sound
 
 Planned
