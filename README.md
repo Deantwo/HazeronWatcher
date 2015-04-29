@@ -28,7 +28,8 @@ Requirements
 How to use
 ==============
 
-Adding offline avatars
+**Adding offline avatars:**
+
 1. Go to the [avatar list](http://www.hazeron.com/EmpireStandings2015/Avatars.html) on [www.Hazeron.com](http://www.Hazeron.com)
 2. Get the ID of the avatar
 3. Start HazeronWatcher (if you hadn't already)
@@ -36,7 +37,8 @@ Adding offline avatars
 5. Enter the avatar's ID
 6. Click OK
 
-Change notification sound:
+**Change notification sound:**
+
 1. Open HazeronWatcher's AppData folder<br>
 Windows: %USERPROFILE%\AppData\Roaming\HazeronWatcher
 2. Move the desired .wav file to the folder
