@@ -32,7 +32,7 @@ How to use
 
 1. Go to the [avatar list](http://www.hazeron.com/EmpireStandings2015/Avatars.html) on [www.Hazeron.com](http://www.Hazeron.com)
 2. Get the ID of the avatar
-3. Start HazeronWatcher (if you hadn't already)
+3. Start **HazeronWatcher** (if you hadn't already)
 4. Go to *Edit -> Add Player*
 5. Enter the avatar's ID
 6. Click OK
