@@ -34,6 +34,9 @@ namespace HazeronWatcher
             notifyIcon1.Text = this.Text;
             notifyIcon1.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
+            cmsListRightClickMain.Visible = false;
+            cmsListRightClickMain.Click -= cmsListRightClickMain_Click;
+
             // Make sure the AppData folder exist.
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
@@ -80,7 +83,7 @@ namespace HazeronWatcher
             // Get data from the settings.
             _playerList = _settingsXml.PlayerList.Player.ToDictionary(x => x.ID);
             foreach (Player player in _playerList.Values)
-                AddPlayer(player);
+                AddPlayerToDGV(player);
             menuStrip1OptionsPlayerIds.Checked = _settingsXml.Options.ShowIdColumn;
             menuStrip1OptionsWatchHighlight.Checked = _settingsXml.Options.ShowWatchHighlight;
             menuStrip1OptionsNonWatched.Checked = _settingsXml.Options.ShowNonWatched;
@@ -131,7 +134,12 @@ namespace HazeronWatcher
             catch (WebException)
             {
                 timer1.Stop();
-                DialogResult retryAnswer = MessageBox.Show(this, "Failed to get the HTTP page." + Environment.NewLine + "It may be a connection issue." + Environment.NewLine + Environment.NewLine + "Would you like to continue the program?", "Connection Issue", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                DialogResult retryAnswer = MessageBox.Show(this,
+                    "Failed to get the HTTP page." + Environment.NewLine +
+                    "It may be a connection issue." + Environment.NewLine +
+                    "" + Environment.NewLine +
+                    "Would you like to continue the program?"
+                    , "Connection Issue", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 if (retryAnswer == DialogResult.Cancel)
                     this.Close();
                 timer1.Start();
@@ -162,7 +170,7 @@ namespace HazeronWatcher
                         string playerName = httpLine.Substring(startIndex, endIndex);
                         player = new Player(playerName, playerId);
                         _playerList.Add(playerId, player);
-                        AddPlayer(player);
+                        AddPlayerToDGV(player);
                     }
                     else
                         player = _playerList[playerId];
@@ -203,7 +211,7 @@ namespace HazeronWatcher
             }
 
             // Update the lists with colors and check the watch list.
-            UpdateLists();
+            UpdateDGV();
         }
 
         public void OnlineNotification(Player player)
@@ -228,7 +236,31 @@ namespace HazeronWatcher
             }
         }
 
-        public void AddPlayer(Player player)
+        public Player GetPlayer(string id)
+        {
+            Player player;
+            if (_playerList.ContainsKey(id))
+                player = _playerList[id];
+            else
+            {
+                try
+                {
+                    player = Player.GetAvatar(id);
+                }
+                catch (HazeronAvatarNotFoundException)
+                {
+                    MessageBox.Show(this,
+                        "There is no avatar with that ID."
+                        , "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
+                _playerList.Add(id, player);
+                AddPlayerToDGV(player);
+            }
+            return player;
+        }
+
+        public void AddPlayerToDGV(Player player)
         {
             dgvPlayersOnline.Rows.Add();
             player.ListRow = dgvPlayersOnline.Rows[dgvPlayersOnline.RowCount - 1];
@@ -238,7 +270,7 @@ namespace HazeronWatcher
             dgvPlayersOnline.Sort(ColumnPlayerName, ListSortDirection.Ascending);
         }
 
-        public void UpdateLists()
+        public void UpdateDGV()
         {
             foreach (Player player in _playerList.Values)
             {
@@ -264,8 +296,11 @@ namespace HazeronWatcher
                 player.ListRow.DefaultCellStyle.SelectionForeColor = relationColor;
                 player.ListRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
                 player.ListRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
+                foreach (DataGridViewCell cell in player.ListRow.Cells)
+                    cell.ToolTipText = player.Note;
 
-                if (player.Relation != 0 || player.Watch)
+                // Is that player watch listed in anyway?
+                if (player.IsWatchListed)
                 {
                     if (player.WatchRow == null)
                     {
@@ -280,12 +315,18 @@ namespace HazeronWatcher
                     player.WatchRow.DefaultCellStyle.SelectionForeColor = relationColor;
                     player.WatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
                     player.WatchRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
+                    foreach (DataGridViewCell cell in player.WatchRow.Cells)
+                        cell.ToolTipText = player.Note;
                 }
                 else if (player.WatchRow != null)
                 {
                     dgvWatchList.Rows.Remove(player.WatchRow);
                     player.WatchRow = null;
                 }
+
+                // Invalidate the tables so "ToString()" method updates.
+                dgvPlayersOnline.Invalidate();
+                dgvWatchList.Invalidate();
             }
         }
 
@@ -295,56 +336,23 @@ namespace HazeronWatcher
             this.Close();
         }
 
-        private void MenuStrip1EditAddPlayer_Click(object sender, EventArgs e)
+        private void MenuStrip1EditAddAvatar_Click(object sender, EventArgs e)
         {
-            FormInput inputDialog = new FormInput("Add Player", "Enter the player's ID.");
+            FormInput inputDialog = new FormInput("Add Avatar", "Enter the avatar's ID.");
             if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
                 return;
             string id = inputDialog.ReturnInput.Trim();
-            System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"^[A-Z]+$");
-            System.Text.RegularExpressions.Match regexMatch = regex.Match(id);
-            if (id == null || id == "" || !regexMatch.Success)
+            if (!Hazeron.ValidID(id))
             {
                 MessageBox.Show(this, "Invalid input, please enter a valid avatar ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (_playerList.ContainsKey(id))
-            {
-                _playerList[id].Watch = true;
-            }
-            else
-            {
-                string httpLine = null;
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        httpLine = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)[0];
-                    }
-                }
-                catch (WebException)
-                {
-                    // Blackhole.
-                }
-                if (httpLine == null || !httpLine.Contains("Shores of Hazeron"))
-                {
-                    MessageBox.Show(this, "There is no avatar with that ID.", "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                const string start = "<title>Shores of Hazeron - ";
-                const string end = "</title>";
-                int startIndex = httpLine.IndexOf(start) + start.Length;
-                int endIndex = httpLine.IndexOf(end) - startIndex;
-                string name = httpLine.Substring(startIndex, endIndex);
-                Player player = new Player(name, id);
-                _playerList.Add(id, player);
-                player.Watch = true;
-                AddPlayer(player);
-            }
-            UpdateLists();
+            Player player = GetPlayer(id);
+            player.Watch = true;
+            UpdateDGV();
         }
 
-        private void menuStrip1OptionsPlayerIds_Click(object sender, EventArgs e)
+        private void menuStrip1OptionsAvatarIds_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsPlayerIds.Checked = !menuStrip1OptionsPlayerIds.Checked;
             ColumnPlayerId.Visible = menuStrip1OptionsPlayerIds.Checked;
@@ -354,13 +362,13 @@ namespace HazeronWatcher
         private void menuStrip1OptionsWatchHighlight_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsWatchHighlight.Checked = !menuStrip1OptionsWatchHighlight.Checked;
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void menuStrip1OptionsNonWatched_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsNonWatched.Checked = !menuStrip1OptionsNonWatched.Checked;
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void menuStrip1OptionsNotificationSound_Click(object sender, EventArgs e)
@@ -401,7 +409,7 @@ namespace HazeronWatcher
                 "1.  Go to the avatar list on www.Hazeron.com" + Environment.NewLine +
                 "2.  Get the ID of the avatar" + Environment.NewLine +
                 "4.  Start HazeronWatcher (which you already have done!)" + Environment.NewLine +
-                "5.  Go to Edit -> Add Player" + Environment.NewLine +
+                "5.  Go to Edit -> Add Avatar" + Environment.NewLine +
                 "6.  Enter the avatar's ID" + Environment.NewLine +
                 "7.  Click OK" + Environment.NewLine +
                 "" + Environment.NewLine +
@@ -478,6 +486,8 @@ namespace HazeronWatcher
             cmsListRightClickEnemy.Checked = player.Enemy;
             cmsListRightClickWatch.Checked = player.Watch;
             cmsListRightClickWatch.Text = (player.Watch ? "Remove from" : "Add to") + " Watch";
+            cmsListRightClickMain.Text = (String.IsNullOrEmpty(player.MainID) ? "Set" : "Unset") + " Main";
+            cmsListRightClickNote.Text = (String.IsNullOrEmpty(player.Note) ? "Add" : "Edit") + " Note";
         }
 
         private void cmsListRightClickCopy_Click(object sender, EventArgs e)
@@ -532,7 +542,7 @@ namespace HazeronWatcher
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
                 player.Relation = 2;
             }
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void cmsListRightClickFriend_Click(object sender, EventArgs e)
@@ -546,7 +556,7 @@ namespace HazeronWatcher
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
                 player.Relation = 1;
             }
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void cmsListRightClickNeutral_Click(object sender, EventArgs e)
@@ -560,7 +570,7 @@ namespace HazeronWatcher
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
                 player.Relation = 0;
             }
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void cmsListRightClickUnsure_Click(object sender, EventArgs e)
@@ -574,7 +584,7 @@ namespace HazeronWatcher
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
                 player.Relation = -1;
             }
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void cmsListRightClickEnemy_Click(object sender, EventArgs e)
@@ -588,7 +598,7 @@ namespace HazeronWatcher
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
                 player.Relation = -2;
             }
-            UpdateLists();
+            UpdateDGV();
         }
 
         private void cmsListRightClickWatch_Click(object sender, EventArgs e)
@@ -602,7 +612,27 @@ namespace HazeronWatcher
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
                 player.Watch = !player.Watch;
             }
-            UpdateLists();
+            UpdateDGV();
+        }
+
+        private void cmsListRightClickMain_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+        }
+
+        private void cmsListRightClickNote_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (sender as DataGridView);
+            if (dgv == null)
+                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridViewCell currentCell = dgv.CurrentCell;
+            if (currentCell != null)
+            {
+                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
+                FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note);
+                if (inputBox.ShowDialog(this) == DialogResult.OK)
+                    player.Note = inputBox.ReturnInput;
+            }
+            UpdateDGV();
         }
         #endregion
 
@@ -641,7 +671,7 @@ namespace HazeronWatcher
             timer1.Stop();
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
-            _settingsXml.PlayerList.Player = _playerList.Values.Where(x => x.Watch || x.Relation != 0).ToList();
+            _settingsXml.PlayerList.Player = _playerList.Values.Where(x => x.IsWatchListed).ToList();
             _settingsXml.Options.ShowIdColumn = menuStrip1OptionsPlayerIds.Checked;
             _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
             _settingsXml.Options.ShowNonWatched = menuStrip1OptionsNonWatched.Checked;

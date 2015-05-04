@@ -7,6 +7,32 @@ namespace HazeronWatcher
 {
     public class Player
     {
+        public static Player GetAvatar(string id)
+        {
+            string httpLine = null;
+            try
+            {
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    httpLine = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)[0];
+                }
+            }
+            catch (System.Net.WebException)
+            {
+                // Blackhole.
+            }
+            if (httpLine == null || !httpLine.Contains("Shores of Hazeron"))
+            {
+                throw new HazeronAvatarNotFoundException("Avatar Not Found");
+            }
+            const string start = "<title>Shores of Hazeron - ";
+            const string end = "</title>";
+            int startIndex = httpLine.IndexOf(start) + start.Length;
+            int endIndex = httpLine.IndexOf(end) - startIndex;
+            string name = httpLine.Substring(startIndex, endIndex);
+            return new Player(name, id);
+        }
+
         protected string _id;
         [System.Xml.Serialization.XmlAttribute]
         public string ID
@@ -63,6 +89,31 @@ namespace HazeronWatcher
             set { _watch = value; }
         }
 
+        protected string _mainId;
+        [System.Xml.Serialization.XmlAttribute]
+        public string MainID
+        {
+            get { return _mainId; }
+            set { _mainId = value; }
+        }
+        public bool Alt
+        {
+            get { return !String.IsNullOrEmpty(_mainId); }
+        }
+
+        protected string _note;
+        [System.Xml.Serialization.XmlAttribute]
+        public string Note
+        {
+            get { return _note; }
+            set { _note = value; }
+        }
+
+        public bool IsWatchListed
+        {
+            get { return _watch || _relation != 0 || !String.IsNullOrEmpty(_mainId) || !String.IsNullOrEmpty(_note); }
+        }
+
         protected System.Windows.Forms.DataGridViewRow _listRow;
         [System.Xml.Serialization.XmlIgnoreAttribute]
         public System.Windows.Forms.DataGridViewRow ListRow
@@ -71,28 +122,43 @@ namespace HazeronWatcher
             set { _listRow = value; }
         }
 
-        protected System.Windows.Forms.DataGridViewRow _WatchRow;
+        protected System.Windows.Forms.DataGridViewRow _watchRow;
         [System.Xml.Serialization.XmlIgnoreAttribute]
         public System.Windows.Forms.DataGridViewRow WatchRow
         {
-            get { return _WatchRow; }
-            set { _WatchRow = value; }
+            get { return _watchRow; }
+            set { _watchRow = value; }
         }
 
         public Player()
         {
-            //_id = "A";
-            //_name = "";
+            _id = "A";
+            _name = "";
+            _mainId = "";
+            _note = "";
         }
         public Player(string name, string id)
         {
             _id = id;
             _name = name;
+            _mainId = "";
+            _note = "";
         }
 
         public override string ToString()
         {
-            return _name;
+            if (String.IsNullOrEmpty(_mainId))
+                return _name;
+            else
+                return "<alt>" + _name + "</alt>";
+        }
+    }
+
+    public class HazeronAvatarNotFoundException : Exception
+    {
+        public HazeronAvatarNotFoundException(string message)
+            : base(message)
+        {
         }
     }
 }

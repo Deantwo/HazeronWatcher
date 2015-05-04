@@ -29,9 +29,13 @@ namespace HazeronWatcher
             // Set the textbox's content.
             tbxInput.Text = current;
 
+            // Make the window wider if the textbox's content is long.
+            if (current.Length > 33)
+                this.Width += Math.Min((current.Length - 33) * 7, 1000);
             // Try to make the window wider if the textbox's content is long.
-            if (current.Length > 20)
-                this.Width += (current.Length - 10) * 6;
+            int lineCount = info.Count(x => x == '\n');
+            if (lineCount > 0)
+                this.Height += lineCount * 9;
 
             // If "sensitive" is true, the textbox will go into password mode.
             tbxInput.UseSystemPasswordChar = sensitive;

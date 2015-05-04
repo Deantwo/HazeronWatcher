@@ -37,11 +37,12 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1FileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Edit = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuStrip1EditAddPlayer = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuStrip1EditAddAvatar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Options = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsPlayerIds = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsWatchHighlight = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsNonWatched = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsNotificationSound = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Help = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1HelpGithub = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1HelpThread = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,13 +67,15 @@
             this.cmsListRightClickEnemy = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsListRightClickWatch = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsListRightClickMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsListRightClickNote = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsNotifyIconRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1OptionsNotificationSound = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -152,16 +155,17 @@
             // menuStrip1Edit
             // 
             this.menuStrip1Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuStrip1EditAddPlayer});
+            this.MenuStrip1EditAddAvatar});
             this.menuStrip1Edit.Name = "menuStrip1Edit";
             this.menuStrip1Edit.Size = new System.Drawing.Size(39, 20);
             this.menuStrip1Edit.Text = "Edit";
             // 
-            // MenuStrip1EditAddPlayer
+            // MenuStrip1EditAddAvatar
             // 
-            this.MenuStrip1EditAddPlayer.Name = "MenuStrip1EditAddPlayer";
-            this.MenuStrip1EditAddPlayer.Size = new System.Drawing.Size(152, 22);
-            this.MenuStrip1EditAddPlayer.Text = "Add Player";
+            this.MenuStrip1EditAddAvatar.Name = "MenuStrip1EditAddAvatar";
+            this.MenuStrip1EditAddAvatar.Size = new System.Drawing.Size(152, 22);
+            this.MenuStrip1EditAddAvatar.Text = "Add Avatar";
+            this.MenuStrip1EditAddAvatar.Click += new System.EventHandler(this.MenuStrip1EditAddAvatar_Click);
             // 
             // menuStrip1Options
             // 
@@ -179,7 +183,7 @@
             this.menuStrip1OptionsPlayerIds.Name = "menuStrip1OptionsPlayerIds";
             this.menuStrip1OptionsPlayerIds.Size = new System.Drawing.Size(179, 22);
             this.menuStrip1OptionsPlayerIds.Text = "Show Player IDs";
-            this.menuStrip1OptionsPlayerIds.Click += new System.EventHandler(this.menuStrip1OptionsPlayerIds_Click);
+            this.menuStrip1OptionsPlayerIds.Click += new System.EventHandler(this.menuStrip1OptionsAvatarIds_Click);
             // 
             // menuStrip1OptionsWatchHighlight
             // 
@@ -194,6 +198,13 @@
             this.menuStrip1OptionsNonWatched.Size = new System.Drawing.Size(179, 22);
             this.menuStrip1OptionsNonWatched.Text = "Show non-Watched";
             this.menuStrip1OptionsNonWatched.Click += new System.EventHandler(this.menuStrip1OptionsNonWatched_Click);
+            // 
+            // menuStrip1OptionsNotificationSound
+            // 
+            this.menuStrip1OptionsNotificationSound.Name = "menuStrip1OptionsNotificationSound";
+            this.menuStrip1OptionsNotificationSound.Size = new System.Drawing.Size(179, 22);
+            this.menuStrip1OptionsNotificationSound.Text = "Notification Sound";
+            this.menuStrip1OptionsNotificationSound.Click += new System.EventHandler(this.menuStrip1OptionsNotificationSound_Click);
             // 
             // menuStrip1Help
             // 
@@ -358,9 +369,12 @@
             this.cmsListRightClickUnsure,
             this.cmsListRightClickEnemy,
             this.toolStripSeparator1,
-            this.cmsListRightClickWatch});
+            this.cmsListRightClickWatch,
+            this.toolStripSeparator6,
+            this.cmsListRightClickMain,
+            this.cmsListRightClickNote});
             this.cmsListRightClick.Name = "contextMenuStrip1";
-            this.cmsListRightClick.Size = new System.Drawing.Size(138, 192);
+            this.cmsListRightClick.Size = new System.Drawing.Size(138, 242);
             this.cmsListRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsRightClick_Opening);
             // 
             // cmsListRightClickCopy
@@ -429,6 +443,25 @@
             this.cmsListRightClickWatch.Text = "Watch";
             this.cmsListRightClickWatch.Click += new System.EventHandler(this.cmsListRightClickWatch_Click);
             // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(134, 6);
+            // 
+            // cmsListRightClickMain
+            // 
+            this.cmsListRightClickMain.Name = "cmsListRightClickMain";
+            this.cmsListRightClickMain.Size = new System.Drawing.Size(137, 22);
+            this.cmsListRightClickMain.Text = "Main";
+            this.cmsListRightClickMain.Click += new System.EventHandler(this.cmsListRightClickMain_Click);
+            // 
+            // cmsListRightClickNote
+            // 
+            this.cmsListRightClickNote.Name = "cmsListRightClickNote";
+            this.cmsListRightClickNote.Size = new System.Drawing.Size(137, 22);
+            this.cmsListRightClickNote.Text = "Note";
+            this.cmsListRightClickNote.Click += new System.EventHandler(this.cmsListRightClickNote_Click);
+            // 
             // timer1
             // 
             this.timer1.Interval = 5000;
@@ -468,13 +501,6 @@
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
-            // 
-            // menuStrip1OptionsNotificationSound
-            // 
-            this.menuStrip1OptionsNotificationSound.Name = "menuStrip1OptionsNotificationSound";
-            this.menuStrip1OptionsNotificationSound.Size = new System.Drawing.Size(179, 22);
-            this.menuStrip1OptionsNotificationSound.Text = "Notification Sound";
-            this.menuStrip1OptionsNotificationSound.Click += new System.EventHandler(this.menuStrip1OptionsNotificationSound_Click);
             // 
             // FormMain
             // 
@@ -549,9 +575,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1HelpHowToUse;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem MenuStrip1EditAddPlayer;
+        private System.Windows.Forms.ToolStripMenuItem MenuStrip1EditAddAvatar;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickAvatar;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsNotificationSound;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickNote;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickMain;
     }
 }
 

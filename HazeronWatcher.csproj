@@ -61,6 +61,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hazeron.cs" />
     <Compile Include="HazeronWatcherSettings.cs" />
     <Compile Include="HazeronWatcherSettingsOLD.cs" />
     <Compile Include="Player.cs" />
