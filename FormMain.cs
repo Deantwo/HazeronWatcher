@@ -1,4 +1,5 @@
 ﻿#define OldSettingsUpdate
+//#define DisableMain
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,8 +35,10 @@ namespace HazeronWatcher
             notifyIcon1.Text = this.Text;
             notifyIcon1.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
+#if DisableMain
             cmsListRightClickMain.Visible = false;
             cmsListRightClickMain.Click -= cmsListRightClickMain_Click;
+#endif
 
             // Make sure the AppData folder exist.
             if (!Directory.Exists(_appdataFolder))
@@ -617,6 +620,8 @@ namespace HazeronWatcher
 
         private void cmsListRightClickMain_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+#if !DisableMain
+#endif
         }
 
         private void cmsListRightClickNote_Click(object sender, EventArgs e)
