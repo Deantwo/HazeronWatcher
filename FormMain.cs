@@ -147,7 +147,7 @@ namespace HazeronWatcher
                     this.Close();
                 timer1.Start();
             }
-            if (httpArray == null || !httpArray[0].Contains("Shores of Hazeron"))
+            if (httpArray == null || httpArray.Length == 0 || !httpArray[0].Contains("Shores of Hazeron"))
                 return;
 
             // Go through the HTTP page line by line.
