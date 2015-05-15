@@ -351,6 +351,8 @@ namespace HazeronWatcher
                 return;
             }
             Player player = GetPlayer(id);
+            if (player == null)
+                return;
             player.Watch = true;
             UpdateDGV();
         }

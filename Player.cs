@@ -14,7 +14,9 @@ namespace HazeronWatcher
             {
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
-                    httpLine = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)[0];
+                    string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (httpArray.Length != 0)
+                        httpLine = httpArray[0];
                 }
             }
             catch (System.Net.WebException)
