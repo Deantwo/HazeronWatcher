@@ -1,5 +1,5 @@
 ﻿#define OldSettingsUpdate
-//#define DisableMain
+#define DisableMain
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
