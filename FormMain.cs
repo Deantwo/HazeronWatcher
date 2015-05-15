@@ -623,6 +623,50 @@ namespace HazeronWatcher
         private void cmsListRightClickMain_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
 #if !DisableMain
+            DataGridView dgv = (sender as DataGridView);
+            if (dgv == null)
+                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridViewCell currentCell = dgv.CurrentCell;
+            if (currentCell != null)
+            {
+                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
+
+                if (String.IsNullOrEmpty(player.MainID))
+                {
+                    FormInput inputDialog = new FormInput("Set Main", "Enter the player's main avatar's ID.", player.MainID);
+                    if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
+                        return;
+                    string mainId = inputDialog.ReturnInput.Trim();
+                    if (!Hazeron.ValidID(mainId))
+                    {
+                        MessageBox.Show(this, "Invalid input, please enter a valid avatar ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    Player mainPlayer;
+                    if (!_playerList.ContainsKey(mainId) ||
+                        (_playerList.ContainsKey(mainId) && !_playerList[mainId].IsWatchListed)
+                        )
+                    {
+                        bool list = MessageBox.Show(this,
+                           "The entered avatar ID is not on the watch list." + Environment.NewLine +
+                           "´The avatar has to be on your watch list, either just as a having a note, relationship or watched." + Environment.NewLine +
+                           "" + Environment.NewLine +
+                           "Would you like to try and set the avatar to watch?"
+                           , "Invalid Input", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                           == DialogResult.Yes;
+                        mainPlayer = GetPlayer(mainId);
+                        if (mainPlayer == null)
+                            return;
+                        mainPlayer.Watch = true;
+                    }
+
+                    player.MainID = mainId;
+                }
+                else
+                    player.MainID = "";
+            }
+            UpdateDGV();
 #endif
         }
 

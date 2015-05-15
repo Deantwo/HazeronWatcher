@@ -51,6 +51,18 @@ namespace HazeronWatcher
             set { _name = value; }
         }
 
+        protected string _mainId;
+        [System.Xml.Serialization.XmlAttribute]
+        public string MainID
+        {
+            get { return _mainId; }
+            set { _mainId = value; }
+        }
+        public bool Alt
+        {
+            get { return !String.IsNullOrEmpty(_mainId); }
+        }
+
         protected bool _online;
         [System.Xml.Serialization.XmlIgnoreAttribute]
         public bool Online
@@ -89,18 +101,6 @@ namespace HazeronWatcher
         {
             get { return _watch; }
             set { _watch = value; }
-        }
-
-        protected string _mainId;
-        [System.Xml.Serialization.XmlAttribute]
-        public string MainID
-        {
-            get { return _mainId; }
-            set { _mainId = value; }
-        }
-        public bool Alt
-        {
-            get { return !String.IsNullOrEmpty(_mainId); }
         }
 
         protected string _note;
