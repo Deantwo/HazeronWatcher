@@ -38,7 +38,7 @@
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(12, 55);
+            this.btnOk.Location = new System.Drawing.Point(12, 77);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(174, 55);
+            this.btnCancel.Location = new System.Drawing.Point(174, 77);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
@@ -58,24 +58,26 @@
             // 
             // lblInfo
             // 
-            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfo.Location = new System.Drawing.Point(12, 9);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(237, 18);
+            this.lblInfo.Size = new System.Drawing.Size(237, 40);
             this.lblInfo.TabIndex = 2;
             this.lblInfo.Text = "lblInfo";
             // 
             // tbxInput
             // 
-            this.tbxInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbxInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbxInput.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbxInput.Location = new System.Drawing.Point(12, 30);
+            this.tbxInput.Location = new System.Drawing.Point(12, 52);
             this.tbxInput.Name = "tbxInput";
+            this.tbxInput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbxInput.Size = new System.Drawing.Size(237, 19);
             this.tbxInput.TabIndex = 3;
+            this.tbxInput.WordWrap = false;
             // 
             // FormInput
             // 
@@ -83,7 +85,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(261, 90);
+            this.ClientSize = new System.Drawing.Size(261, 112);
             this.ControlBox = false;
             this.Controls.Add(this.tbxInput);
             this.Controls.Add(this.lblInfo);
@@ -91,7 +93,7 @@
             this.Controls.Add(this.btnOk);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(277, 128);
+            this.MinimumSize = new System.Drawing.Size(277, 150);
             this.Name = "FormInput";
             this.Text = "FormInput";
             this.Load += new System.EventHandler(this.FormInput_Load);

@@ -635,7 +635,7 @@ namespace HazeronWatcher
             if (currentCell != null)
             {
                 Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note);
+                FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note, FormInputOptions.Multiline);
                 if (inputBox.ShowDialog(this) == DialogResult.OK)
                     player.Note = inputBox.ReturnInput;
             }
