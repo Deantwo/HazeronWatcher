@@ -1,5 +1,5 @@
 ﻿#define OldSettingsUpdate
-#define DisableMain
+//#define DisableMain
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +22,9 @@ namespace HazeronWatcher
 
         int _numOnline = 0;
         Dictionary<string, Player> _playerList;
+
+        Icon _iconLit = HazeronWatcher.Properties.Resources.Psyker_s_lit_tray_icon;
+        Icon _iconUnlit = HazeronWatcher.Properties.Resources.Psyker_s_unlit_tray_icon;
 
         public FormMain()
         {
@@ -212,6 +215,11 @@ namespace HazeronWatcher
                     player.ListRow.Visible = false;
                 }
             }
+
+            if (_playerList.Values.Any(x => x.Watch && x.Online))
+                notifyIcon1.Icon = _iconLit;
+            else
+                notifyIcon1.Icon = _iconUnlit;
 
             // Update the lists with colors and check the watch list.
             UpdateDGV();

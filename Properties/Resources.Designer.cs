@@ -68,5 +68,25 @@ namespace HazeronWatcher.Properties {
                 return ResourceManager.GetStream("communi2", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Psyker_s_lit_tray_icon {
+            get {
+                object obj = ResourceManager.GetObject("Psyker_s_lit_tray_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Psyker_s_unlit_tray_icon {
+            get {
+                object obj = ResourceManager.GetObject("Psyker_s_unlit_tray_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }
