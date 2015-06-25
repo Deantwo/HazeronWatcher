@@ -90,9 +90,12 @@ namespace HazeronWatcher
             _playerList = _settingsXml.PlayerList.Player.ToDictionary(x => x.ID);
             foreach (Player player in _playerList.Values)
                 AddPlayerToDGV(player);
-            menuStrip1OptionsPlayerIds.Checked = _settingsXml.Options.ShowIdColumn;
+            menuStrip1OptionsAvatarIds.Checked = !_settingsXml.Options.ShowIdColumn;
+            menuStrip1OptionsAvatarIds_Click(null, null);
             menuStrip1OptionsWatchHighlight.Checked = _settingsXml.Options.ShowWatchHighlight;
             menuStrip1OptionsNonWatched.Checked = _settingsXml.Options.ShowNonWatched;
+            menuStrip1OptionsWatchList.Checked = !_settingsXml.Options.ShowWatchList;
+            menuStrip1OptionsWatchList_Click(null, null);
             menuStrip1OptionsNotificationSound.Checked = _settingsXml.Options.PlaySound;
 
             //// Create the "Notification.wav" file if it doesn't exist.
@@ -112,8 +115,6 @@ namespace HazeronWatcher
             //}
 
             // Set the DataGridView colors and fonts.
-            ColumnPlayerId.Visible = menuStrip1OptionsPlayerIds.Checked;
-            ColumnWatchId.Visible = menuStrip1OptionsPlayerIds.Checked;
             dgvPlayersOnline.DefaultCellStyle.BackColor = Color.Black;
             dgvPlayersOnline.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
             dgvPlayersOnline.Columns["ColumnPlayerId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
@@ -367,9 +368,9 @@ namespace HazeronWatcher
 
         private void menuStrip1OptionsAvatarIds_Click(object sender, EventArgs e)
         {
-            menuStrip1OptionsPlayerIds.Checked = !menuStrip1OptionsPlayerIds.Checked;
-            ColumnPlayerId.Visible = menuStrip1OptionsPlayerIds.Checked;
-            ColumnWatchId.Visible = menuStrip1OptionsPlayerIds.Checked;
+            menuStrip1OptionsAvatarIds.Checked = !menuStrip1OptionsAvatarIds.Checked;
+            ColumnPlayerId.Visible = menuStrip1OptionsAvatarIds.Checked;
+            ColumnWatchId.Visible = menuStrip1OptionsAvatarIds.Checked;
         }
 
         private void menuStrip1OptionsWatchHighlight_Click(object sender, EventArgs e)
@@ -382,6 +383,16 @@ namespace HazeronWatcher
         {
             menuStrip1OptionsNonWatched.Checked = !menuStrip1OptionsNonWatched.Checked;
             UpdateDGV();
+        }
+
+        private void menuStrip1OptionsWatchList_Click(object sender, EventArgs e)
+        {
+            menuStrip1OptionsWatchList.Checked = !menuStrip1OptionsWatchList.Checked;
+            splitContainer1.Panel2Collapsed = !menuStrip1OptionsWatchList.Checked;
+            if (menuStrip1OptionsWatchList.Checked)
+                splitContainer1.Panel2.Show();
+            else
+                splitContainer1.Panel2.Hide();
         }
 
         private void menuStrip1OptionsNotificationSound_Click(object sender, EventArgs e)
@@ -731,9 +742,10 @@ namespace HazeronWatcher
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
             _settingsXml.PlayerList.Player = _playerList.Values.Where(x => x.IsWatchListed).ToList();
-            _settingsXml.Options.ShowIdColumn = menuStrip1OptionsPlayerIds.Checked;
+            _settingsXml.Options.ShowIdColumn = menuStrip1OptionsAvatarIds.Checked;
             _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
             _settingsXml.Options.ShowNonWatched = menuStrip1OptionsNonWatched.Checked;
+            _settingsXml.Options.ShowWatchList = menuStrip1OptionsWatchList.Checked;
             _settingsXml.Options.PlaySound = menuStrip1OptionsNotificationSound.Checked;
             _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
         }

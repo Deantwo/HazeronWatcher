@@ -56,6 +56,9 @@ namespace HazeronWatcher
         public bool ShowNonWatched { get; set; }
 
         [XmlElement]
+        public bool ShowWatchList { get; set; }
+
+        [XmlElement]
         public bool PlaySound { get; set; }
 
         public HazeronWatcherSettingsOptions()
@@ -64,6 +67,7 @@ namespace HazeronWatcher
             ShowIdColumn = false;
             ShowWatchHighlight = true;
             ShowNonWatched = true;
+            ShowWatchList = true;
             PlaySound = true;
         }
     }

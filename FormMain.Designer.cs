@@ -39,9 +39,10 @@
             this.menuStrip1Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip1EditAddAvatar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Options = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1OptionsPlayerIds = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsAvatarIds = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsWatchHighlight = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsNonWatched = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsWatchList = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsNotificationSound = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Help = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1HelpGithub = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +77,7 @@
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -163,27 +165,29 @@
             // MenuStrip1EditAddAvatar
             // 
             this.MenuStrip1EditAddAvatar.Name = "MenuStrip1EditAddAvatar";
-            this.MenuStrip1EditAddAvatar.Size = new System.Drawing.Size(152, 22);
+            this.MenuStrip1EditAddAvatar.Size = new System.Drawing.Size(133, 22);
             this.MenuStrip1EditAddAvatar.Text = "Add Avatar";
             this.MenuStrip1EditAddAvatar.Click += new System.EventHandler(this.MenuStrip1EditAddAvatar_Click);
             // 
             // menuStrip1Options
             // 
             this.menuStrip1Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStrip1OptionsPlayerIds,
+            this.menuStrip1OptionsAvatarIds,
             this.menuStrip1OptionsWatchHighlight,
             this.menuStrip1OptionsNonWatched,
+            this.menuStrip1OptionsWatchList,
+            this.toolStripSeparator7,
             this.menuStrip1OptionsNotificationSound});
             this.menuStrip1Options.Name = "menuStrip1Options";
             this.menuStrip1Options.Size = new System.Drawing.Size(61, 20);
             this.menuStrip1Options.Text = "Options";
             // 
-            // menuStrip1OptionsPlayerIds
+            // menuStrip1OptionsAvatarIds
             // 
-            this.menuStrip1OptionsPlayerIds.Name = "menuStrip1OptionsPlayerIds";
-            this.menuStrip1OptionsPlayerIds.Size = new System.Drawing.Size(179, 22);
-            this.menuStrip1OptionsPlayerIds.Text = "Show Player IDs";
-            this.menuStrip1OptionsPlayerIds.Click += new System.EventHandler(this.menuStrip1OptionsAvatarIds_Click);
+            this.menuStrip1OptionsAvatarIds.Name = "menuStrip1OptionsAvatarIds";
+            this.menuStrip1OptionsAvatarIds.Size = new System.Drawing.Size(179, 22);
+            this.menuStrip1OptionsAvatarIds.Text = "Show Avatar IDs";
+            this.menuStrip1OptionsAvatarIds.Click += new System.EventHandler(this.menuStrip1OptionsAvatarIds_Click);
             // 
             // menuStrip1OptionsWatchHighlight
             // 
@@ -198,6 +202,13 @@
             this.menuStrip1OptionsNonWatched.Size = new System.Drawing.Size(179, 22);
             this.menuStrip1OptionsNonWatched.Text = "Show non-Watched";
             this.menuStrip1OptionsNonWatched.Click += new System.EventHandler(this.menuStrip1OptionsNonWatched_Click);
+            // 
+            // menuStrip1OptionsWatchList
+            // 
+            this.menuStrip1OptionsWatchList.Name = "menuStrip1OptionsWatchList";
+            this.menuStrip1OptionsWatchList.Size = new System.Drawing.Size(179, 22);
+            this.menuStrip1OptionsWatchList.Text = "Show Watch List";
+            this.menuStrip1OptionsWatchList.Click += new System.EventHandler(this.menuStrip1OptionsWatchList_Click);
             // 
             // menuStrip1OptionsNotificationSound
             // 
@@ -502,6 +513,11 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(176, 6);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -547,7 +563,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.DataGridView dgvPlayersOnline;
         private System.Windows.Forms.DataGridView dgvWatchList;
-        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsPlayerIds;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsAvatarIds;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPlayerId;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPlayerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnWatchId;
@@ -581,6 +597,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickNote;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickMain;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsWatchList;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
 
