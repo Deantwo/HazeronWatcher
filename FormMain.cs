@@ -25,6 +25,8 @@ namespace HazeronWatcher
 
         Icon _iconLit = HazeronWatcher.Properties.Resources.Psyker_s_lit_tray_icon;
         Icon _iconUnlit = HazeronWatcher.Properties.Resources.Psyker_s_unlit_tray_icon;
+        //Icon _iconError = HazeronWatcher.Properties.Resources.Psyker_s_error_tray_icon; // Icon needed!
+        Icon _iconError = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
 
         public FormMain()
         {
@@ -141,6 +143,13 @@ namespace HazeronWatcher
             catch (WebException)
             {
                 timer1.Stop();
+                // Change notifyIcon's icon to error version.
+                notifyIcon1.Icon = _iconError;
+                // Set the notifyIcon tooltip.
+                notifyIcon1.Text = this.Text + Environment.NewLine + "Connection error! Retry?";
+                // Set the toolStripStatusLabel text.
+                toolStripStatusLabel1.Text = "Connection error! Retry? (" + DateTime.Now.ToString(Hazeron.DateTimeFormat) + ")";
+                // Make a nd show the retry dialog.
                 DialogResult retryAnswer = MessageBox.Show(this,
                     "Failed to get the HTTP page." + Environment.NewLine +
                     "It may be a connection issue." + Environment.NewLine +
