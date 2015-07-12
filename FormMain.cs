@@ -203,10 +203,12 @@ namespace HazeronWatcher
             {
                 if (onlineNow.Contains(player.ID))
                 {
+                    // Check if the player is watched and was offline last check.
                     if (player.Watch && !player.Online)
                     {
                         OnlineNotification(player);
                     }
+                    // Set the status to online.
                     player.Online = true;
                     player.ListRow.Visible = true;
                 }
@@ -217,10 +219,27 @@ namespace HazeronWatcher
                 }
             }
 
+            // Change the notifyIcon if there are watched players online.
             if (_playerList.Values.Any(x => x.Watch && x.Online))
+            {
+                // Change notifyIcon's icon to lit version.
                 notifyIcon1.Icon = _iconLit;
+                // Add list of online watched players to the notifyIcon tooltip.
+                string watchNames = "";
+                foreach (string playerId in onlineNow)
+                {
+                    if (_playerList[playerId].Watch)
+                        watchNames += Environment.NewLine + "• " + _playerList[playerId].ToString();
+                }
+                notifyIcon1.Text = this.Text + watchNames;
+            }
             else
+            {
+                // Change notifyIcon's icon to unlit version.
                 notifyIcon1.Icon = _iconUnlit;
+                // Clear the notifyIcon tooltip.
+                notifyIcon1.Text = this.Text;
+            }
 
             // Update the lists with colors and check the watch list.
             UpdateDGV();
