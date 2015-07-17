@@ -363,11 +363,11 @@ namespace HazeronWatcher
                     dgvWatch.Rows.Remove(avatar.WatchRow);
                     avatar.WatchRow = null;
                 }
-
-                // Invalidate the tables so "ToString()" method updates.
-                dgvOnline.Invalidate();
-                dgvWatch.Invalidate();
             }
+
+            // Invalidate the tables so "ToString()" methods updates.
+            dgvOnline.Invalidate();
+            dgvWatch.Invalidate();
         }
 
         #region menuStrip1
