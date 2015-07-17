@@ -147,6 +147,33 @@ namespace HazeronWatcher
             _note = "";
         }
 
+        public void RecheckName()
+        {
+            string httpLine = null;
+            try
+            {
+                using (System.Net.WebClient client = new System.Net.WebClient())
+                {
+                    string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + _id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (httpArray.Length != 0)
+                        httpLine = httpArray[0];
+                }
+            }
+            catch (System.Net.WebException)
+            {
+                // Blackhole.
+            }
+            if (httpLine == null || !httpLine.Contains("Shores of Hazeron"))
+            {
+                throw new HazeronAvatarNotFoundException("Avatar Not Found");
+            }
+            const string start = "<title>Shores of Hazeron - ";
+            const string end = "</title>";
+            int startIndex = httpLine.IndexOf(start) + start.Length;
+            int endIndex = httpLine.IndexOf(end) - startIndex;
+            _name = httpLine.Substring(startIndex, endIndex);
+        }
+
         public override string ToString()
         {
             if (String.IsNullOrEmpty(_mainId))
