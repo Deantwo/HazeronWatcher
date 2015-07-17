@@ -5,9 +5,9 @@ using System.Text;
 
 namespace HazeronWatcher
 {
-    public class Player
+    public class Avatar
     {
-        public static Player GetAvatar(string id)
+        public static Avatar GetAvatar(string id)
         {
             string httpLine = null;
             try
@@ -32,7 +32,7 @@ namespace HazeronWatcher
             int startIndex = httpLine.IndexOf(start) + start.Length;
             int endIndex = httpLine.IndexOf(end) - startIndex;
             string name = httpLine.Substring(startIndex, endIndex);
-            return new Player(name, id);
+            return new Avatar(name, id);
         }
 
         protected string _id;
@@ -132,14 +132,14 @@ namespace HazeronWatcher
             set { _watchRow = value; }
         }
 
-        public Player()
+        public Avatar()
         {
             _id = "A";
             _name = "";
             _mainId = "";
             _note = "";
         }
-        public Player(string name, string id)
+        public Avatar(string name, string id)
         {
             _id = id;
             _name = name;

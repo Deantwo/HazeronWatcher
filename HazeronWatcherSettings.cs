@@ -14,12 +14,12 @@ namespace HazeronWatcher
         public HazeronWatcherSettingsOptions Options { get; set; }
 
         [XmlElement]
-        public HazeronWatcherSettingsPlayers PlayerList { get; set; }
+        public HazeronWatcherSettingsAvatars AvatarList { get; set; }
 
         public HazeronWatcherSettings()
         {
             Options = new HazeronWatcherSettingsOptions();
-            PlayerList = new HazeronWatcherSettingsPlayers();
+            AvatarList = new HazeronWatcherSettingsAvatars();
         }
 
         public void Save(string filePath)
@@ -72,14 +72,14 @@ namespace HazeronWatcher
         }
     }
 
-    public class HazeronWatcherSettingsPlayers
+    public class HazeronWatcherSettingsAvatars
     {
         [XmlElement]
-        public List<Player> Player { get; set; }
+        public List<Avatar> Avatar { get; set; }
 
-        public HazeronWatcherSettingsPlayers()
+        public HazeronWatcherSettingsAvatars()
         {
-            Player = new List<Player>();
+            Avatar = new List<Avatar>();
         }
     }
 }

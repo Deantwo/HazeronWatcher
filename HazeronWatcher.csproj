@@ -64,7 +64,7 @@
     <Compile Include="Hazeron.cs" />
     <Compile Include="HazeronWatcherSettings.cs" />
     <Compile Include="HazeronWatcherSettingsOLD.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Avatar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormInput.resx">

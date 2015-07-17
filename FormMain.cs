@@ -21,7 +21,7 @@ namespace HazeronWatcher
         HazeronWatcherSettings _settingsXml;
 
         int _numOnline = 0;
-        Dictionary<string, Player> _playerList;
+        Dictionary<string, Avatar> _avatarList;
 
         Icon _iconLit = HazeronWatcher.Properties.Resources.Psyker_s_lit_tray_icon;
         Icon _iconUnlit = HazeronWatcher.Properties.Resources.Psyker_s_unlit_tray_icon;
@@ -59,7 +59,7 @@ namespace HazeronWatcher
                     // Convert the old "Settings.xml" into a new "HazeronWatcherSettings.xml".
                     _settingsXml = new HazeronWatcherSettings();
                     foreach (HazeronWatcherOLD.Player oldPlayer in oldSettingsXml.PlayerList)
-                        _settingsXml.PlayerList.Player.Add(oldPlayer.ToNewPlayer());
+                        _settingsXml.AvatarList.Avatar.Add(oldPlayer.ToAvatar());
                     _settingsXml.Options.ShowIdColumn = oldSettingsXml.ShowIdColumn;
                     _settingsXml.Options.ShowWatchHighlight = oldSettingsXml.ShowWatchHighlight;
                     _settingsXml.Options.ShowNonWatched = oldSettingsXml.ShowNonWatched;
@@ -89,9 +89,9 @@ namespace HazeronWatcher
             else
                 _settingsXml = new HazeronWatcherSettings();
             // Get data from the settings.
-            _playerList = _settingsXml.PlayerList.Player.ToDictionary(x => x.ID);
-            foreach (Player player in _playerList.Values)
-                AddPlayerToDGV(player);
+            _avatarList = _settingsXml.AvatarList.Avatar.ToDictionary(x => x.ID);
+            foreach (Avatar avatar in _avatarList.Values)
+                AddAvatarToDGV(avatar);
             menuStrip1OptionsAvatarIds.Checked = !_settingsXml.Options.ShowIdColumn;
             menuStrip1OptionsAvatarIds_Click(null, null);
             menuStrip1OptionsWatchHighlight.Checked = _settingsXml.Options.ShowWatchHighlight;
@@ -117,12 +117,12 @@ namespace HazeronWatcher
             //}
 
             // Set the DataGridView colors and fonts.
-            dgvPlayersOnline.DefaultCellStyle.BackColor = Color.Black;
-            dgvPlayersOnline.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
-            dgvPlayersOnline.Columns["ColumnPlayerId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
-            dgvWatchList.DefaultCellStyle.BackColor = Color.Black;
-            dgvWatchList.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
-            dgvWatchList.Columns["ColumnWatchId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
+            dgvOnline.DefaultCellStyle.BackColor = Color.Black;
+            dgvOnline.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
+            dgvOnline.Columns["dgvOnlineColumnID"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
+            dgvWatch.DefaultCellStyle.BackColor = Color.Black;
+            dgvWatch.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
+            dgvWatch.Columns["dgvWatchColumnID"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
 
             // Run the tick once and start the looping timer.
             timer1_Tick(null, null);
@@ -165,10 +165,10 @@ namespace HazeronWatcher
 
             // Go through the HTTP page line by line.
             List<string> onlineNow = new List<string>();
-            bool playersSection = false;
+            bool avatarsSection = false;
             foreach (string httpLine in httpArray)
             {
-                if (playersSection)
+                if (avatarsSection)
                 {
                     if (httpLine.Contains("</tbody>"))
                         break;
@@ -177,20 +177,20 @@ namespace HazeronWatcher
                     const string end = "</a>";
                     int startIndex = httpLine.IndexOf(start) + start.Length;
                     int endIndex = httpLine.IndexOf(middle) - startIndex;
-                    string playerId = httpLine.Substring(startIndex, endIndex);
-                    Player player;
-                    if (!_playerList.ContainsKey(playerId))
+                    string avatarId = httpLine.Substring(startIndex, endIndex);
+                    Avatar avatar;
+                    if (!_avatarList.ContainsKey(avatarId))
                     {
                         startIndex = httpLine.IndexOf(middle) + middle.Length;
                         endIndex = httpLine.IndexOf(end) - startIndex;
-                        string playerName = httpLine.Substring(startIndex, endIndex);
-                        player = new Player(playerName, playerId);
-                        _playerList.Add(playerId, player);
-                        AddPlayerToDGV(player);
+                        string avatarName = httpLine.Substring(startIndex, endIndex);
+                        avatar = new Avatar(avatarName, avatarId);
+                        _avatarList.Add(avatarId, avatar);
+                        AddAvatarToDGV(avatar);
                     }
                     else
-                        player = _playerList[playerId];
-                    onlineNow.Add(playerId);
+                        avatar = _avatarList[avatarId];
+                    onlineNow.Add(avatarId);
                 }
                 else if (httpLine.Contains(">Players Online</big>"))
                 {
@@ -203,42 +203,42 @@ namespace HazeronWatcher
                 }
                 else if (httpLine.Contains("Player Name"))
                 {
-                    playersSection = true;
+                    avatarsSection = true;
                 }
             }
 
-            // Go through each player in the player list.
-            foreach (Player player in _playerList.Values)
+            // Go through each avatar in the avatar list.
+            foreach (Avatar avatar in _avatarList.Values)
             {
-                if (onlineNow.Contains(player.ID))
+                if (onlineNow.Contains(avatar.ID))
                 {
-                    // Check if the player is watched and was offline last check.
-                    if (player.Watch && !player.Online)
+                    // Check if the avatar is watched and was offline last check.
+                    if (avatar.Watch && !avatar.Online)
                     {
-                        OnlineNotification(player);
+                        OnlineNotification(avatar);
                     }
                     // Set the status to online.
-                    player.Online = true;
-                    player.ListRow.Visible = true;
+                    avatar.Online = true;
+                    avatar.ListRow.Visible = true;
                 }
                 else
                 {
-                    player.Online = false;
-                    player.ListRow.Visible = false;
+                    avatar.Online = false;
+                    avatar.ListRow.Visible = false;
                 }
             }
 
-            // Change the notifyIcon if there are watched players online.
-            if (_playerList.Values.Any(x => x.Watch && x.Online))
+            // Change the notifyIcon if there are watched avatars online.
+            if (_avatarList.Values.Any(x => x.Watch && x.Online))
             {
                 // Change notifyIcon's icon to lit version.
                 notifyIcon1.Icon = _iconLit;
-                // Add list of online watched players to the notifyIcon tooltip.
+                // Add list of online watched avatars to the notifyIcon tooltip.
                 string watchNames = "";
-                foreach (string playerId in onlineNow)
+                foreach (string avatarId in onlineNow)
                 {
-                    if (_playerList[playerId].Watch)
-                        watchNames += Environment.NewLine + "• " + _playerList[playerId].ToString();
+                    if (_avatarList[avatarId].Watch)
+                        watchNames += Environment.NewLine + "• " + _avatarList[avatarId].ToString();
                 }
                 notifyIcon1.Text = this.Text + watchNames;
             }
@@ -254,10 +254,10 @@ namespace HazeronWatcher
             UpdateDGV();
         }
 
-        public void OnlineNotification(Player player)
+        public void OnlineNotification(Avatar avatar)
         {
             // Notify popup message.
-            TrayBalloonTip(player.Name + " has come online", ToolTipIcon.Info);
+            TrayBalloonTip(avatar.Name + " has come online", ToolTipIcon.Info);
 
             // Play notification sound.
             if (menuStrip1OptionsNotificationSound.Checked)
@@ -276,16 +276,16 @@ namespace HazeronWatcher
             }
         }
 
-        public Player GetPlayer(string id)
+        public Avatar GetAvatar(string id)
         {
-            Player player;
-            if (_playerList.ContainsKey(id))
-                player = _playerList[id];
+            Avatar avatar;
+            if (_avatarList.ContainsKey(id))
+                avatar = _avatarList[id];
             else
             {
                 try
                 {
-                    player = Player.GetAvatar(id);
+                    avatar = Avatar.GetAvatar(id);
                 }
                 catch (HazeronAvatarNotFoundException)
                 {
@@ -294,79 +294,79 @@ namespace HazeronWatcher
                         , "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
                 }
-                _playerList.Add(id, player);
-                AddPlayerToDGV(player);
+                _avatarList.Add(id, avatar);
+                AddAvatarToDGV(avatar);
             }
-            return player;
+            return avatar;
         }
 
-        public void AddPlayerToDGV(Player player)
+        public void AddAvatarToDGV(Avatar avatar)
         {
-            dgvPlayersOnline.Rows.Add();
-            player.ListRow = dgvPlayersOnline.Rows[dgvPlayersOnline.RowCount - 1];
-            player.ListRow.Visible = false;
-            player.ListRow.Cells["ColumnPlayerID"].Value = player.ID;
-            player.ListRow.Cells["ColumnPlayerName"].Value = player;
-            dgvPlayersOnline.Sort(ColumnPlayerName, ListSortDirection.Ascending);
+            dgvOnline.Rows.Add();
+            avatar.ListRow = dgvOnline.Rows[dgvOnline.RowCount - 1];
+            avatar.ListRow.Visible = false;
+            avatar.ListRow.Cells["dgvOnlineColumnID"].Value = avatar.ID;
+            avatar.ListRow.Cells["dgvOnlineColumnAvatar"].Value = avatar;
+            dgvOnline.Sort(dgvOnlineColumnAvatar, ListSortDirection.Ascending);
         }
 
         public void UpdateDGV()
         {
-            foreach (Player player in _playerList.Values)
+            foreach (Avatar avatar in _avatarList.Values)
             {
                 Color relationColor;
-                if (player.Empire)
+                if (avatar.Empire)
                     relationColor = Color.FromArgb(90, 110, 255); // Blue
-                else if (player.Friend)
+                else if (avatar.Friend)
                     relationColor = Color.FromArgb(50, 240, 50); // Green
-                else if (player.Unsure)
+                else if (avatar.Unsure)
                     relationColor = Color.Yellow;
-                else if (player.Enemy)
+                else if (avatar.Enemy)
                     relationColor = Color.Red;
                 else
                     relationColor = Color.White;
 
                 int watchColorOffset;
-                if (menuStrip1OptionsWatchHighlight.Checked && player.Watch)
+                if (menuStrip1OptionsWatchHighlight.Checked && avatar.Watch)
                     watchColorOffset = 40;
                 else
                     watchColorOffset = 0;
 
-                player.ListRow.DefaultCellStyle.ForeColor = relationColor;
-                player.ListRow.DefaultCellStyle.SelectionForeColor = relationColor;
-                player.ListRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
-                player.ListRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
-                foreach (DataGridViewCell cell in player.ListRow.Cells)
-                    cell.ToolTipText = player.Note;
+                avatar.ListRow.DefaultCellStyle.ForeColor = relationColor;
+                avatar.ListRow.DefaultCellStyle.SelectionForeColor = relationColor;
+                avatar.ListRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
+                avatar.ListRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
+                foreach (DataGridViewCell cell in avatar.ListRow.Cells)
+                    cell.ToolTipText = avatar.Note;
 
-                // Is that player watch listed in anyway?
-                if (player.IsWatchListed)
+                // Is that avatar watch listed in anyway?
+                if (avatar.IsWatchListed)
                 {
-                    if (player.WatchRow == null)
+                    if (avatar.WatchRow == null)
                     {
-                        dgvWatchList.Rows.Add();
-                        player.WatchRow = dgvWatchList.Rows[dgvWatchList.RowCount - 1];
-                        player.WatchRow.Cells["ColumnWatchID"].Value = player.ID;
-                        player.WatchRow.Cells["ColumnWatchName"].Value = player;
-                        dgvWatchList.Sort(ColumnWatchName, ListSortDirection.Ascending);
+                        dgvWatch.Rows.Add();
+                        avatar.WatchRow = dgvWatch.Rows[dgvWatch.RowCount - 1];
+                        avatar.WatchRow.Cells["dgvWatchColumnId"].Value = avatar.ID;
+                        avatar.WatchRow.Cells["dgvWatchColumnAvatar"].Value = avatar;
+                        dgvWatch.Sort(dgvWatchColumnAvatar, ListSortDirection.Ascending);
                     }
-                    player.WatchRow.Visible = (player.Watch || menuStrip1OptionsNonWatched.Checked);
-                    player.WatchRow.DefaultCellStyle.ForeColor = relationColor;
-                    player.WatchRow.DefaultCellStyle.SelectionForeColor = relationColor;
-                    player.WatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
-                    player.WatchRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
-                    foreach (DataGridViewCell cell in player.WatchRow.Cells)
-                        cell.ToolTipText = player.Note;
+                    avatar.WatchRow.Visible = (avatar.Watch || menuStrip1OptionsNonWatched.Checked);
+                    avatar.WatchRow.DefaultCellStyle.ForeColor = relationColor;
+                    avatar.WatchRow.DefaultCellStyle.SelectionForeColor = relationColor;
+                    avatar.WatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
+                    avatar.WatchRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
+                    foreach (DataGridViewCell cell in avatar.WatchRow.Cells)
+                        cell.ToolTipText = avatar.Note;
                 }
-                else if (player.WatchRow != null)
+                else if (avatar.WatchRow != null)
                 {
-                    dgvWatchList.Rows.Remove(player.WatchRow);
-                    player.WatchRow = null;
+                    dgvWatch.Rows.Remove(avatar.WatchRow);
+                    avatar.WatchRow = null;
                 }
 
                 // Invalidate the tables so "ToString()" method updates.
-                dgvPlayersOnline.Invalidate();
-                dgvWatchList.Invalidate();
+                dgvOnline.Invalidate();
+                dgvWatch.Invalidate();
             }
         }
 
@@ -387,18 +387,18 @@ namespace HazeronWatcher
                 MessageBox.Show(this, "Invalid input, please enter a valid avatar ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Player player = GetPlayer(id);
-            if (player == null)
+            Avatar avatar = GetAvatar(id);
+            if (avatar == null)
                 return;
-            player.Watch = true;
+            avatar.Watch = true;
             UpdateDGV();
         }
 
         private void menuStrip1OptionsAvatarIds_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsAvatarIds.Checked = !menuStrip1OptionsAvatarIds.Checked;
-            ColumnPlayerId.Visible = menuStrip1OptionsAvatarIds.Checked;
-            ColumnWatchId.Visible = menuStrip1OptionsAvatarIds.Checked;
+            dgvOnlineColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
+            dgvWatchColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
         }
 
         private void menuStrip1OptionsWatchHighlight_Click(object sender, EventArgs e)
@@ -477,10 +477,10 @@ namespace HazeronWatcher
         #region DataGridView
         private void dgv_Click(object sender, EventArgs e)
         {
-            if (sender != null && (sender as DataGridView) != dgvPlayersOnline)
-                dgvPlayersOnline.ClearSelection();
-            if (sender != null && (sender as DataGridView) != dgvWatchList)
-                dgvWatchList.ClearSelection();
+            if (sender != null && (sender as DataGridView) != dgvOnline)
+                dgvOnline.ClearSelection();
+            if (sender != null && (sender as DataGridView) != dgvWatch)
+                dgvWatch.ClearSelection();
         }
         #endregion
 
@@ -530,16 +530,16 @@ namespace HazeronWatcher
             if (dgv == null)
                 dgv = ((sender as ContextMenuStrip).SourceControl as DataGridView);
 
-            Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-            cmsListRightClickEmpire.Checked = player.Empire;
-            cmsListRightClickFriend.Checked = player.Friend;
-            cmsListRightClickNeutral.Checked = player.Relation == 0;
-            cmsListRightClickUnsure.Checked = player.Unsure;
-            cmsListRightClickEnemy.Checked = player.Enemy;
-            cmsListRightClickWatch.Checked = player.Watch;
-            cmsListRightClickWatch.Text = (player.Watch ? "Remove from" : "Add to") + " Watch";
-            cmsListRightClickMain.Text = (String.IsNullOrEmpty(player.MainID) ? "Set" : "Unset") + " Main";
-            cmsListRightClickNote.Text = (String.IsNullOrEmpty(player.Note) ? "Add" : "Edit") + " Note";
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            cmsListRightClickEmpire.Checked = avatar.Empire;
+            cmsListRightClickFriend.Checked = avatar.Friend;
+            cmsListRightClickNeutral.Checked = avatar.Relation == 0;
+            cmsListRightClickUnsure.Checked = avatar.Unsure;
+            cmsListRightClickEnemy.Checked = avatar.Enemy;
+            cmsListRightClickWatch.Checked = avatar.Watch;
+            cmsListRightClickWatch.Text = (avatar.Watch ? "Remove from" : "Add to") + " Watch";
+            cmsListRightClickMain.Text = (String.IsNullOrEmpty(avatar.MainID) ? "Set" : "Unset") + " Main";
+            cmsListRightClickNote.Text = (String.IsNullOrEmpty(avatar.Note) ? "Add" : "Edit") + " Note";
         }
 
         private void cmsListRightClickCopy_Click(object sender, EventArgs e)
@@ -578,8 +578,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                System.Diagnostics.Process.Start(@"http://Hazeron.com/EmpireStandings2015/p" + player.ID + ".html");
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                System.Diagnostics.Process.Start(@"http://Hazeron.com/EmpireStandings2015/p" + avatar.ID + ".html");
             }
         }
 
@@ -591,8 +591,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                player.Relation = 2;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                avatar.Relation = 2;
             }
             UpdateDGV();
         }
@@ -605,8 +605,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                player.Relation = 1;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                avatar.Relation = 1;
             }
             UpdateDGV();
         }
@@ -619,8 +619,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                player.Relation = 0;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                avatar.Relation = 0;
             }
             UpdateDGV();
         }
@@ -633,8 +633,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                player.Relation = -1;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                avatar.Relation = -1;
             }
             UpdateDGV();
         }
@@ -647,8 +647,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                player.Relation = -2;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                avatar.Relation = -2;
             }
             UpdateDGV();
         }
@@ -661,8 +661,8 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
-                player.Watch = !player.Watch;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+                avatar.Watch = !avatar.Watch;
             }
             UpdateDGV();
         }
@@ -676,11 +676,11 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
+                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
 
-                if (String.IsNullOrEmpty(player.MainID))
+                if (String.IsNullOrEmpty(avatar.MainID))
                 {
-                    FormInput inputDialog = new FormInput("Set Main", "Enter the player's main avatar's ID.", player.MainID);
+                    FormInput inputDialog = new FormInput("Set Main", "Enter the player's main avatar's ID.", avatar.MainID);
                     if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
                         return;
                     string mainId = inputDialog.ReturnInput.Trim();
@@ -690,9 +690,9 @@ namespace HazeronWatcher
                         return;
                     }
 
-                    Player mainPlayer;
-                    if (!_playerList.ContainsKey(mainId) ||
-                        (_playerList.ContainsKey(mainId) && !_playerList[mainId].IsWatchListed)
+                    Avatar mainAvatar;
+                    if (!_avatarList.ContainsKey(mainId) ||
+                        (_avatarList.ContainsKey(mainId) && !_avatarList[mainId].IsWatchListed)
                         )
                     {
                         bool list = MessageBox.Show(this,
@@ -702,16 +702,16 @@ namespace HazeronWatcher
                            "Would you like to try and set the avatar to watch?"
                            , "Invalid Input", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                            == DialogResult.Yes;
-                        mainPlayer = GetPlayer(mainId);
-                        if (mainPlayer == null)
+                        mainAvatar = GetAvatar(mainId);
+                        if (mainAvatar == null)
                             return;
-                        mainPlayer.Watch = true;
+                        mainAvatar.Watch = true;
                     }
 
-                    player.MainID = mainId;
+                    avatar.MainID = mainId;
                 }
                 else
-                    player.MainID = "";
+                    avatar.MainID = "";
             }
             UpdateDGV();
 #endif
@@ -725,7 +725,7 @@ namespace HazeronWatcher
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
-                Player player = (Player)dgv.CurrentRow.Cells[1].Value;
+                Avatar player = (Avatar)dgv.CurrentRow.Cells[1].Value;
                 FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note, FormInputOptions.Multiline);
                 if (inputBox.ShowDialog(this) == DialogResult.OK)
                     player.Note = inputBox.ReturnInput;
@@ -769,7 +769,7 @@ namespace HazeronWatcher
             timer1.Stop();
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
-            _settingsXml.PlayerList.Player = _playerList.Values.Where(x => x.IsWatchListed).ToList();
+            _settingsXml.AvatarList.Avatar = _avatarList.Values.Where(x => x.IsWatchListed).ToList();
             _settingsXml.Options.ShowIdColumn = menuStrip1OptionsAvatarIds.Checked;
             _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
             _settingsXml.Options.ShowNonWatched = menuStrip1OptionsNonWatched.Checked;

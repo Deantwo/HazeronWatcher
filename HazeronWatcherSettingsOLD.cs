@@ -125,14 +125,14 @@ namespace HazeronWatcher
                 _id = id;
             }
 
-            public HazeronWatcher.Player ToNewPlayer()
+            public HazeronWatcher.Avatar ToAvatar()
             {
-                HazeronWatcher.Player newPlayer = new HazeronWatcher.Player();
-                newPlayer.ID = _id;
-                newPlayer.Name = _name;
-                newPlayer.Relation = _relation;
-                newPlayer.Watch = _watch;
-                return newPlayer;
+                HazeronWatcher.Avatar avatar = new HazeronWatcher.Avatar();
+                avatar.ID = _id;
+                avatar.Name = _name;
+                avatar.Relation = _relation;
+                avatar.Watch = _watch;
+                return avatar;
             }
 
             public override string ToString()
