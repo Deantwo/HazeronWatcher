@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -53,17 +55,21 @@
             this.menuStrip1HelpHowToUse = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvOnline = new System.Windows.Forms.DataGridView();
+            this.dgvOnlineColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvOnlineColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvWatch = new System.Windows.Forms.DataGridView();
+            this.dgvWatchColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvWatchColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmsListRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsListRightClickCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsListRightClickAvatar = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsListRightClickRecheck = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmsListRightClickEmpire = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickFriend = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickNeutral = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickUnsure = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickEnemy = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsListRightClickStanding = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsListRightClickStandingEmpire = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsListRightClickStandingFriend = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsListRightClickStandingUnsure = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsListRightClickStandingEnemy = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsListRightClickWatch = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsListRightClickMain = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,10 +80,6 @@
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dgvOnlineColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvOnlineColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvWatchColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvWatchColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -295,6 +297,14 @@
             this.dgvOnline.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvOnlineColumnId,
             this.dgvOnlineColumnAvatar});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOnline.Location = new System.Drawing.Point(0, 0);
             this.dgvOnline.Name = "dgvOnline";
@@ -308,6 +318,27 @@
             this.dgvOnline.Click += new System.EventHandler(this.dgv_Click);
             this.dgvOnline.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
             // 
+            // dgvOnlineColumnId
+            // 
+            this.dgvOnlineColumnId.FillWeight = 50F;
+            this.dgvOnlineColumnId.Frozen = true;
+            this.dgvOnlineColumnId.HeaderText = "ID";
+            this.dgvOnlineColumnId.MinimumWidth = 50;
+            this.dgvOnlineColumnId.Name = "dgvOnlineColumnId";
+            this.dgvOnlineColumnId.ReadOnly = true;
+            this.dgvOnlineColumnId.Width = 50;
+            // 
+            // dgvOnlineColumnAvatar
+            // 
+            this.dgvOnlineColumnAvatar.FillWeight = 1000F;
+            this.dgvOnlineColumnAvatar.Frozen = true;
+            this.dgvOnlineColumnAvatar.HeaderText = "Avatars Online";
+            this.dgvOnlineColumnAvatar.MinimumWidth = 1000;
+            this.dgvOnlineColumnAvatar.Name = "dgvOnlineColumnAvatar";
+            this.dgvOnlineColumnAvatar.ReadOnly = true;
+            this.dgvOnlineColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnlineColumnAvatar.Width = 1000;
+            // 
             // dgvWatch
             // 
             this.dgvWatch.AllowUserToAddRows = false;
@@ -318,6 +349,14 @@
             this.dgvWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvWatchColumnId,
             this.dgvWatchColumnAvatar});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvWatch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvWatch.Location = new System.Drawing.Point(0, 0);
             this.dgvWatch.Name = "dgvWatch";
@@ -331,24 +370,41 @@
             this.dgvWatch.Click += new System.EventHandler(this.dgv_Click);
             this.dgvWatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
             // 
+            // dgvWatchColumnId
+            // 
+            this.dgvWatchColumnId.FillWeight = 50F;
+            this.dgvWatchColumnId.Frozen = true;
+            this.dgvWatchColumnId.HeaderText = "ID";
+            this.dgvWatchColumnId.MinimumWidth = 50;
+            this.dgvWatchColumnId.Name = "dgvWatchColumnId";
+            this.dgvWatchColumnId.ReadOnly = true;
+            this.dgvWatchColumnId.Width = 50;
+            // 
+            // dgvWatchColumnAvatar
+            // 
+            this.dgvWatchColumnAvatar.FillWeight = 1000F;
+            this.dgvWatchColumnAvatar.Frozen = true;
+            this.dgvWatchColumnAvatar.HeaderText = "Watch List";
+            this.dgvWatchColumnAvatar.MinimumWidth = 1000;
+            this.dgvWatchColumnAvatar.Name = "dgvWatchColumnAvatar";
+            this.dgvWatchColumnAvatar.ReadOnly = true;
+            this.dgvWatchColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvWatchColumnAvatar.Width = 1000;
+            // 
             // cmsListRightClick
             // 
             this.cmsListRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmsListRightClickCopy,
             this.cmsListRightClickAvatar,
+            this.cmsListRightClickRecheck,
             this.toolStripSeparator2,
-            this.cmsListRightClickEmpire,
-            this.cmsListRightClickFriend,
-            this.cmsListRightClickNeutral,
-            this.cmsListRightClickUnsure,
-            this.cmsListRightClickEnemy,
-            this.toolStripSeparator1,
+            this.cmsListRightClickStanding,
             this.cmsListRightClickWatch,
             this.toolStripSeparator6,
             this.cmsListRightClickMain,
             this.cmsListRightClickNote});
             this.cmsListRightClick.Name = "contextMenuStrip1";
-            this.cmsListRightClick.Size = new System.Drawing.Size(138, 242);
+            this.cmsListRightClick.Size = new System.Drawing.Size(153, 192);
             this.cmsListRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsRightClick_Opening);
             // 
             // cmsListRightClickCopy
@@ -365,50 +421,52 @@
             this.cmsListRightClickAvatar.Text = "Avatar Page";
             this.cmsListRightClickAvatar.Click += new System.EventHandler(this.cmsListRightClickAvatar_Click);
             // 
+            // cmsListRightClickRecheck
+            // 
+            this.cmsListRightClickRecheck.Name = "cmsListRightClickRecheck";
+            this.cmsListRightClickRecheck.Size = new System.Drawing.Size(137, 22);
+            this.cmsListRightClickRecheck.Text = "Recheck";
+            this.cmsListRightClickRecheck.Click += new System.EventHandler(this.cmsListRightClickRecheck_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(134, 6);
             // 
-            // cmsListRightClickEmpire
+            // cmsListRightClickStanding
             // 
-            this.cmsListRightClickEmpire.Name = "cmsListRightClickEmpire";
-            this.cmsListRightClickEmpire.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickEmpire.Text = "Set Empire";
-            this.cmsListRightClickEmpire.Click += new System.EventHandler(this.cmsListRightClickEmpire_Click);
+            this.cmsListRightClickStanding.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsListRightClickStandingEmpire,
+            this.cmsListRightClickStandingFriend,
+            this.cmsListRightClickStandingUnsure,
+            this.cmsListRightClickStandingEnemy});
+            this.cmsListRightClickStanding.Name = "cmsListRightClickStanding";
+            this.cmsListRightClickStanding.Size = new System.Drawing.Size(152, 22);
+            this.cmsListRightClickStanding.Text = "Standing...";
             // 
-            // cmsListRightClickFriend
+            // cmsListRightClickStandingEmpire
             // 
-            this.cmsListRightClickFriend.Name = "cmsListRightClickFriend";
-            this.cmsListRightClickFriend.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickFriend.Text = "Set Friend";
-            this.cmsListRightClickFriend.Click += new System.EventHandler(this.cmsListRightClickFriend_Click);
+            this.cmsListRightClickStandingEmpire.Name = "cmsListRightClickStandingEmpire";
+            this.cmsListRightClickStandingEmpire.Size = new System.Drawing.Size(152, 22);
+            this.cmsListRightClickStandingEmpire.Text = "Empire";
             // 
-            // cmsListRightClickNeutral
+            // cmsListRightClickStandingFriend
             // 
-            this.cmsListRightClickNeutral.Name = "cmsListRightClickNeutral";
-            this.cmsListRightClickNeutral.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickNeutral.Text = "Set Neutral";
-            this.cmsListRightClickNeutral.Click += new System.EventHandler(this.cmsListRightClickNeutral_Click);
+            this.cmsListRightClickStandingFriend.Name = "cmsListRightClickStandingFriend";
+            this.cmsListRightClickStandingFriend.Size = new System.Drawing.Size(152, 22);
+            this.cmsListRightClickStandingFriend.Text = "Friend";
             // 
-            // cmsListRightClickUnsure
+            // cmsListRightClickStandingUnsure
             // 
-            this.cmsListRightClickUnsure.Name = "cmsListRightClickUnsure";
-            this.cmsListRightClickUnsure.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickUnsure.Text = "Set Unsure";
-            this.cmsListRightClickUnsure.Click += new System.EventHandler(this.cmsListRightClickUnsure_Click);
+            this.cmsListRightClickStandingUnsure.Name = "cmsListRightClickStandingUnsure";
+            this.cmsListRightClickStandingUnsure.Size = new System.Drawing.Size(152, 22);
+            this.cmsListRightClickStandingUnsure.Text = "Unsure";
             // 
-            // cmsListRightClickEnemy
+            // cmsListRightClickStandingEnemy
             // 
-            this.cmsListRightClickEnemy.Name = "cmsListRightClickEnemy";
-            this.cmsListRightClickEnemy.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickEnemy.Text = "Set Enemy";
-            this.cmsListRightClickEnemy.Click += new System.EventHandler(this.cmsListRightClickEnemy_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(134, 6);
+            this.cmsListRightClickStandingEnemy.Name = "cmsListRightClickStandingEnemy";
+            this.cmsListRightClickStandingEnemy.Size = new System.Drawing.Size(152, 22);
+            this.cmsListRightClickStandingEnemy.Text = "Enemy";
             // 
             // cmsListRightClickWatch
             // 
@@ -476,48 +534,6 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
-            // dgvOnlineColumnId
-            // 
-            this.dgvOnlineColumnId.FillWeight = 50F;
-            this.dgvOnlineColumnId.Frozen = true;
-            this.dgvOnlineColumnId.HeaderText = "ID";
-            this.dgvOnlineColumnId.MinimumWidth = 50;
-            this.dgvOnlineColumnId.Name = "dgvOnlineColumnId";
-            this.dgvOnlineColumnId.ReadOnly = true;
-            this.dgvOnlineColumnId.Width = 50;
-            // 
-            // dgvOnlineColumnAvatar
-            // 
-            this.dgvOnlineColumnAvatar.FillWeight = 1000F;
-            this.dgvOnlineColumnAvatar.Frozen = true;
-            this.dgvOnlineColumnAvatar.HeaderText = "Avatars Online";
-            this.dgvOnlineColumnAvatar.MinimumWidth = 1000;
-            this.dgvOnlineColumnAvatar.Name = "dgvOnlineColumnAvatar";
-            this.dgvOnlineColumnAvatar.ReadOnly = true;
-            this.dgvOnlineColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnlineColumnAvatar.Width = 1000;
-            // 
-            // dgvWatchColumnId
-            // 
-            this.dgvWatchColumnId.FillWeight = 50F;
-            this.dgvWatchColumnId.Frozen = true;
-            this.dgvWatchColumnId.HeaderText = "ID";
-            this.dgvWatchColumnId.MinimumWidth = 50;
-            this.dgvWatchColumnId.Name = "dgvWatchColumnId";
-            this.dgvWatchColumnId.ReadOnly = true;
-            this.dgvWatchColumnId.Width = 50;
-            // 
-            // dgvWatchColumnAvatar
-            // 
-            this.dgvWatchColumnAvatar.FillWeight = 1000F;
-            this.dgvWatchColumnAvatar.Frozen = true;
-            this.dgvWatchColumnAvatar.HeaderText = "Watch List";
-            this.dgvWatchColumnAvatar.MinimumWidth = 1000;
-            this.dgvWatchColumnAvatar.Name = "dgvWatchColumnAvatar";
-            this.dgvWatchColumnAvatar.ReadOnly = true;
-            this.dgvWatchColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWatchColumnAvatar.Width = 1000;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -567,10 +583,6 @@
         private System.Windows.Forms.ContextMenuStrip cmsListRightClick;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickFriend;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickNeutral;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickEnemy;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickWatch;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickCopy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -578,8 +590,6 @@
         private System.Windows.Forms.ToolStripMenuItem cmsNotifyIconRightClickRestore;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickEmpire;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickUnsure;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsWatchHighlight;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsNonWatched;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1HelpGithub;
@@ -599,6 +609,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnAvatar;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnAvatar;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStanding;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingEmpire;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingFriend;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingUnsure;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingEnemy;
+        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickRecheck;
     }
 }
 

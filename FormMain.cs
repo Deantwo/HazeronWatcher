@@ -137,6 +137,7 @@ namespace HazeronWatcher
             {
                 using (WebClient client = new WebClient())
                 {
+                    client.Encoding = Encoding.UTF8;
                     httpArray = client.DownloadString(@"http://www.hazeron.com/playerson.html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 }
             }
@@ -531,14 +532,20 @@ namespace HazeronWatcher
                 dgv = ((sender as ContextMenuStrip).SourceControl as DataGridView);
 
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            cmsListRightClickEmpire.Checked = avatar.Empire;
-            cmsListRightClickFriend.Checked = avatar.Friend;
-            cmsListRightClickNeutral.Checked = avatar.Relation == 0;
-            cmsListRightClickUnsure.Checked = avatar.Unsure;
-            cmsListRightClickEnemy.Checked = avatar.Enemy;
+            cmsListRightClickStanding.Checked = avatar.Relation != 0;
+            cmsListRightClickStandingEmpire.Checked = avatar.Empire;
+            cmsListRightClickStandingEmpire.Text = (avatar.Empire ? "Unset" : "Set") + " Empire";
+            cmsListRightClickStandingFriend.Checked = avatar.Friend;
+            cmsListRightClickStandingFriend.Text = (avatar.Friend ? "Unset" : "Set") + " Friend";
+            cmsListRightClickStandingUnsure.Checked = avatar.Unsure;
+            cmsListRightClickStandingUnsure.Text = (avatar.Unsure ? "Unset" : "Set") + " Unsure";
+            cmsListRightClickStandingEnemy.Checked = avatar.Enemy;
+            cmsListRightClickStandingEnemy.Text = (avatar.Enemy ? "Unset" : "Set") + " Enemy";
             cmsListRightClickWatch.Checked = avatar.Watch;
             cmsListRightClickWatch.Text = (avatar.Watch ? "Remove from" : "Add to") + " Watch";
+            cmsListRightClickMain.Checked = !String.IsNullOrEmpty(avatar.MainID);
             cmsListRightClickMain.Text = (String.IsNullOrEmpty(avatar.MainID) ? "Set" : "Unset") + " Main";
+            cmsListRightClickNote.Checked = !String.IsNullOrEmpty(avatar.Note);
             cmsListRightClickNote.Text = (String.IsNullOrEmpty(avatar.Note) ? "Add" : "Edit") + " Note";
         }
 
@@ -583,7 +590,7 @@ namespace HazeronWatcher
             }
         }
 
-        private void cmsListRightClickEmpire_Click(object sender, EventArgs e)
+        private void cmsListRightClickRecheck_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (sender as DataGridView);
             if (dgv == null)
@@ -592,12 +599,36 @@ namespace HazeronWatcher
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                avatar.Relation = 2;
+                try
+                {
+                    avatar.RecheckName();
+                }
+                catch (HazeronAvatarNotFoundException)
+                {
+                    if (avatar.IsWatchListed)
+                    {
+                        DialogResult confimation = MessageBox.Show(this,
+                            "There is no avatar with that ID." + Environment.NewLine +
+                            "The avatar may have been deleted." + Environment.NewLine +
+                            "" + Environment.NewLine +
+                            "Would you like to remove the avatar from watch list?"
+                            , "Avatar Not Found, Unwatch?", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        if (confimation == DialogResult.Yes)
+                        {
+                            avatar.Unlist();
+                        }
+                    }
+                    else
+                        MessageBox.Show(this,
+                            "There is no avatar with that ID." + Environment.NewLine +
+                            "The avatar may have been deleted."
+                            , "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             UpdateDGV();
         }
 
-        private void cmsListRightClickFriend_Click(object sender, EventArgs e)
+        private void cmsListRightClickStandingEmpire_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (sender as DataGridView);
             if (dgv == null)
@@ -606,12 +637,15 @@ namespace HazeronWatcher
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                avatar.Relation = 1;
+                if (avatar.Empire)
+                    avatar.Relation = 2;
+                else
+                    avatar.Relation = 0;
             }
             UpdateDGV();
         }
 
-        private void cmsListRightClickNeutral_Click(object sender, EventArgs e)
+        private void cmsListRightClickStandingFriend_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (sender as DataGridView);
             if (dgv == null)
@@ -620,12 +654,15 @@ namespace HazeronWatcher
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                avatar.Relation = 0;
+                if (avatar.Friend)
+                    avatar.Relation = 1;
+                else
+                    avatar.Relation = 0;
             }
             UpdateDGV();
         }
 
-        private void cmsListRightClickUnsure_Click(object sender, EventArgs e)
+        private void cmsListRightClickStandingUnsure_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (sender as DataGridView);
             if (dgv == null)
@@ -634,12 +671,15 @@ namespace HazeronWatcher
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                avatar.Relation = -1;
+                if (avatar.Unsure)
+                    avatar.Relation = -1;
+                else
+                    avatar.Relation = 0;
             }
             UpdateDGV();
         }
 
-        private void cmsListRightClickEnemy_Click(object sender, EventArgs e)
+        private void cmsListRightClickStandingEnemy_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (sender as DataGridView);
             if (dgv == null)
@@ -648,7 +688,10 @@ namespace HazeronWatcher
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                avatar.Relation = -2;
+                if (avatar.Enemy)
+                    avatar.Relation = -2;
+                else
+                    avatar.Relation = 0;
             }
             UpdateDGV();
         }

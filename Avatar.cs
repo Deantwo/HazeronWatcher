@@ -14,6 +14,7 @@ namespace HazeronWatcher
             {
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
+                    client.Encoding = Encoding.UTF8;
                     string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                     if (httpArray.Length != 0)
                         httpLine = httpArray[0];
@@ -147,6 +148,14 @@ namespace HazeronWatcher
             _note = "";
         }
 
+        public void Unlist()
+        {
+            _relation = 0;
+            _watch = false;
+            _mainId = "";
+            _note = "";
+        }
+
         public void RecheckName()
         {
             string httpLine = null;
@@ -154,6 +163,7 @@ namespace HazeronWatcher
             {
                 using (System.Net.WebClient client = new System.Net.WebClient())
                 {
+                    client.Encoding = Encoding.UTF8;
                     string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + _id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                     if (httpArray.Length != 0)
                         httpLine = httpArray[0];
@@ -165,7 +175,20 @@ namespace HazeronWatcher
             }
             if (httpLine == null || !httpLine.Contains("Shores of Hazeron"))
             {
-                throw new HazeronAvatarNotFoundException("Avatar Not Found");
+                try
+                {
+                    using (System.Net.WebClient client = new System.Net.WebClient())
+                    {
+                        using (var stream = client.OpenRead(@"http://www.hazeron.com/status.php"))
+                        {
+                            throw new HazeronAvatarNotFoundException("Avatar Not Found");
+                        }
+                    }
+                }
+                catch
+                {
+                    throw new HazeronWebsiteNotFoundException("www.Hazeron.com Not Found");
+                }
             }
             const string start = "<title>Shores of Hazeron - ";
             const string end = "</title>";
@@ -186,6 +209,14 @@ namespace HazeronWatcher
     public class HazeronAvatarNotFoundException : Exception
     {
         public HazeronAvatarNotFoundException(string message)
+            : base(message)
+        {
+        }
+    }
+
+    public class HazeronWebsiteNotFoundException : Exception
+    {
+        public HazeronWebsiteNotFoundException(string message)
             : base(message)
         {
         }
