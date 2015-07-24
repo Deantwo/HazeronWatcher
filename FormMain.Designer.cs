@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -297,14 +297,14 @@
             this.dgvOnline.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvOnlineColumnId,
             this.dgvOnlineColumnAvatar});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOnline.Location = new System.Drawing.Point(0, 0);
             this.dgvOnline.Name = "dgvOnline";
@@ -349,14 +349,14 @@
             this.dgvWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvWatchColumnId,
             this.dgvWatchColumnAvatar});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvWatch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvWatch.Location = new System.Drawing.Point(0, 0);
             this.dgvWatch.Name = "dgvWatch";
@@ -449,24 +449,28 @@
             this.cmsListRightClickStandingEmpire.Name = "cmsListRightClickStandingEmpire";
             this.cmsListRightClickStandingEmpire.Size = new System.Drawing.Size(152, 22);
             this.cmsListRightClickStandingEmpire.Text = "Empire";
+            this.cmsListRightClickStandingEmpire.Click += new System.EventHandler(this.cmsListRightClickStandingEmpire_Click);
             // 
             // cmsListRightClickStandingFriend
             // 
             this.cmsListRightClickStandingFriend.Name = "cmsListRightClickStandingFriend";
             this.cmsListRightClickStandingFriend.Size = new System.Drawing.Size(152, 22);
             this.cmsListRightClickStandingFriend.Text = "Friend";
+            this.cmsListRightClickStandingFriend.Click += new System.EventHandler(this.cmsListRightClickStandingFriend_Click);
             // 
             // cmsListRightClickStandingUnsure
             // 
             this.cmsListRightClickStandingUnsure.Name = "cmsListRightClickStandingUnsure";
             this.cmsListRightClickStandingUnsure.Size = new System.Drawing.Size(152, 22);
             this.cmsListRightClickStandingUnsure.Text = "Unsure";
+            this.cmsListRightClickStandingUnsure.Click += new System.EventHandler(this.cmsListRightClickStandingUnsure_Click);
             // 
             // cmsListRightClickStandingEnemy
             // 
             this.cmsListRightClickStandingEnemy.Name = "cmsListRightClickStandingEnemy";
             this.cmsListRightClickStandingEnemy.Size = new System.Drawing.Size(152, 22);
             this.cmsListRightClickStandingEnemy.Text = "Enemy";
+            this.cmsListRightClickStandingEnemy.Click += new System.EventHandler(this.cmsListRightClickStandingEnemy_Click);
             // 
             // cmsListRightClickWatch
             // 

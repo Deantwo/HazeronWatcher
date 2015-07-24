@@ -486,6 +486,8 @@ namespace HazeronWatcher
         #endregion
 
         #region DataGridView ContextMenu RightClick
+        private Control _cmsRightClickSourceControl;
+
         private void dgv_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         { // Based on: http://stackoverflow.com/questions/1718389/right-click-context-menu-for-datagrid.
             if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -527,9 +529,8 @@ namespace HazeronWatcher
         private void cmsRightClick_Opening(object sender, CancelEventArgs e)
         {
             // Get table in question and currentCell.
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = ((sender as ContextMenuStrip).SourceControl as DataGridView);
+            _cmsRightClickSourceControl = ((sender as ContextMenuStrip).SourceControl as Control);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
 
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
             cmsListRightClickStanding.Checked = avatar.Relation != 0;
@@ -551,9 +552,7 @@ namespace HazeronWatcher
 
         private void cmsListRightClickCopy_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
@@ -579,9 +578,7 @@ namespace HazeronWatcher
 
         private void cmsListRightClickAvatar_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
@@ -592,9 +589,7 @@ namespace HazeronWatcher
 
         private void cmsListRightClickRecheck_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
@@ -630,77 +625,67 @@ namespace HazeronWatcher
 
         private void cmsListRightClickStandingEmpire_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
                 if (avatar.Empire)
-                    avatar.Relation = 2;
-                else
                     avatar.Relation = 0;
+                else
+                    avatar.Relation = 2;
             }
             UpdateDGV();
         }
 
         private void cmsListRightClickStandingFriend_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
                 if (avatar.Friend)
-                    avatar.Relation = 1;
-                else
                     avatar.Relation = 0;
+                else
+                    avatar.Relation = 1;
             }
             UpdateDGV();
         }
 
         private void cmsListRightClickStandingUnsure_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
                 if (avatar.Unsure)
-                    avatar.Relation = -1;
-                else
                     avatar.Relation = 0;
+                else
+                    avatar.Relation = -1;
             }
             UpdateDGV();
         }
 
         private void cmsListRightClickStandingEnemy_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
                 Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
                 if (avatar.Enemy)
-                    avatar.Relation = -2;
-                else
                     avatar.Relation = 0;
+                else
+                    avatar.Relation = -2;
             }
             UpdateDGV();
         }
 
         private void cmsListRightClickWatch_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
@@ -713,9 +698,7 @@ namespace HazeronWatcher
         private void cmsListRightClickMain_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
 #if !DisableMain
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
@@ -762,9 +745,7 @@ namespace HazeronWatcher
 
         private void cmsListRightClickNote_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv == null)
-                dgv = (((sender as ToolStripItem).Owner as ContextMenuStrip).SourceControl as DataGridView);
+            DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
             if (currentCell != null)
             {
