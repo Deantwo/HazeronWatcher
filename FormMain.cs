@@ -62,7 +62,6 @@ namespace HazeronWatcher
                         _settingsXml.AvatarList.Avatar.Add(oldPlayer.ToAvatar());
                     _settingsXml.Options.ShowIdColumn = oldSettingsXml.ShowIdColumn;
                     _settingsXml.Options.ShowWatchHighlight = oldSettingsXml.ShowWatchHighlight;
-                    _settingsXml.Options.ShowNonWatched = oldSettingsXml.ShowNonWatched;
                     _settingsXml.Options.PlaySound = oldSettingsXml.PlaySound;
                     // Rename the old "Settings.xml" to "Settings (v1.1 backup).xml".
                     File.Move(Path.Combine(_appdataFolder, "Settings.xml"), Path.Combine(_appdataFolder, "Settings (v1.1 backup).xml"));
@@ -95,7 +94,6 @@ namespace HazeronWatcher
             menuStrip1OptionsAvatarIds.Checked = !_settingsXml.Options.ShowIdColumn;
             menuStrip1OptionsAvatarIds_Click(null, null);
             menuStrip1OptionsWatchHighlight.Checked = _settingsXml.Options.ShowWatchHighlight;
-            menuStrip1OptionsNonWatched.Checked = _settingsXml.Options.ShowNonWatched;
             menuStrip1OptionsWatchList.Checked = !_settingsXml.Options.ShowWatchList;
             menuStrip1OptionsWatchList_Click(null, null);
             menuStrip1OptionsNotificationSound.Checked = _settingsXml.Options.PlaySound;
@@ -123,6 +121,8 @@ namespace HazeronWatcher
             dgvWatch.DefaultCellStyle.BackColor = Color.Black;
             dgvWatch.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
             dgvWatch.Columns["dgvWatchColumnID"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
+
+            cbxStandingFilter.SelectedIndex = 0;
 
             // Run the tick once and start the looping timer.
             timer1_Tick(null, null);
@@ -351,7 +351,14 @@ namespace HazeronWatcher
                         avatar.WatchRow.Cells["dgvWatchColumnAvatar"].Value = avatar;
                         dgvWatch.Sort(dgvWatchColumnAvatar, ListSortDirection.Ascending);
                     }
-                    avatar.WatchRow.Visible = (avatar.Watch || menuStrip1OptionsNonWatched.Checked);
+                    avatar.WatchRow.Visible = (avatar.Watch || !chxHideNonWatched.Checked)
+                                          && (cbxStandingFilter.SelectedItem == "Show all"
+                                           || (avatar.Empire && cbxStandingFilter.SelectedItem == "Empire")
+                                           || (avatar.Friend && cbxStandingFilter.SelectedItem == "Friend")
+                                           || (avatar.Relation == 0 && cbxStandingFilter.SelectedItem == "Neutral")
+                                           || (avatar.Unsure && cbxStandingFilter.SelectedItem == "Unsure")
+                                           || (avatar.Enemy && cbxStandingFilter.SelectedItem == "Enemy")
+                                             );
                     avatar.WatchRow.DefaultCellStyle.ForeColor = relationColor;
                     avatar.WatchRow.DefaultCellStyle.SelectionForeColor = relationColor;
                     avatar.WatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
@@ -371,13 +378,19 @@ namespace HazeronWatcher
             dgvWatch.Invalidate();
         }
 
-        #region menuStrip1
-        private void menuStrip1FileExit_Click(object sender, EventArgs e)
+        #region Buttons
+        private void cbxStandingFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.Close();
+            UpdateDGV();
         }
 
-        private void MenuStrip1EditAddAvatar_Click(object sender, EventArgs e)
+        private void chxHideNonWatched_Click(object sender, EventArgs e)
+        {
+            chxHideNonWatched.Checked = !chxHideNonWatched.Checked;
+            UpdateDGV();
+        }
+
+        private void btnAddAvatar_Click(object sender, EventArgs e)
         {
             FormInput inputDialog = new FormInput("Add Avatar", "Enter the avatar's ID.");
             if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
@@ -394,6 +407,13 @@ namespace HazeronWatcher
             avatar.Watch = true;
             UpdateDGV();
         }
+        #endregion
+
+        #region menuStrip1
+        private void menuStrip1FileExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
         private void menuStrip1OptionsAvatarIds_Click(object sender, EventArgs e)
         {
@@ -405,12 +425,6 @@ namespace HazeronWatcher
         private void menuStrip1OptionsWatchHighlight_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsWatchHighlight.Checked = !menuStrip1OptionsWatchHighlight.Checked;
-            UpdateDGV();
-        }
-
-        private void menuStrip1OptionsNonWatched_Click(object sender, EventArgs e)
-        {
-            menuStrip1OptionsNonWatched.Checked = !menuStrip1OptionsNonWatched.Checked;
             UpdateDGV();
         }
 
@@ -796,7 +810,6 @@ namespace HazeronWatcher
             _settingsXml.AvatarList.Avatar = _avatarList.Values.Where(x => x.IsWatchListed).ToList();
             _settingsXml.Options.ShowIdColumn = menuStrip1OptionsAvatarIds.Checked;
             _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
-            _settingsXml.Options.ShowNonWatched = menuStrip1OptionsNonWatched.Checked;
             _settingsXml.Options.ShowWatchList = menuStrip1OptionsWatchList.Checked;
             _settingsXml.Options.PlaySound = menuStrip1OptionsNotificationSound.Checked;
             _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));

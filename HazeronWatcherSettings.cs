@@ -53,9 +53,6 @@ namespace HazeronWatcher
         public bool ShowWatchHighlight { get; set; }
 
         [XmlElement]
-        public bool ShowNonWatched { get; set; }
-
-        [XmlElement]
         public bool ShowWatchList { get; set; }
 
         [XmlElement]
@@ -66,7 +63,6 @@ namespace HazeronWatcher
             Version = 0;
             ShowIdColumn = false;
             ShowWatchHighlight = true;
-            ShowNonWatched = true;
             ShowWatchList = true;
             PlaySound = true;
         }
