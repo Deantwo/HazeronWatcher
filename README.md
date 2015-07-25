@@ -50,12 +50,11 @@ Features
 - Color code players so you can easily see them on the list (be it friend or foe)
 - Get notifications when selected players come online
 - Customizable notification sound
+- Writing of notes for characters
 
 Planned
 ==============
 
-- Hide watch list
-- Writing of notes for characters
 - Merging of characters/alts into one
 
 Want to help
