@@ -513,18 +513,21 @@ namespace HazeronWatcher
 
         private void dgv_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         { // Based on: http://stackoverflow.com/questions/1718389/right-click-context-menu-for-datagrid.
-            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
             {
                 DataGridView dgv = (sender as DataGridView);
-                dgv.ContextMenuStrip = cmsListRightClick;
+                _cmsRightClickSourceControl = (dgv as Control);
+
+                // Get and set current cell from mouse location.
                 DataGridViewCell currentCell = dgv[e.ColumnIndex, e.RowIndex];
-                currentCell.DataGridView.ClearSelection();
-                currentCell.DataGridView.CurrentCell = currentCell;
+                dgv.ClearSelection();
+                dgv.CurrentCell = currentCell;
                 currentCell.Selected = true;
-                //Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
-                //Point p = new Point(r.X + r.Width, r.Y + r.Height);
+
+                //Show the ContextMenuStrip.
+                dgv.ContextMenuStrip = cmsListRightClick;
                 Point p = dgv.PointToClient(Control.MousePosition);
-                dgv.ContextMenuStrip.Show(currentCell.DataGridView, p);
+                dgv.ContextMenuStrip.Show(dgv, p);
                 dgv.ContextMenuStrip = null;
             }
         }
@@ -533,15 +536,16 @@ namespace HazeronWatcher
         { // Based on: http://stackoverflow.com/questions/1718389/right-click-context-menu-for-datagrid.
             DataGridView dgv = (sender as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
+            _cmsRightClickSourceControl = (dgv as Control);
             if (currentCell != null)
             {
-                cmsRightClick_Opening(sender, null);
                 if ((e.KeyCode == Keys.F10 && !e.Control && e.Shift) || e.KeyCode == Keys.Apps)
                 {
+                    //Show the ContextMenuStrip.
                     dgv.ContextMenuStrip = cmsListRightClick;
-                    Rectangle r = currentCell.DataGridView.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Rectangle r = dgv.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                     Point p = new Point(r.X, r.Y + r.Height);
-                    dgv.ContextMenuStrip.Show(currentCell.DataGridView, p);
+                    dgv.ContextMenuStrip.Show(dgv, p);
                     dgv.ContextMenuStrip = null;
                 }
                 else if (e.KeyCode == Keys.C && e.Control && !e.Shift)
@@ -551,10 +555,7 @@ namespace HazeronWatcher
 
         private void cmsRightClick_Opening(object sender, CancelEventArgs e)
         {
-            // Get table in question and currentCell.
-            _cmsRightClickSourceControl = ((sender as ContextMenuStrip).SourceControl as Control);
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
             cmsListRightClickStanding.Checked = avatar.Relation != 0;
             cmsListRightClickStandingEmpire.Checked = avatar.Empire;
@@ -577,71 +578,60 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                // Check if the cell is empty.
-                if (!String.IsNullOrEmpty(currentCell.Value.ToString()))
-                { // If not empty, add to clipboard and inform the user.
-                    Clipboard.SetText(currentCell.Value.ToString());
-                    toolStripStatusLabel1.Text = "Cell content copied to clipboard (\"" + currentCell.Value.ToString() + "\")";
-                }
-                else
-                { // Inform the user the cell was empty and therefor no reason to erase the clipboard.
-                    toolStripStatusLabel1.Text = "Cell is empty";
+            // Check if the cell is empty.
+            if (!String.IsNullOrEmpty(currentCell.Value.ToString()))
+            { // If not empty, add to clipboard and inform the user.
+                Clipboard.SetText(currentCell.Value.ToString());
+                toolStripStatusLabel1.Text = "Cell content copied to clipboard (\"" + currentCell.Value.ToString() + "\")";
+            }
+            else
+            { // Inform the user the cell was empty and therefor no reason to erase the clipboard.
+                toolStripStatusLabel1.Text = "Cell is empty";
 #if DEBUG
-                    // Debug code to see if the cell is null or "".
-                    if (dgv.CurrentCell.Value == null)
-                        toolStripStatusLabel1.Text += " (null)";
-                    else
-                        toolStripStatusLabel1.Text += " (\"\")";
+                // Debug code to see if the cell is null or "".
+                if (currentCell.Value == null)
+                    toolStripStatusLabel1.Text += " (null)";
+                else
+                    toolStripStatusLabel1.Text += " (\"\")";
 #endif
-                }
             }
         }
 
         private void cmsListRightClickAvatar_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                System.Diagnostics.Process.Start(@"http://Hazeron.com/EmpireStandings2015/p" + avatar.ID + ".html");
-            }
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            System.Diagnostics.Process.Start(@"http://Hazeron.com/EmpireStandings2015/p" + avatar.ID + ".html");
         }
 
         private void cmsListRightClickRecheck_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            try
             {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                try
+                avatar.RecheckName();
+            }
+            catch (HazeronAvatarNotFoundException)
+            {
+                if (avatar.IsWatchListed)
                 {
-                    avatar.RecheckName();
-                }
-                catch (HazeronAvatarNotFoundException)
-                {
-                    if (avatar.IsWatchListed)
+                    DialogResult confimation = MessageBox.Show(this,
+                        "There is no avatar with that ID." + Environment.NewLine +
+                        "The avatar may have been deleted." + Environment.NewLine +
+                        "" + Environment.NewLine +
+                        "Would you like to remove the avatar from watch list?"
+                        , "Avatar Not Found, Unwatch?", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (confimation == DialogResult.Yes)
                     {
-                        DialogResult confimation = MessageBox.Show(this,
-                            "There is no avatar with that ID." + Environment.NewLine +
-                            "The avatar may have been deleted." + Environment.NewLine +
-                            "" + Environment.NewLine +
-                            "Would you like to remove the avatar from watch list?"
-                            , "Avatar Not Found, Unwatch?", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                        if (confimation == DialogResult.Yes)
-                        {
-                            avatar.Unlist();
-                        }
+                        avatar.Unlist();
                     }
-                    else
-                        MessageBox.Show(this,
-                            "There is no avatar with that ID." + Environment.NewLine +
-                            "The avatar may have been deleted."
-                            , "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else
+                    MessageBox.Show(this,
+                        "There is no avatar with that ID." + Environment.NewLine +
+                        "The avatar may have been deleted."
+                        , "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             UpdateDGV();
         }
@@ -649,72 +639,52 @@ namespace HazeronWatcher
         private void cmsListRightClickStandingEmpire_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                if (avatar.Empire)
-                    avatar.Relation = 0;
-                else
-                    avatar.Relation = 2;
-            }
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            if (avatar.Empire)
+                avatar.Relation = 0;
+            else
+                avatar.Relation = 2;
             UpdateDGV();
         }
 
         private void cmsListRightClickStandingFriend_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                if (avatar.Friend)
-                    avatar.Relation = 0;
-                else
-                    avatar.Relation = 1;
-            }
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            if (avatar.Friend)
+                avatar.Relation = 0;
+            else
+                avatar.Relation = 1;
             UpdateDGV();
         }
 
         private void cmsListRightClickStandingUnsure_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                if (avatar.Unsure)
-                    avatar.Relation = 0;
-                else
-                    avatar.Relation = -1;
-            }
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            if (avatar.Unsure)
+                avatar.Relation = 0;
+            else
+                avatar.Relation = -1;
             UpdateDGV();
         }
 
         private void cmsListRightClickStandingEnemy_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                if (avatar.Enemy)
-                    avatar.Relation = 0;
-                else
-                    avatar.Relation = -2;
-            }
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            if (avatar.Enemy)
+                avatar.Relation = 0;
+            else
+                avatar.Relation = -2;
             UpdateDGV();
         }
 
         private void cmsListRightClickWatch_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                avatar.Watch = !avatar.Watch;
-            }
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            avatar.Watch = !avatar.Watch;
             UpdateDGV();
         }
 
@@ -722,46 +692,42 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
 #if !DisableMain
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+
+            if (String.IsNullOrEmpty(avatar.MainID))
             {
-                Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-
-                if (String.IsNullOrEmpty(avatar.MainID))
+                FormInput inputDialog = new FormInput("Set Main", "Enter the player's main avatar's ID.", avatar.MainID);
+                if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
+                    return;
+                string mainId = inputDialog.ReturnInput.Trim();
+                if (!Hazeron.ValidID(mainId))
                 {
-                    FormInput inputDialog = new FormInput("Set Main", "Enter the player's main avatar's ID.", avatar.MainID);
-                    if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
-                        return;
-                    string mainId = inputDialog.ReturnInput.Trim();
-                    if (!Hazeron.ValidID(mainId))
-                    {
-                        MessageBox.Show(this, "Invalid input, please enter a valid avatar ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    Avatar mainAvatar;
-                    if (!_avatarList.ContainsKey(mainId) ||
-                        (_avatarList.ContainsKey(mainId) && !_avatarList[mainId].IsWatchListed)
-                        )
-                    {
-                        bool list = MessageBox.Show(this,
-                           "The entered avatar ID is not on the watch list." + Environment.NewLine +
-                           "´The avatar has to be on your watch list, either just as a having a note, relationship or watched." + Environment.NewLine +
-                           "" + Environment.NewLine +
-                           "Would you like to try and set the avatar to watch?"
-                           , "Invalid Input", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                           == DialogResult.Yes;
-                        mainAvatar = GetAvatar(mainId);
-                        if (mainAvatar == null)
-                            return;
-                        mainAvatar.Watch = true;
-                    }
-
-                    avatar.MainID = mainId;
+                    MessageBox.Show(this, "Invalid input, please enter a valid avatar ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
-                else
-                    avatar.MainID = "";
+
+                Avatar mainAvatar;
+                if (!_avatarList.ContainsKey(mainId) ||
+                    (_avatarList.ContainsKey(mainId) && !_avatarList[mainId].IsWatchListed)
+                    )
+                {
+                    bool list = MessageBox.Show(this,
+                        "The entered avatar ID is not on the watch list." + Environment.NewLine +
+                        "´The avatar has to be on your watch list, either just as a having a note, relationship or watched." + Environment.NewLine +
+                        "" + Environment.NewLine +
+                        "Would you like to try and set the avatar to watch?"
+                        , "Invalid Input", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == DialogResult.Yes;
+                    mainAvatar = GetAvatar(mainId);
+                    if (mainAvatar == null)
+                        return;
+                    mainAvatar.Watch = true;
+                }
+
+                avatar.MainID = mainId;
             }
+            else
+                avatar.MainID = "";
             UpdateDGV();
 #endif
         }
@@ -769,14 +735,10 @@ namespace HazeronWatcher
         private void cmsListRightClickNote_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
-            DataGridViewCell currentCell = dgv.CurrentCell;
-            if (currentCell != null)
-            {
-                Avatar player = (Avatar)dgv.CurrentRow.Cells[1].Value;
-                FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note, FormInputOptions.Multiline);
-                if (inputBox.ShowDialog(this) == DialogResult.OK)
-                    player.Note = inputBox.ReturnInput;
-            }
+            Avatar player = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note, FormInputOptions.Multiline);
+            if (inputBox.ShowDialog(this) == DialogResult.OK)
+                player.Note = inputBox.ReturnInput;
             UpdateDGV();
         }
         #endregion
