@@ -235,13 +235,22 @@ namespace HazeronWatcher
                 // Change notifyIcon's icon to lit version.
                 notifyIcon1.Icon = _iconLit;
                 // Add list of online watched avatars to the notifyIcon tooltip.
-                string watchNames = "";
+                string watchNames = this.Text;
+                int watchExtra = 0;
                 foreach (string avatarId in onlineNow)
                 {
                     if (_avatarList[avatarId].Watch)
-                        watchNames += Environment.NewLine + "• " + _avatarList[avatarId].ToString();
+                    {
+                        string avatarName = _avatarList[avatarId].ToString();
+                        if (watchExtra == 0 && (watchNames.Length + 3 + avatarName.Length) < 50)
+                            watchNames += Environment.NewLine + "• " + avatarName;
+                        else
+                            watchExtra++;
+                    }
                 }
-                notifyIcon1.Text = this.Text + watchNames;
+                notifyIcon1.Text = watchNames;
+                if (watchExtra > 0)
+                    notifyIcon1.Text += Environment.NewLine + "And " + watchExtra + " more";
             }
             else
             {
