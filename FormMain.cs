@@ -96,7 +96,10 @@ namespace HazeronWatcher
             menuStrip1OptionsWatchHighlight.Checked = _settingsXml.Options.ShowWatchHighlight;
             menuStrip1OptionsWatchList.Checked = !_settingsXml.Options.ShowWatchList;
             menuStrip1OptionsWatchList_Click(null, null);
+            menuStrip1OptionsRecentList.Checked = !_settingsXml.Options.ShowRecentList;
+            menuStrip1OptionsRecentList_Click(null, null);
             menuStrip1OptionsNotificationSound.Checked = _settingsXml.Options.PlaySound;
+            menuStrip1OptionsMinimizeTray.Checked = _settingsXml.Options.MinimizeToTray;
 
             //// Create the "Notification.wav" file if it doesn't exist.
             //if (!File.Exists(Path.Combine(_appdataFolder, NOTIFICATION)))
@@ -220,12 +223,13 @@ namespace HazeronWatcher
                     }
                     // Set the status to online.
                     avatar.Online = true;
-                    avatar.ListRow.Visible = true;
+                    avatar.OnlineRow.Visible = true;
+                    avatar.RecentRow.Visible = true;
                 }
                 else
                 {
                     avatar.Online = false;
-                    avatar.ListRow.Visible = false;
+                    avatar.OnlineRow.Visible = false;
                 }
             }
 
@@ -312,12 +316,20 @@ namespace HazeronWatcher
 
         public void AddAvatarToDGV(Avatar avatar)
         {
+            // Online list
             dgvOnline.Rows.Add();
-            avatar.ListRow = dgvOnline.Rows[dgvOnline.RowCount - 1];
-            avatar.ListRow.Visible = false;
-            avatar.ListRow.Cells["dgvOnlineColumnID"].Value = avatar.ID;
-            avatar.ListRow.Cells["dgvOnlineColumnAvatar"].Value = avatar;
+            avatar.OnlineRow = dgvOnline.Rows[dgvOnline.RowCount - 1];
+            avatar.OnlineRow.Visible = false;
+            avatar.OnlineRow.Cells["dgvOnlineColumnID"].Value = avatar.ID;
+            avatar.OnlineRow.Cells["dgvOnlineColumnAvatar"].Value = avatar;
             dgvOnline.Sort(dgvOnlineColumnAvatar, ListSortDirection.Ascending);
+            // Recent list
+            dgvRecent.Rows.Add();
+            avatar.RecentRow = dgvRecent.Rows[dgvRecent.RowCount - 1];
+            avatar.RecentRow.Visible = false;
+            avatar.RecentRow.Cells["dgvRecentColumnID"].Value = avatar.ID;
+            avatar.RecentRow.Cells["dgvRecentColumnAvatar"].Value = avatar;
+            dgvRecent.Sort(dgvRecentColumnAvatar, ListSortDirection.Ascending);
         }
 
         public void UpdateDGV()
@@ -342,11 +354,12 @@ namespace HazeronWatcher
                 else
                     watchColorOffset = 0;
 
-                avatar.ListRow.DefaultCellStyle.ForeColor = relationColor;
-                avatar.ListRow.DefaultCellStyle.SelectionForeColor = relationColor;
-                avatar.ListRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
-                avatar.ListRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
-                foreach (DataGridViewCell cell in avatar.ListRow.Cells)
+                // Update colors and note for dgvOnline
+                avatar.OnlineRow.DefaultCellStyle.ForeColor = relationColor;
+                avatar.OnlineRow.DefaultCellStyle.SelectionForeColor = relationColor;
+                avatar.OnlineRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
+                avatar.OnlineRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
+                foreach (DataGridViewCell cell in avatar.OnlineRow.Cells)
                     cell.ToolTipText = avatar.Note;
 
                 // Is that avatar watch listed in anyway?
@@ -368,6 +381,7 @@ namespace HazeronWatcher
                                            || (avatar.Unsure && cbxStandingFilter.SelectedItem == "Unsure")
                                            || (avatar.Enemy && cbxStandingFilter.SelectedItem == "Enemy")
                                              );
+                    // Update colors and note for dgvWatch
                     avatar.WatchRow.DefaultCellStyle.ForeColor = relationColor;
                     avatar.WatchRow.DefaultCellStyle.SelectionForeColor = relationColor;
                     avatar.WatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
@@ -380,6 +394,14 @@ namespace HazeronWatcher
                     dgvWatch.Rows.Remove(avatar.WatchRow);
                     avatar.WatchRow = null;
                 }
+
+                // Update colors and note for dgvRecent
+                avatar.RecentRow.DefaultCellStyle.ForeColor = relationColor;
+                avatar.RecentRow.DefaultCellStyle.SelectionForeColor = relationColor;
+                avatar.RecentRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + watchColorOffset, 0 + watchColorOffset); // Black
+                avatar.RecentRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + watchColorOffset, 30 + watchColorOffset); // Dark Gray
+                foreach (DataGridViewCell cell in avatar.RecentRow.Cells)
+                    cell.ToolTipText = avatar.Note;
             }
 
             // Invalidate the tables so "ToString()" methods updates.
@@ -429,6 +451,7 @@ namespace HazeronWatcher
             menuStrip1OptionsAvatarIds.Checked = !menuStrip1OptionsAvatarIds.Checked;
             dgvOnlineColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
             dgvWatchColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
+            dgvRecentColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
         }
 
         private void menuStrip1OptionsWatchHighlight_Click(object sender, EventArgs e)
@@ -447,9 +470,24 @@ namespace HazeronWatcher
                 splitContainer1.Panel2.Hide();
         }
 
+        private void menuStrip1OptionsRecentList_Click(object sender, EventArgs e)
+        {
+            menuStrip1OptionsRecentList.Checked = !menuStrip1OptionsRecentList.Checked;
+            splitContainer2.Panel2Collapsed = !menuStrip1OptionsRecentList.Checked;
+            if (menuStrip1OptionsRecentList.Checked)
+                splitContainer2.Panel2.Show();
+            else
+                splitContainer2.Panel2.Hide();
+        }
+
         private void menuStrip1OptionsNotificationSound_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsNotificationSound.Checked = !menuStrip1OptionsNotificationSound.Checked;
+        }
+
+        private void menuStrip1OptionsMinimizeTray_Click(object sender, EventArgs e)
+        {
+            menuStrip1OptionsMinimizeTray.Checked = !menuStrip1OptionsMinimizeTray.Checked;
         }
 
         private void menuStrip1HelpGithub_Click(object sender, EventArgs e)
@@ -485,7 +523,7 @@ namespace HazeronWatcher
                 "1.  Go to the avatar list on www.Hazeron.com" + Environment.NewLine +
                 "2.  Get the ID of the avatar" + Environment.NewLine +
                 "4.  Start HazeronWatcher (which you already have done!)" + Environment.NewLine +
-                "5.  Go to Edit -> Add Avatar" + Environment.NewLine +
+                "5.  Click the \"Add Avatar via ID\" button above the watchlist" + Environment.NewLine +
                 "6.  Enter the avatar's ID" + Environment.NewLine +
                 "7.  Click OK" + Environment.NewLine +
                 "" + Environment.NewLine +
@@ -505,6 +543,8 @@ namespace HazeronWatcher
                 dgvOnline.ClearSelection();
             if (sender != null && (sender as DataGridView) != dgvWatch)
                 dgvWatch.ClearSelection();
+            if (sender != null && (sender as DataGridView) != dgvRecent)
+                dgvRecent.ClearSelection();
         }
         #endregion
 
@@ -746,10 +786,13 @@ namespace HazeronWatcher
         #region Minimize to Tray
         private void FormMain_Resize(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized)
+            if (menuStrip1OptionsMinimizeTray.Checked)
             {
-                TrayBalloonTip("Minimized to tray");
-                this.ShowInTaskbar = false;
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    TrayBalloonTip("Minimized to tray");
+                    this.ShowInTaskbar = false;
+                }
             }
         }
 
@@ -782,7 +825,9 @@ namespace HazeronWatcher
             _settingsXml.Options.ShowIdColumn = menuStrip1OptionsAvatarIds.Checked;
             _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;
             _settingsXml.Options.ShowWatchList = menuStrip1OptionsWatchList.Checked;
+            _settingsXml.Options.ShowRecentList = menuStrip1OptionsRecentList.Checked;
             _settingsXml.Options.PlaySound = menuStrip1OptionsNotificationSound.Checked;
+            _settingsXml.Options.MinimizeToTray = menuStrip1OptionsMinimizeTray.Checked;
             _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
         }
     }

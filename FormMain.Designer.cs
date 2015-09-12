@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -41,7 +42,7 @@
             this.menuStrip1Options = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsAvatarIds = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsWatchHighlight = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1OptionsWatchList = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsRecentList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1OptionsNotificationSound = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Help = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,6 +81,14 @@
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.dgvRecent = new System.Windows.Forms.DataGridView();
+            this.menuStrip1OptionsWatchList = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.dgvRecentColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRecentColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -90,6 +99,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).BeginInit();
             this.cmsListRightClick.SuspendLayout();
             this.cmsNotifyIconRightClick.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -160,9 +174,13 @@
             this.menuStrip1Options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuStrip1OptionsAvatarIds,
             this.menuStrip1OptionsWatchHighlight,
-            this.menuStrip1OptionsWatchList,
             this.toolStripSeparator7,
-            this.menuStrip1OptionsNotificationSound});
+            this.menuStrip1OptionsWatchList,
+            this.menuStrip1OptionsRecentList,
+            this.toolStripSeparator1,
+            this.menuStrip1OptionsNotificationSound,
+            this.toolStripSeparator8,
+            this.menuStrip1OptionsMinimizeTray});
             this.menuStrip1Options.Name = "menuStrip1Options";
             this.menuStrip1Options.Size = new System.Drawing.Size(61, 20);
             this.menuStrip1Options.Text = "Options";
@@ -181,12 +199,12 @@
             this.menuStrip1OptionsWatchHighlight.Text = "Highlight Watched";
             this.menuStrip1OptionsWatchHighlight.Click += new System.EventHandler(this.menuStrip1OptionsWatchHighlight_Click);
             // 
-            // menuStrip1OptionsWatchList
+            // menuStrip1OptionsRecentList
             // 
-            this.menuStrip1OptionsWatchList.Name = "menuStrip1OptionsWatchList";
-            this.menuStrip1OptionsWatchList.Size = new System.Drawing.Size(174, 22);
-            this.menuStrip1OptionsWatchList.Text = "Show Watch List";
-            this.menuStrip1OptionsWatchList.Click += new System.EventHandler(this.menuStrip1OptionsWatchList_Click);
+            this.menuStrip1OptionsRecentList.Name = "menuStrip1OptionsRecentList";
+            this.menuStrip1OptionsRecentList.Size = new System.Drawing.Size(189, 22);
+            this.menuStrip1OptionsRecentList.Text = "Show Recently Online";
+            this.menuStrip1OptionsRecentList.Click += new System.EventHandler(this.menuStrip1OptionsRecentList_Click);
             // 
             // toolStripSeparator7
             // 
@@ -254,7 +272,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dgvOnline);
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
             // 
             // splitContainer1.Panel2
             // 
@@ -276,14 +294,14 @@
             this.dgvOnline.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvOnlineColumnId,
             this.dgvOnlineColumnAvatar});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOnline.Location = new System.Drawing.Point(0, 0);
             this.dgvOnline.Name = "dgvOnline";
@@ -291,7 +309,7 @@
             this.dgvOnline.RowHeadersVisible = false;
             this.dgvOnline.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvOnline.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOnline.Size = new System.Drawing.Size(172, 287);
+            this.dgvOnline.Size = new System.Drawing.Size(172, 192);
             this.dgvOnline.TabIndex = 1;
             this.dgvOnline.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
             this.dgvOnline.Click += new System.EventHandler(this.dgv_Click);
@@ -374,14 +392,14 @@
             this.dgvWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvWatchColumnId,
             this.dgvWatchColumnAvatar});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvWatch.Location = new System.Drawing.Point(0, 82);
             this.dgvWatch.Name = "dgvWatch";
             this.dgvWatch.ReadOnly = true;
@@ -562,6 +580,100 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.dgvOnline);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dgvRecent);
+            this.splitContainer2.Size = new System.Drawing.Size(172, 287);
+            this.splitContainer2.SplitterDistance = 192;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // dgvRecent
+            // 
+            this.dgvRecent.AllowUserToAddRows = false;
+            this.dgvRecent.AllowUserToDeleteRows = false;
+            this.dgvRecent.AllowUserToResizeRows = false;
+            this.dgvRecent.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvRecent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRecent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvRecentColumnId,
+            this.dgvRecentColumnAvatar});
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvRecent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRecent.Location = new System.Drawing.Point(0, 0);
+            this.dgvRecent.Name = "dgvRecent";
+            this.dgvRecent.ReadOnly = true;
+            this.dgvRecent.RowHeadersVisible = false;
+            this.dgvRecent.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvRecent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRecent.Size = new System.Drawing.Size(172, 91);
+            this.dgvRecent.TabIndex = 2;
+            this.dgvRecent.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
+            this.dgvRecent.Click += new System.EventHandler(this.dgv_Click);
+            this.dgvRecent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
+            // 
+            // menuStrip1OptionsWatchList
+            // 
+            this.menuStrip1OptionsWatchList.Name = "menuStrip1OptionsWatchList";
+            this.menuStrip1OptionsWatchList.Size = new System.Drawing.Size(174, 22);
+            this.menuStrip1OptionsWatchList.Text = "Show Watch List";
+            this.menuStrip1OptionsWatchList.Click += new System.EventHandler(this.menuStrip1OptionsWatchList_Click);
+            // 
+            // menuStrip1OptionsMinimizeTray
+            // 
+            this.menuStrip1OptionsMinimizeTray.Name = "menuStrip1OptionsMinimizeTray";
+            this.menuStrip1OptionsMinimizeTray.Size = new System.Drawing.Size(174, 22);
+            this.menuStrip1OptionsMinimizeTray.Text = "Minimize to Tray";
+            this.menuStrip1OptionsMinimizeTray.Click += new System.EventHandler(this.menuStrip1OptionsMinimizeTray_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(171, 6);
+            // 
+            // dgvRecentColumnId
+            // 
+            this.dgvRecentColumnId.FillWeight = 50F;
+            this.dgvRecentColumnId.Frozen = true;
+            this.dgvRecentColumnId.HeaderText = "ID";
+            this.dgvRecentColumnId.MinimumWidth = 50;
+            this.dgvRecentColumnId.Name = "dgvRecentColumnId";
+            this.dgvRecentColumnId.ReadOnly = true;
+            this.dgvRecentColumnId.Width = 50;
+            // 
+            // dgvRecentColumnAvatar
+            // 
+            this.dgvRecentColumnAvatar.FillWeight = 1000F;
+            this.dgvRecentColumnAvatar.Frozen = true;
+            this.dgvRecentColumnAvatar.HeaderText = "Recently Online";
+            this.dgvRecentColumnAvatar.MinimumWidth = 1000;
+            this.dgvRecentColumnAvatar.Name = "dgvRecentColumnAvatar";
+            this.dgvRecentColumnAvatar.ReadOnly = true;
+            this.dgvRecentColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecentColumnAvatar.Width = 1000;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -588,6 +700,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).EndInit();
             this.cmsListRightClick.ResumeLayout(false);
             this.cmsNotifyIconRightClick.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -629,7 +746,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickNote;
         private System.Windows.Forms.ToolStripMenuItem cmsListRightClickMain;
-        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsWatchList;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsRecentList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnAvatar;
@@ -644,6 +761,14 @@
         private System.Windows.Forms.CheckBox chxHideNonWatched;
         private System.Windows.Forms.ComboBox cbxStandingFilter;
         private System.Windows.Forms.Button btnAddAvatar;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsWatchList;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.DataGridView dgvRecent;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsMinimizeTray;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnAvatar;
     }
 }
 

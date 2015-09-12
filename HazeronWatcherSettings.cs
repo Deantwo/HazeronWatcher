@@ -56,15 +56,23 @@ namespace HazeronWatcher
         public bool ShowWatchList { get; set; }
 
         [XmlElement]
+        public bool ShowRecentList { get; set; }
+
+        [XmlElement]
         public bool PlaySound { get; set; }
+
+        [XmlElement]
+        public bool MinimizeToTray { get; set; }
 
         public HazeronWatcherSettingsOptions()
         {
-            Version = 0;
+            Version = 1;
             ShowIdColumn = false;
             ShowWatchHighlight = true;
             ShowWatchList = true;
+            ShowRecentList = true;
             PlaySound = true;
+            MinimizeToTray = false;
         }
     }
 

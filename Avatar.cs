@@ -117,12 +117,12 @@ namespace HazeronWatcher
             get { return _watch || _relation != 0 || !String.IsNullOrEmpty(_mainId) || !String.IsNullOrEmpty(_note); }
         }
 
-        protected System.Windows.Forms.DataGridViewRow _listRow;
+        protected System.Windows.Forms.DataGridViewRow _onlineRow;
         [System.Xml.Serialization.XmlIgnoreAttribute]
-        public System.Windows.Forms.DataGridViewRow ListRow
+        public System.Windows.Forms.DataGridViewRow OnlineRow
         {
-            get { return _listRow; }
-            set { _listRow = value; }
+            get { return _onlineRow; }
+            set { _onlineRow = value; }
         }
 
         protected System.Windows.Forms.DataGridViewRow _watchRow;
@@ -131,6 +131,14 @@ namespace HazeronWatcher
         {
             get { return _watchRow; }
             set { _watchRow = value; }
+        }
+
+        protected System.Windows.Forms.DataGridViewRow _recentRow;
+        [System.Xml.Serialization.XmlIgnoreAttribute]
+        public System.Windows.Forms.DataGridViewRow RecentRow
+        {
+            get { return _recentRow; }
+            set { _recentRow = value; }
         }
 
         public Avatar()
