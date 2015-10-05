@@ -52,6 +52,14 @@ namespace HazeronWatcher
             set { _name = value; }
         }
 
+        protected int _empire;
+        [System.Xml.Serialization.XmlAttribute]
+        public int Empire
+        {
+            get { return _empire; }
+            set { _empire = value; }
+        }
+
         protected string _mainId;
         [System.Xml.Serialization.XmlAttribute]
         public string MainID
@@ -79,19 +87,19 @@ namespace HazeronWatcher
             get { return _relation; }
             set { _relation = value; }
         }
-        public bool Empire
+        public bool RelationEmpire
         {
             get { return _relation >= 2; }
         }
-        public bool Friend
+        public bool RelationFriend
         {
             get { return _relation == 1; }
         }
-        public bool Unsure
+        public bool RelationUnsure
         {
             get { return _relation == -1; }
         }
-        public bool Enemy
+        public bool RelationEnemy
         {
             get { return _relation <= -2; }
         }

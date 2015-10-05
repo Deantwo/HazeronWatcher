@@ -15,11 +15,14 @@ namespace HazeronWatcher
 {
     public partial class FormMain : Form
     {
+        const string URL_PLAYERSON = @"http://www.hazeron.com/playerson.html";
+
         string _appdataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HazeronWatcher"); // %USERPROFILE%\AppData\Roaming\HazeronWatcher
         const string SETTINGS = "HazeronWatcherSettings.xml";
         const string NOTIFICATION = "Notification.wav";
         HazeronWatcherSettings _settingsXml;
 
+        DateTime _updatedTime = DateTime.MinValue;
         int _numOnline = 0;
         Dictionary<string, Avatar> _avatarList;
 
@@ -134,59 +137,85 @@ namespace HazeronWatcher
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // Request the HTTP page.
-            string[] httpArray = null;
+            bool skip = false;
+            List<string> httpDoc = new List<string>();
+            List<string> onlineNow = new List<string>();
             try
             {
-                using (WebClient client = new WebClient())
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(URL_PLAYERSON);
+                request.IfModifiedSince = _updatedTime;
+                request.Timeout = 5000;
+                request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    client.Encoding = Encoding.UTF8;
-                    httpArray = client.DownloadString(@"http://www.hazeron.com/playerson.html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    using (Stream receiveStream = response.GetResponseStream())
+                    {
+                        StreamReader sr = new StreamReader(receiveStream, Encoding.UTF8);
+                        string httpLine = sr.ReadLine();
+                        const string HTTPLINE_FIRST = "<html><head><meta content=\"text/html;charset=UTF-8\" http-equiv=\"Content-Type\"><title>Shores of Hazeron - Avatars Online</title></head>";
+                        if (httpLine == HTTPLINE_FIRST)
+                        {
+                            while ((httpLine = sr.ReadLine()) != null)
+                            {
+                                httpDoc.Add(httpLine);
+                            }
+                        }
+                    }
                 }
             }
-            catch (WebException)
+            catch (WebException ex)
             {
-                timer1.Stop();
-                // Change notifyIcon's icon to error version.
-                notifyIcon1.Icon = _iconError;
-                // Set the notifyIcon tooltip.
-                notifyIcon1.Text = this.Text + Environment.NewLine + "Connection error! Retry?";
-                // Set the toolStripStatusLabel text.
-                toolStripStatusLabel1.Text = "Connection error! Retry? (" + DateTime.Now.ToString(Hazeron.DateTimeFormat) + ")";
-                // Make a nd show the retry dialog.
-                DialogResult retryAnswer = MessageBox.Show(this,
-                    "Failed to get the HTTP page." + Environment.NewLine +
-                    "It may be a connection issue." + Environment.NewLine +
-                    "" + Environment.NewLine +
-                    "Would you like to continue the program?"
-                    , "Connection Issue", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-                if (retryAnswer == DialogResult.Cancel)
-                    this.Close();
-                timer1.Start();
+                if (ex.Status != WebExceptionStatus.ProtocolError && ex.Status != WebExceptionStatus.Timeout && ex.Status != WebExceptionStatus.NameResolutionFailure)
+                    throw;
+
+                HttpWebResponse response = (HttpWebResponse)ex.Response;
+                if (response != null && response.StatusCode == HttpStatusCode.NotModified)
+                    _updatedTime = DateTime.Now;
+                else if ((DateTime.Now - _updatedTime).TotalSeconds > 12)
+                {
+                    // Change notifyIcon's icon to error version.
+                    notifyIcon1.Icon = _iconError;
+                    // Set the notifyIcon tooltip.
+                    notifyIcon1.Text = this.Text + Environment.NewLine
+                        + "Connection error! Retrying...";
+                    // Set the toolStripStatusLabel text.
+                    toolStripStatusLabel1.Text = "Connection error! Retrying... (" + _updatedTime.ToString(Hazeron.DateTimeFormat) + ")";
+                }
+
+                skip = true;
             }
-            if (httpArray == null || httpArray.Length == 0 || !httpArray[0].Contains("Shores of Hazeron"))
+            if (skip)
                 return;
 
+            // Save the time.
+            _updatedTime = DateTime.Now;
+
             // Go through the HTTP page line by line.
-            List<string> onlineNow = new List<string>();
             bool avatarsSection = false;
-            foreach (string httpLine in httpArray)
+            foreach (string httpLine in httpDoc)
             {
+                const string HTTPLINE_AVATAR_START = "<tbody><tr><td style=\"vertical-align: top; background-color: rgb(16,16,100);\"><small><b>Avatar</b><br></small></td></tr>";
+                const string HTTPLINE_AVATAR_END = "</tbody>";
                 if (avatarsSection)
                 {
-                    if (httpLine.Contains("</tbody>"))
+                    if (httpLine == HTTPLINE_AVATAR_END)
                         break;
-                    const string start = "http://Hazeron.com/EmpireStandings2015/p";
-                    const string middle = ".html\">";
-                    const string end = "</a>";
-                    int startIndex = httpLine.IndexOf(start) + start.Length;
-                    int endIndex = httpLine.IndexOf(middle) - startIndex;
+                    const string EMPIRE_START = "src=\"http://Hazeron.com/EmpireStandings2015/";
+                    const string EMPIRE_END = ".png\"></a>";
+                    const string AVATAR_START = "href=\"http://Hazeron.com/EmpireStandings2015/p";
+                    const string AVATAR_MIDDLE = ".html\">";
+                    const string AVATAR_END = "</a></small><br></td></tr>";
+                    int startIndex = httpLine.IndexOf(EMPIRE_START) + EMPIRE_START.Length;
+                    int endIndex = httpLine.IndexOf(EMPIRE_END) - startIndex;
+                    int empireId = Convert.ToInt32(httpLine.Substring(startIndex, endIndex));
+                    startIndex = httpLine.LastIndexOf(AVATAR_START) + AVATAR_START.Length;
+                    endIndex = httpLine.LastIndexOf(AVATAR_MIDDLE) - startIndex;
                     string avatarId = httpLine.Substring(startIndex, endIndex);
                     Avatar avatar;
                     if (!_avatarList.ContainsKey(avatarId))
                     {
-                        startIndex = httpLine.IndexOf(middle) + middle.Length;
-                        endIndex = httpLine.IndexOf(end) - startIndex;
+                        startIndex = httpLine.LastIndexOf(AVATAR_MIDDLE) + AVATAR_MIDDLE.Length;
+                        endIndex = httpLine.LastIndexOf(AVATAR_END) - startIndex;
                         string avatarName = httpLine.Substring(startIndex, endIndex);
                         avatar = new Avatar(avatarName, avatarId);
                         _avatarList.Add(avatarId, avatar);
@@ -194,18 +223,17 @@ namespace HazeronWatcher
                     }
                     else
                         avatar = _avatarList[avatarId];
+                    avatar.Empire = empireId;
                     onlineNow.Add(avatarId);
                 }
-                else if (httpLine.Contains(">Players Online</big>"))
+                else if (httpLine.EndsWith(" avatars are currently online.</span><br><br>"))
                 {
-                    const string onlineStart = "<span style=\"font-family: sans-serif;\">";
-                    const string onlineEnd = " players are currently online.<";
-                    int startIndex = httpLine.IndexOf(onlineStart) + onlineStart.Length;
-                    int endIndex = httpLine.IndexOf(onlineEnd) - startIndex;
-                    _numOnline = Convert.ToInt32(httpLine.Substring(startIndex, endIndex));
-                    toolStripStatusLabel1.Text = _numOnline.ToString() + " players online";
+                    const string AVATARS_START = "<div style=\"text-align: center; font-family: sans-serif;\"><big style=\"font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
+                    const string AVATARS_END = " avatars are currently online.</span><br><br>";
+                    _numOnline = Convert.ToInt32(httpLine.Remove(httpLine.Length - AVATARS_END.Length).Substring(AVATARS_START.Length));
+                    toolStripStatusLabel1.Text = _numOnline.ToString() + " avatars online";
                 }
-                else if (httpLine.Contains("Player Name"))
+                else if (httpLine == HTTPLINE_AVATAR_START)
                 {
                     avatarsSection = true;
                 }
@@ -337,13 +365,13 @@ namespace HazeronWatcher
             foreach (Avatar avatar in _avatarList.Values)
             {
                 Color relationColor;
-                if (avatar.Empire)
+                if (avatar.RelationEmpire)
                     relationColor = Color.FromArgb(90, 110, 255); // Blue
-                else if (avatar.Friend)
+                else if (avatar.RelationFriend)
                     relationColor = Color.FromArgb(50, 240, 50); // Green
-                else if (avatar.Unsure)
+                else if (avatar.RelationUnsure)
                     relationColor = Color.Yellow;
-                else if (avatar.Enemy)
+                else if (avatar.RelationEnemy)
                     relationColor = Color.Red;
                 else
                     relationColor = Color.White;
@@ -375,11 +403,11 @@ namespace HazeronWatcher
                     }
                     avatar.WatchRow.Visible = (avatar.Watch || !chxHideNonWatched.Checked)
                                           && (cbxStandingFilter.SelectedItem == "Show all"
-                                           || (avatar.Empire && cbxStandingFilter.SelectedItem == "Empire")
-                                           || (avatar.Friend && cbxStandingFilter.SelectedItem == "Friend")
+                                           || (avatar.RelationEmpire && cbxStandingFilter.SelectedItem == "Empire")
+                                           || (avatar.RelationFriend && cbxStandingFilter.SelectedItem == "Friend")
                                            || (avatar.Relation == 0 && cbxStandingFilter.SelectedItem == "Neutral")
-                                           || (avatar.Unsure && cbxStandingFilter.SelectedItem == "Unsure")
-                                           || (avatar.Enemy && cbxStandingFilter.SelectedItem == "Enemy")
+                                           || (avatar.RelationUnsure && cbxStandingFilter.SelectedItem == "Unsure")
+                                           || (avatar.RelationEnemy && cbxStandingFilter.SelectedItem == "Enemy")
                                              );
                     // Update colors and note for dgvWatch
                     avatar.WatchRow.DefaultCellStyle.ForeColor = relationColor;
@@ -598,14 +626,14 @@ namespace HazeronWatcher
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
             cmsListRightClickStanding.Checked = avatar.Relation != 0;
-            cmsListRightClickStandingEmpire.Checked = avatar.Empire;
-            cmsListRightClickStandingEmpire.Text = (avatar.Empire ? "Unset" : "Set") + " Empire";
-            cmsListRightClickStandingFriend.Checked = avatar.Friend;
-            cmsListRightClickStandingFriend.Text = (avatar.Friend ? "Unset" : "Set") + " Friend";
-            cmsListRightClickStandingUnsure.Checked = avatar.Unsure;
-            cmsListRightClickStandingUnsure.Text = (avatar.Unsure ? "Unset" : "Set") + " Unsure";
-            cmsListRightClickStandingEnemy.Checked = avatar.Enemy;
-            cmsListRightClickStandingEnemy.Text = (avatar.Enemy ? "Unset" : "Set") + " Enemy";
+            cmsListRightClickStandingEmpire.Checked = avatar.RelationEmpire;
+            cmsListRightClickStandingEmpire.Text = (avatar.RelationEmpire ? "Unset" : "Set") + " Empire";
+            cmsListRightClickStandingFriend.Checked = avatar.RelationFriend;
+            cmsListRightClickStandingFriend.Text = (avatar.RelationFriend ? "Unset" : "Set") + " Friend";
+            cmsListRightClickStandingUnsure.Checked = avatar.RelationUnsure;
+            cmsListRightClickStandingUnsure.Text = (avatar.RelationUnsure ? "Unset" : "Set") + " Unsure";
+            cmsListRightClickStandingEnemy.Checked = avatar.RelationEnemy;
+            cmsListRightClickStandingEnemy.Text = (avatar.RelationEnemy ? "Unset" : "Set") + " Enemy";
             cmsListRightClickWatch.Checked = avatar.Watch;
             cmsListRightClickWatch.Text = (avatar.Watch ? "Remove from" : "Add to") + " Watch";
             cmsListRightClickMain.Checked = !String.IsNullOrEmpty(avatar.MainID);
@@ -680,7 +708,7 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            if (avatar.Empire)
+            if (avatar.RelationEmpire)
                 avatar.Relation = 0;
             else
                 avatar.Relation = 2;
@@ -691,7 +719,7 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            if (avatar.Friend)
+            if (avatar.RelationFriend)
                 avatar.Relation = 0;
             else
                 avatar.Relation = 1;
@@ -702,7 +730,7 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            if (avatar.Unsure)
+            if (avatar.RelationUnsure)
                 avatar.Relation = 0;
             else
                 avatar.Relation = -1;
@@ -713,7 +741,7 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            if (avatar.Enemy)
+            if (avatar.RelationEnemy)
                 avatar.Relation = 0;
             else
                 avatar.Relation = -2;
