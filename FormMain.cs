@@ -194,7 +194,7 @@ namespace HazeronWatcher
             bool avatarsSection = false;
             foreach (string httpLine in httpDoc)
             {
-                const string HTTPLINE_AVATAR_START = "<tbody><tr><td style=\"vertical-align: top; background-color: rgb(16,16,100);\"><small><b>Avatar</b><br></small></td></tr>";
+                const string HTTPLINE_AVATAR_START = "<tbody><tr><td colspan=\"2\" style=\"vertical-align: top; background-color: rgb(16,16,100);\"><small><b>Avatar</b><br></small></td></tr>";
                 const string HTTPLINE_AVATAR_END = "</tbody>";
                 if (avatarsSection)
                 {
@@ -204,7 +204,7 @@ namespace HazeronWatcher
                     const string EMPIRE_END = ".png\"></a>";
                     const string AVATAR_START = "href=\"http://Hazeron.com/EmpireStandings2015/p";
                     const string AVATAR_MIDDLE = ".html\">";
-                    const string AVATAR_END = "</a></small><br></td></tr>";
+                    const string AVATAR_END = "</a></small></td></tr>";
                     int startIndex = httpLine.IndexOf(EMPIRE_START) + EMPIRE_START.Length;
                     int endIndex = httpLine.IndexOf(EMPIRE_END) - startIndex;
                     int empireId = Convert.ToInt32(httpLine.Substring(startIndex, endIndex));
@@ -230,7 +230,13 @@ namespace HazeronWatcher
                 {
                     const string AVATARS_START = "<div style=\"text-align: center; font-family: sans-serif;\"><big style=\"font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
                     const string AVATARS_END = " avatars are currently online.</span><br><br>";
-                    _numOnline = Convert.ToInt32(httpLine.Remove(httpLine.Length - AVATARS_END.Length).Substring(AVATARS_START.Length));
+                    string numberAvatars = httpLine.Remove(httpLine.Length - AVATARS_END.Length).Substring(AVATARS_START.Length);
+                    //if (numberAvatars != "No")
+                    //    _numOnline = Convert.ToInt32(numberAvatars);
+                    //else
+                    //    _numOnline = 0;
+                    if (!Int32.TryParse(numberAvatars, out _numOnline))
+                        _numOnline = 0;
                     toolStripStatusLabel1.Text = _numOnline.ToString() + " avatars online";
                 }
                 else if (httpLine == HTTPLINE_AVATAR_START)
