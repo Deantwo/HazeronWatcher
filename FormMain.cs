@@ -22,7 +22,8 @@ namespace HazeronWatcher
         const string NOTIFICATION = "Notification.wav";
         HazeronWatcherSettings _settingsXml;
 
-        DateTime _updatedTime = DateTime.MinValue;
+        DateTime _lastUpdated = DateTime.MinValue;
+        int _numRetries = 0;
         int _numOnline = 0;
         Dictionary<string, Avatar> _avatarList;
 
@@ -143,7 +144,7 @@ namespace HazeronWatcher
             try
             {
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(URL_PLAYERSON);
-                request.IfModifiedSince = _updatedTime;
+                request.IfModifiedSince = _lastUpdated;
                 request.Timeout = 5000;
                 request.Method = "GET";
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -165,13 +166,16 @@ namespace HazeronWatcher
             }
             catch (WebException ex)
             {
-                if (ex.Status != WebExceptionStatus.ProtocolError && ex.Status != WebExceptionStatus.Timeout && ex.Status != WebExceptionStatus.NameResolutionFailure)
-                    throw;
-
                 HttpWebResponse response = (HttpWebResponse)ex.Response;
                 if (response != null && response.StatusCode == HttpStatusCode.NotModified)
-                    _updatedTime = DateTime.Now;
-                else if ((DateTime.Now - _updatedTime).TotalSeconds > 12)
+                {
+                    _lastUpdated = DateTime.Now;
+                    _numRetries = 0;
+                }
+                else
+                    _numRetries++;
+
+                if (_numRetries >= 2)
                 {
                     // Change notifyIcon's icon to error version.
                     notifyIcon1.Icon = _iconError;
@@ -179,7 +183,7 @@ namespace HazeronWatcher
                     notifyIcon1.Text = this.Text + Environment.NewLine
                         + "Connection error! Retrying...";
                     // Set the toolStripStatusLabel text.
-                    toolStripStatusLabel1.Text = "Connection error! Retrying... (" + _updatedTime.ToString(Hazeron.DateTimeFormat) + ")";
+                    toolStripStatusLabel1.Text = "Connection error! Retrying... (" + _lastUpdated.ToString(Hazeron.DateTimeFormat) + ")";
                 }
 
                 skip = true;
@@ -188,7 +192,8 @@ namespace HazeronWatcher
                 return;
 
             // Save the time.
-            _updatedTime = DateTime.Now;
+            _lastUpdated = DateTime.Now;
+            _numRetries = 0;
 
             // Go through the HTTP page line by line.
             bool avatarsSection = false;

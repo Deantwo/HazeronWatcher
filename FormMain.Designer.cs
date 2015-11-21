@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -42,9 +42,13 @@
             this.menuStrip1Options = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsAvatarIds = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1OptionsWatchHighlight = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1OptionsRecentList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuStrip1OptionsWatchList = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsRecentList = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1OptionsNotificationSound = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuStrip1OptionsMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Help = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1HelpGithub = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1HelpThread = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,9 +56,13 @@
             this.menuStrip1HelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1HelpHowToUse = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dgvOnline = new System.Windows.Forms.DataGridView();
             this.dgvOnlineColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvOnlineColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRecent = new System.Windows.Forms.DataGridView();
+            this.dgvRecentColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRecentColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddAvatar = new System.Windows.Forms.Button();
             this.cbxStandingFilter = new System.Windows.Forms.ComboBox();
             this.chxHideNonWatched = new System.Windows.Forms.CheckBox();
@@ -81,29 +89,21 @@
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.dgvRecent = new System.Windows.Forms.DataGridView();
-            this.menuStrip1OptionsWatchList = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1OptionsMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.dgvRecentColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvRecentColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvOnline)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).BeginInit();
-            this.cmsListRightClick.SuspendLayout();
-            this.cmsNotifyIconRightClick.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOnline)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).BeginInit();
+            this.cmsListRightClick.SuspendLayout();
+            this.cmsNotifyIconRightClick.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -159,13 +159,13 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(131, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // menuStrip1FileExit
             // 
             this.menuStrip1FileExit.Name = "menuStrip1FileExit";
             this.menuStrip1FileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.menuStrip1FileExit.Size = new System.Drawing.Size(134, 22);
+            this.menuStrip1FileExit.Size = new System.Drawing.Size(152, 22);
             this.menuStrip1FileExit.Text = "Exit";
             this.menuStrip1FileExit.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
@@ -188,16 +188,28 @@
             // menuStrip1OptionsAvatarIds
             // 
             this.menuStrip1OptionsAvatarIds.Name = "menuStrip1OptionsAvatarIds";
-            this.menuStrip1OptionsAvatarIds.Size = new System.Drawing.Size(174, 22);
+            this.menuStrip1OptionsAvatarIds.Size = new System.Drawing.Size(189, 22);
             this.menuStrip1OptionsAvatarIds.Text = "Show Avatar IDs";
             this.menuStrip1OptionsAvatarIds.Click += new System.EventHandler(this.menuStrip1OptionsAvatarIds_Click);
             // 
             // menuStrip1OptionsWatchHighlight
             // 
             this.menuStrip1OptionsWatchHighlight.Name = "menuStrip1OptionsWatchHighlight";
-            this.menuStrip1OptionsWatchHighlight.Size = new System.Drawing.Size(174, 22);
+            this.menuStrip1OptionsWatchHighlight.Size = new System.Drawing.Size(189, 22);
             this.menuStrip1OptionsWatchHighlight.Text = "Highlight Watched";
             this.menuStrip1OptionsWatchHighlight.Click += new System.EventHandler(this.menuStrip1OptionsWatchHighlight_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(186, 6);
+            // 
+            // menuStrip1OptionsWatchList
+            // 
+            this.menuStrip1OptionsWatchList.Name = "menuStrip1OptionsWatchList";
+            this.menuStrip1OptionsWatchList.Size = new System.Drawing.Size(189, 22);
+            this.menuStrip1OptionsWatchList.Text = "Show Watch List";
+            this.menuStrip1OptionsWatchList.Click += new System.EventHandler(this.menuStrip1OptionsWatchList_Click);
             // 
             // menuStrip1OptionsRecentList
             // 
@@ -206,17 +218,29 @@
             this.menuStrip1OptionsRecentList.Text = "Show Recently Online";
             this.menuStrip1OptionsRecentList.Click += new System.EventHandler(this.menuStrip1OptionsRecentList_Click);
             // 
-            // toolStripSeparator7
+            // toolStripSeparator1
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
             // 
             // menuStrip1OptionsNotificationSound
             // 
             this.menuStrip1OptionsNotificationSound.Name = "menuStrip1OptionsNotificationSound";
-            this.menuStrip1OptionsNotificationSound.Size = new System.Drawing.Size(174, 22);
+            this.menuStrip1OptionsNotificationSound.Size = new System.Drawing.Size(189, 22);
             this.menuStrip1OptionsNotificationSound.Text = "Notification Sound";
             this.menuStrip1OptionsNotificationSound.Click += new System.EventHandler(this.menuStrip1OptionsNotificationSound_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(186, 6);
+            // 
+            // menuStrip1OptionsMinimizeTray
+            // 
+            this.menuStrip1OptionsMinimizeTray.Name = "menuStrip1OptionsMinimizeTray";
+            this.menuStrip1OptionsMinimizeTray.Size = new System.Drawing.Size(189, 22);
+            this.menuStrip1OptionsMinimizeTray.Text = "Minimize to Tray";
+            this.menuStrip1OptionsMinimizeTray.Click += new System.EventHandler(this.menuStrip1OptionsMinimizeTray_Click);
             // 
             // menuStrip1Help
             // 
@@ -233,33 +257,34 @@
             // menuStrip1HelpGithub
             // 
             this.menuStrip1HelpGithub.Name = "menuStrip1HelpGithub";
-            this.menuStrip1HelpGithub.Size = new System.Drawing.Size(149, 22);
+            this.menuStrip1HelpGithub.Size = new System.Drawing.Size(157, 22);
             this.menuStrip1HelpGithub.Text = "GitHub Repo";
             this.menuStrip1HelpGithub.Click += new System.EventHandler(this.menuStrip1HelpGithub_Click);
             // 
             // menuStrip1HelpThread
             // 
             this.menuStrip1HelpThread.Name = "menuStrip1HelpThread";
-            this.menuStrip1HelpThread.Size = new System.Drawing.Size(149, 22);
+            this.menuStrip1HelpThread.Size = new System.Drawing.Size(157, 22);
             this.menuStrip1HelpThread.Text = "Forum Thread";
             this.menuStrip1HelpThread.Click += new System.EventHandler(this.menuStrip1HelpThread_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(154, 6);
             // 
             // menuStrip1HelpAbout
             // 
             this.menuStrip1HelpAbout.Name = "menuStrip1HelpAbout";
-            this.menuStrip1HelpAbout.Size = new System.Drawing.Size(149, 22);
+            this.menuStrip1HelpAbout.Size = new System.Drawing.Size(157, 22);
             this.menuStrip1HelpAbout.Text = "About";
             this.menuStrip1HelpAbout.Click += new System.EventHandler(this.menuStrip1HelpAbout_Click);
             // 
             // menuStrip1HelpHowToUse
             // 
             this.menuStrip1HelpHowToUse.Name = "menuStrip1HelpHowToUse";
-            this.menuStrip1HelpHowToUse.Size = new System.Drawing.Size(149, 22);
+            this.menuStrip1HelpHowToUse.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.menuStrip1HelpHowToUse.Size = new System.Drawing.Size(157, 22);
             this.menuStrip1HelpHowToUse.Text = "How To Use";
             this.menuStrip1HelpHowToUse.Click += new System.EventHandler(this.menuStrip1HelpHowToUse_Click);
             // 
@@ -284,6 +309,24 @@
             this.splitContainer1.SplitterDistance = 176;
             this.splitContainer1.TabIndex = 2;
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.dgvOnline);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.dgvRecent);
+            this.splitContainer2.Size = new System.Drawing.Size(172, 287);
+            this.splitContainer2.SplitterDistance = 192;
+            this.splitContainer2.TabIndex = 2;
+            // 
             // dgvOnline
             // 
             this.dgvOnline.AllowUserToAddRows = false;
@@ -294,14 +337,14 @@
             this.dgvOnline.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvOnlineColumnId,
             this.dgvOnlineColumnAvatar});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOnline.Location = new System.Drawing.Point(0, 0);
             this.dgvOnline.Name = "dgvOnline";
@@ -335,6 +378,58 @@
             this.dgvOnlineColumnAvatar.ReadOnly = true;
             this.dgvOnlineColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvOnlineColumnAvatar.Width = 1000;
+            // 
+            // dgvRecent
+            // 
+            this.dgvRecent.AllowUserToAddRows = false;
+            this.dgvRecent.AllowUserToDeleteRows = false;
+            this.dgvRecent.AllowUserToResizeRows = false;
+            this.dgvRecent.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvRecent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRecent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvRecentColumnId,
+            this.dgvRecentColumnAvatar});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvRecent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRecent.Location = new System.Drawing.Point(0, 0);
+            this.dgvRecent.Name = "dgvRecent";
+            this.dgvRecent.ReadOnly = true;
+            this.dgvRecent.RowHeadersVisible = false;
+            this.dgvRecent.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvRecent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRecent.Size = new System.Drawing.Size(172, 91);
+            this.dgvRecent.TabIndex = 2;
+            this.dgvRecent.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
+            this.dgvRecent.Click += new System.EventHandler(this.dgv_Click);
+            this.dgvRecent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
+            // 
+            // dgvRecentColumnId
+            // 
+            this.dgvRecentColumnId.FillWeight = 50F;
+            this.dgvRecentColumnId.Frozen = true;
+            this.dgvRecentColumnId.HeaderText = "ID";
+            this.dgvRecentColumnId.MinimumWidth = 50;
+            this.dgvRecentColumnId.Name = "dgvRecentColumnId";
+            this.dgvRecentColumnId.ReadOnly = true;
+            this.dgvRecentColumnId.Width = 50;
+            // 
+            // dgvRecentColumnAvatar
+            // 
+            this.dgvRecentColumnAvatar.FillWeight = 1000F;
+            this.dgvRecentColumnAvatar.Frozen = true;
+            this.dgvRecentColumnAvatar.HeaderText = "Recently Online";
+            this.dgvRecentColumnAvatar.MinimumWidth = 1000;
+            this.dgvRecentColumnAvatar.Name = "dgvRecentColumnAvatar";
+            this.dgvRecentColumnAvatar.ReadOnly = true;
+            this.dgvRecentColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecentColumnAvatar.Width = 1000;
             // 
             // btnAddAvatar
             // 
@@ -392,14 +487,14 @@
             this.dgvWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvWatchColumnId,
             this.dgvWatchColumnAvatar});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvWatch.Location = new System.Drawing.Point(0, 82);
             this.dgvWatch.Name = "dgvWatch";
             this.dgvWatch.ReadOnly = true;
@@ -580,100 +675,6 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.dgvOnline);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.dgvRecent);
-            this.splitContainer2.Size = new System.Drawing.Size(172, 287);
-            this.splitContainer2.SplitterDistance = 192;
-            this.splitContainer2.TabIndex = 2;
-            // 
-            // dgvRecent
-            // 
-            this.dgvRecent.AllowUserToAddRows = false;
-            this.dgvRecent.AllowUserToDeleteRows = false;
-            this.dgvRecent.AllowUserToResizeRows = false;
-            this.dgvRecent.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvRecent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRecent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgvRecentColumnId,
-            this.dgvRecentColumnAvatar});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvRecent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvRecent.Location = new System.Drawing.Point(0, 0);
-            this.dgvRecent.Name = "dgvRecent";
-            this.dgvRecent.ReadOnly = true;
-            this.dgvRecent.RowHeadersVisible = false;
-            this.dgvRecent.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvRecent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRecent.Size = new System.Drawing.Size(172, 91);
-            this.dgvRecent.TabIndex = 2;
-            this.dgvRecent.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
-            this.dgvRecent.Click += new System.EventHandler(this.dgv_Click);
-            this.dgvRecent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
-            // 
-            // menuStrip1OptionsWatchList
-            // 
-            this.menuStrip1OptionsWatchList.Name = "menuStrip1OptionsWatchList";
-            this.menuStrip1OptionsWatchList.Size = new System.Drawing.Size(174, 22);
-            this.menuStrip1OptionsWatchList.Text = "Show Watch List";
-            this.menuStrip1OptionsWatchList.Click += new System.EventHandler(this.menuStrip1OptionsWatchList_Click);
-            // 
-            // menuStrip1OptionsMinimizeTray
-            // 
-            this.menuStrip1OptionsMinimizeTray.Name = "menuStrip1OptionsMinimizeTray";
-            this.menuStrip1OptionsMinimizeTray.Size = new System.Drawing.Size(174, 22);
-            this.menuStrip1OptionsMinimizeTray.Text = "Minimize to Tray";
-            this.menuStrip1OptionsMinimizeTray.Click += new System.EventHandler(this.menuStrip1OptionsMinimizeTray_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(171, 6);
-            // 
-            // dgvRecentColumnId
-            // 
-            this.dgvRecentColumnId.FillWeight = 50F;
-            this.dgvRecentColumnId.Frozen = true;
-            this.dgvRecentColumnId.HeaderText = "ID";
-            this.dgvRecentColumnId.MinimumWidth = 50;
-            this.dgvRecentColumnId.Name = "dgvRecentColumnId";
-            this.dgvRecentColumnId.ReadOnly = true;
-            this.dgvRecentColumnId.Width = 50;
-            // 
-            // dgvRecentColumnAvatar
-            // 
-            this.dgvRecentColumnAvatar.FillWeight = 1000F;
-            this.dgvRecentColumnAvatar.Frozen = true;
-            this.dgvRecentColumnAvatar.HeaderText = "Recently Online";
-            this.dgvRecentColumnAvatar.MinimumWidth = 1000;
-            this.dgvRecentColumnAvatar.Name = "dgvRecentColumnAvatar";
-            this.dgvRecentColumnAvatar.ReadOnly = true;
-            this.dgvRecentColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRecentColumnAvatar.Width = 1000;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -696,15 +697,15 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvOnline)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).EndInit();
-            this.cmsListRightClick.ResumeLayout(false);
-            this.cmsNotifyIconRightClick.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOnline)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).EndInit();
+            this.cmsListRightClick.ResumeLayout(false);
+            this.cmsNotifyIconRightClick.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
