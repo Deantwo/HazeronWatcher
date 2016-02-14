@@ -181,8 +181,8 @@ namespace HazeronWatcher
                 {
                     client.Encoding = Encoding.UTF8;
                     string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + _id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (httpArray.Length != 0)
-                        httpLine = httpArray[0];
+                    if (httpArray.Length > 1)
+                        httpLine = httpArray[0] + httpArray[1];
                 }
             }
             catch (System.Net.WebException)
@@ -201,7 +201,7 @@ namespace HazeronWatcher
                         }
                     }
                 }
-                catch
+                catch (System.Net.WebException)
                 {
                     throw new HazeronWebsiteNotFoundException("www.Hazeron.com Not Found");
                 }
