@@ -310,7 +310,7 @@ namespace HazeronWatcher
         public void OnlineNotification(Avatar avatar)
         {
             // Notify popup message.
-            TrayBalloonTip(avatar.Name + " has come online", ToolTipIcon.Info);
+            TrayBalloonTip(avatar.Name + " has come online");
 
             // Play notification sound.
             if (menuStrip1OptionsNotificationSound.Checked)
