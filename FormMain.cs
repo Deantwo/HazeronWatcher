@@ -153,8 +153,8 @@ namespace HazeronWatcher
                     {
                         StreamReader sr = new StreamReader(receiveStream, Encoding.UTF8);
                         string httpLine = sr.ReadLine();
-                        const string HTTPLINE_FIRST = "<html><head><meta content=\"text/html;charset=UTF-8\" http-equiv=\"Content-Type\"><title>Shores of Hazeron - Avatars Online</title></head>";
-                        if (httpLine == HTTPLINE_FIRST)
+                        const string HTTPLINE_FIRST = "<title>Shores of Hazeron - Avatars Online</title>";
+                        if (httpLine.Contains(HTTPLINE_FIRST))
                         {
                             while ((httpLine = sr.ReadLine()) != null)
                             {
@@ -199,7 +199,7 @@ namespace HazeronWatcher
             bool avatarsSection = false;
             foreach (string httpLine in httpDoc)
             {
-                const string HTTPLINE_AVATAR_START = "<tbody><tr><td colspan=\"2\" style=\"vertical-align: top; background-color: rgb(16,16,100);\"><small><b>Avatar</b><br></small></td></tr>";
+                const string HTTPLINE_AVATAR_START = "<tbody><tr><td colspan=\"2\" style=\"vertical-align: top; background-color: #193680;\"><small><b>Avatar</b><br></small></td></tr>";
                 const string HTTPLINE_AVATAR_END = "</tbody>";
                 if (avatarsSection)
                 {
@@ -233,7 +233,7 @@ namespace HazeronWatcher
                 }
                 else if (httpLine.EndsWith(" avatars are currently online.</span><br><br>"))
                 {
-                    const string AVATARS_START = "<div style=\"text-align: center; font-family: sans-serif;\"><big style=\"font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
+                    const string AVATARS_START = "<div style=\"text-align: center; font-family: sans-serif;\"><big style=\"color: #ffffff; font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
                     const string AVATARS_END = " avatars are currently online.</span><br><br>";
                     string numberAvatars = httpLine.Remove(httpLine.Length - AVATARS_END.Length).Substring(AVATARS_START.Length);
                     //if (numberAvatars != "No")
