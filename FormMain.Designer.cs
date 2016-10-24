@@ -89,6 +89,7 @@
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsTrayNotification = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -159,13 +160,13 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(131, 6);
             // 
             // menuStrip1FileExit
             // 
             this.menuStrip1FileExit.Name = "menuStrip1FileExit";
             this.menuStrip1FileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.menuStrip1FileExit.Size = new System.Drawing.Size(152, 22);
+            this.menuStrip1FileExit.Size = new System.Drawing.Size(134, 22);
             this.menuStrip1FileExit.Text = "Exit";
             this.menuStrip1FileExit.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
@@ -179,6 +180,7 @@
             this.menuStrip1OptionsRecentList,
             this.toolStripSeparator1,
             this.menuStrip1OptionsNotificationSound,
+            this.menuStrip1OptionsTrayNotification,
             this.toolStripSeparator8,
             this.menuStrip1OptionsMinimizeTray});
             this.menuStrip1Options.Name = "menuStrip1Options";
@@ -257,26 +259,26 @@
             // menuStrip1HelpGithub
             // 
             this.menuStrip1HelpGithub.Name = "menuStrip1HelpGithub";
-            this.menuStrip1HelpGithub.Size = new System.Drawing.Size(157, 22);
+            this.menuStrip1HelpGithub.Size = new System.Drawing.Size(156, 22);
             this.menuStrip1HelpGithub.Text = "GitHub Repo";
             this.menuStrip1HelpGithub.Click += new System.EventHandler(this.menuStrip1HelpGithub_Click);
             // 
             // menuStrip1HelpThread
             // 
             this.menuStrip1HelpThread.Name = "menuStrip1HelpThread";
-            this.menuStrip1HelpThread.Size = new System.Drawing.Size(157, 22);
+            this.menuStrip1HelpThread.Size = new System.Drawing.Size(156, 22);
             this.menuStrip1HelpThread.Text = "Forum Thread";
             this.menuStrip1HelpThread.Click += new System.EventHandler(this.menuStrip1HelpThread_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(153, 6);
             // 
             // menuStrip1HelpAbout
             // 
             this.menuStrip1HelpAbout.Name = "menuStrip1HelpAbout";
-            this.menuStrip1HelpAbout.Size = new System.Drawing.Size(157, 22);
+            this.menuStrip1HelpAbout.Size = new System.Drawing.Size(156, 22);
             this.menuStrip1HelpAbout.Text = "About";
             this.menuStrip1HelpAbout.Click += new System.EventHandler(this.menuStrip1HelpAbout_Click);
             // 
@@ -284,7 +286,7 @@
             // 
             this.menuStrip1HelpHowToUse.Name = "menuStrip1HelpHowToUse";
             this.menuStrip1HelpHowToUse.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuStrip1HelpHowToUse.Size = new System.Drawing.Size(157, 22);
+            this.menuStrip1HelpHowToUse.Size = new System.Drawing.Size(156, 22);
             this.menuStrip1HelpHowToUse.Text = "How To Use";
             this.menuStrip1HelpHowToUse.Click += new System.EventHandler(this.menuStrip1HelpHowToUse_Click);
             // 
@@ -675,6 +677,13 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
+            // menuStrip1OptionsTrayNotification
+            // 
+            this.menuStrip1OptionsTrayNotification.Name = "menuStrip1OptionsTrayNotification";
+            this.menuStrip1OptionsTrayNotification.Size = new System.Drawing.Size(189, 22);
+            this.menuStrip1OptionsTrayNotification.Text = "Tray Notification";
+            this.menuStrip1OptionsTrayNotification.Click += new System.EventHandler(this.menuStrip1OptionsTrayNotification_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -770,6 +779,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnAvatar;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsTrayNotification;
     }
 }
 

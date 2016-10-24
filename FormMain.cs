@@ -103,6 +103,7 @@ namespace HazeronWatcher
             menuStrip1OptionsRecentList.Checked = !_settingsXml.Options.ShowRecentList;
             menuStrip1OptionsRecentList_Click(null, null);
             menuStrip1OptionsNotificationSound.Checked = _settingsXml.Options.PlaySound;
+            menuStrip1OptionsTrayNotification.Checked = _settingsXml.Options.BallonTip;
             menuStrip1OptionsMinimizeTray.Checked = _settingsXml.Options.MinimizeToTray;
 
             //// Create the "Notification.wav" file if it doesn't exist.
@@ -524,6 +525,14 @@ namespace HazeronWatcher
             menuStrip1OptionsNotificationSound.Checked = !menuStrip1OptionsNotificationSound.Checked;
         }
 
+        private void menuStrip1OptionsTrayNotification_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuItem = (sender as ToolStripMenuItem);
+            if (menuItem == null)
+                return;
+            menuItem.Checked = !menuItem.Checked;
+        }
+
         private void menuStrip1OptionsMinimizeTray_Click(object sender, EventArgs e)
         {
             menuStrip1OptionsMinimizeTray.Checked = !menuStrip1OptionsMinimizeTray.Checked;
@@ -851,7 +860,8 @@ namespace HazeronWatcher
         {
             notifyIcon1.BalloonTipIcon = toolTipIcon;
             notifyIcon1.BalloonTipText = message;
-            notifyIcon1.ShowBalloonTip(time);
+            if (menuStrip1OptionsTrayNotification.Checked)
+                notifyIcon1.ShowBalloonTip(time);
         }
         #endregion
         
@@ -866,6 +876,7 @@ namespace HazeronWatcher
             _settingsXml.Options.ShowWatchList = menuStrip1OptionsWatchList.Checked;
             _settingsXml.Options.ShowRecentList = menuStrip1OptionsRecentList.Checked;
             _settingsXml.Options.PlaySound = menuStrip1OptionsNotificationSound.Checked;
+            _settingsXml.Options.BallonTip = menuStrip1OptionsTrayNotification.Checked;
             _settingsXml.Options.MinimizeToTray = menuStrip1OptionsMinimizeTray.Checked;
             _settingsXml.Save(Path.Combine(_appdataFolder, SETTINGS));
         }

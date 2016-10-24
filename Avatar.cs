@@ -182,7 +182,7 @@ namespace HazeronWatcher
                     client.Encoding = Encoding.UTF8;
                     string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + _id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
                     if (httpArray.Length > 1)
-                        httpLine = httpArray[0] + httpArray[1];
+                        httpLine = httpArray[5];
                 }
             }
             catch (System.Net.WebException)

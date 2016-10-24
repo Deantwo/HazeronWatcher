@@ -62,6 +62,9 @@ namespace HazeronWatcher
         public bool PlaySound { get; set; }
 
         [XmlElement]
+        public bool BallonTip { get; set; }
+
+        [XmlElement]
         public bool MinimizeToTray { get; set; }
 
         public HazeronWatcherSettingsOptions()
@@ -72,6 +75,7 @@ namespace HazeronWatcher
             ShowWatchList = true;
             ShowRecentList = true;
             PlaySound = true;
+            BallonTip = true;
             MinimizeToTray = false;
         }
     }
