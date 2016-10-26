@@ -139,6 +139,15 @@ namespace HazeronWatcher
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            // Check the http://www.hazeron.com/playerson.html page and read the avatars.
+            RefreshOnlineAvatars();
+
+            // Update the DataGridViews with colors.
+            UpdateDGV();
+        }
+
+        private void RefreshOnlineAvatars()
+        {
             bool skip = false;
             List<string> httpDoc = new List<string>();
             List<string> onlineNow = new List<string>();
@@ -303,9 +312,6 @@ namespace HazeronWatcher
                 // Clear the notifyIcon tooltip.
                 notifyIcon1.Text = this.Text;
             }
-
-            // Update the lists with colors and check the watch list.
-            UpdateDGV();
         }
 
         public void OnlineNotification(Avatar avatar)
