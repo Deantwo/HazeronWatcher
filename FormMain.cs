@@ -164,7 +164,7 @@ namespace HazeronWatcher
                         StreamReader sr = new StreamReader(receiveStream, Encoding.UTF8);
                         string httpLine = sr.ReadLine();
                         const string HTTPLINE_FIRST = "<title>Shores of Hazeron - Avatars Online</title>";
-                        if (httpLine.Contains(HTTPLINE_FIRST))
+                        if (httpLine != null && httpLine.Contains(HTTPLINE_FIRST))
                         {
                             while ((httpLine = sr.ReadLine()) != null)
                             {
