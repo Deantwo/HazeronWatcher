@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace HazeronWatcher
@@ -9,28 +11,40 @@ namespace HazeronWatcher
     {
         public static Avatar GetAvatar(string id)
         {
-            string httpLine = null;
+            string httpHeaderLine = null;
             try
             {
-                using (System.Net.WebClient client = new System.Net.WebClient())
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html");
+                request.Timeout = 5000;
+                request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    client.Encoding = Encoding.UTF8;
-                    string[] httpArray = client.DownloadString(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html").Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (httpArray.Length != 0)
-                        httpLine = httpArray[0];
+                    using (Stream receiveStream = response.GetResponseStream())
+                    {
+                        StreamReader sr = new StreamReader(receiveStream, Encoding.UTF8);
+                        string httpLine;
+                        while ((httpLine = sr.ReadLine()) != null)
+                        {
+                            if (httpLine.Contains("Shores of Hazeron"))
+                            {
+                                httpHeaderLine = httpLine;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
             catch (System.Net.WebException)
             {
                 // Blackhole.
             }
-            if (httpLine == null || !httpLine.Contains("Shores of Hazeron"))
+            if (httpHeaderLine == null)
             {
                 try
                 {
                     using (System.Net.WebClient client = new System.Net.WebClient())
                     {
-                        using (var stream = client.OpenRead(@"http://www.hazeron.com/status.php"))
+                        using (var stream = client.OpenRead(@"http://hazeron.com/status.php"))
                         {
                             throw new HazeronAvatarNotFoundException(id);
                         }
@@ -43,9 +57,9 @@ namespace HazeronWatcher
             }
             const string start = "<title>Shores of Hazeron - ";
             const string end = "</title>";
-            int startIndex = httpLine.IndexOf(start) + start.Length;
-            int endIndex = httpLine.IndexOf(end) - startIndex;
-            string name = httpLine.Substring(startIndex, endIndex);
+            int startIndex = httpHeaderLine.IndexOf(start) + start.Length;
+            int endIndex = httpHeaderLine.IndexOf(end) - startIndex;
+            string name = httpHeaderLine.Substring(startIndex, endIndex);
             return new Avatar(name, id);
         }
 
