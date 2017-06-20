@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace HazeronWatcher
 {
+    [XmlRoot(ElementName = "Avatar", Namespace = "")]
     public class Avatar
     {
         public static Avatar GetAvatar(string id)
@@ -64,7 +66,7 @@ namespace HazeronWatcher
         }
 
         protected string _id;
-        [System.Xml.Serialization.XmlAttribute]
+        [XmlAttribute]
         public string ID
         {
             get { return _id; }
@@ -72,7 +74,7 @@ namespace HazeronWatcher
         }
 
         protected string _name;
-        [System.Xml.Serialization.XmlAttribute]
+        [XmlAttribute]
         public string Name
         {
             get { return _name; }
@@ -80,67 +82,61 @@ namespace HazeronWatcher
         }
 
         protected int _empire;
-        [System.Xml.Serialization.XmlAttribute]
+        [XmlIgnore]
         public int Empire
         {
             get { return _empire; }
             set { _empire = value; }
         }
 
-        protected string _mainId;
-        [System.Xml.Serialization.XmlAttribute]
-        public string MainID
-        {
-            get { return _mainId; }
-            set { _mainId = value; }
-        }
-        public bool Alt
-        {
-            get { return !String.IsNullOrEmpty(_mainId); }
-        }
-
         protected bool _online;
-        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [XmlIgnore]
         public bool Online
         {
             get { return _online; }
             set { _online = value; }
         }
 
-        protected int _relation;
-        [System.Xml.Serialization.XmlAttribute]
-        public int Relation
+        //protected DateTime _lastOnline;
+        //[System.Xml.Serialization.XmlAttribute]
+        //public DateTime LastOnline
+        //{
+        //    get { return _lastOnline; }
+        //    set { _lastOnline = value; }
+        //}
+
+        // Backward capatibility. Convert to WatchGroup.
+        /// <summary>
+        /// Obsolete property, use WatchGroup instead.
+        /// </summary>
+        [XmlAttribute, System.ComponentModel.DefaultValue(0)]
+        public int Relation { get; set; }
+
+        protected int _watchGroup = 0;
+        [XmlAttribute]
+        public int WatchGroup
         {
-            get { return _relation; }
-            set { _relation = value; }
-        }
-        public bool RelationEmpire
-        {
-            get { return _relation >= 2; }
-        }
-        public bool RelationFriend
-        {
-            get { return _relation == 1; }
-        }
-        public bool RelationUnsure
-        {
-            get { return _relation == -1; }
-        }
-        public bool RelationEnemy
-        {
-            get { return _relation <= -2; }
+            get { return _watchGroup; }
+            set { _watchGroup = value; }
         }
 
-        protected bool _watch;
-        [System.Xml.Serialization.XmlAttribute]
-        public bool Watch
+        // Backward capatibility. Convert to Notify.
+        /// <summary>
+        /// Obsolete property, use Nnotify instead.
+        /// </summary>
+        [XmlAttribute, System.ComponentModel.DefaultValue(false)]
+        public bool Watch { get; set; }
+
+        protected bool _notify;
+        [XmlAttribute]
+        public bool Notify
         {
-            get { return _watch; }
-            set { _watch = value; }
+            get { return _notify; }
+            set { _notify = value; }
         }
 
         protected string _note;
-        [System.Xml.Serialization.XmlAttribute]
+        [XmlAttribute]
         public string Note
         {
             get { return _note; }
@@ -149,11 +145,11 @@ namespace HazeronWatcher
 
         public bool IsWatchListed
         {
-            get { return _watch || _relation != 0 || !String.IsNullOrEmpty(_mainId) || !String.IsNullOrEmpty(_note); }
+            get { return _notify || _watchGroup != 0 || !String.IsNullOrEmpty(_note); }
         }
 
         protected System.Windows.Forms.DataGridViewRow _onlineRow;
-        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [XmlIgnore]
         public System.Windows.Forms.DataGridViewRow OnlineRow
         {
             get { return _onlineRow; }
@@ -161,7 +157,7 @@ namespace HazeronWatcher
         }
 
         protected System.Windows.Forms.DataGridViewRow _watchRow;
-        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [XmlIgnore]
         public System.Windows.Forms.DataGridViewRow WatchRow
         {
             get { return _watchRow; }
@@ -169,7 +165,7 @@ namespace HazeronWatcher
         }
 
         protected System.Windows.Forms.DataGridViewRow _recentRow;
-        [System.Xml.Serialization.XmlIgnoreAttribute]
+        [XmlIgnore]
         public System.Windows.Forms.DataGridViewRow RecentRow
         {
             get { return _recentRow; }
@@ -179,24 +175,21 @@ namespace HazeronWatcher
         public Avatar()
         {
             _id = "A";
-            _name = "";
-            _mainId = "";
-            _note = "";
+            _name = string.Empty;
+            _note = string.Empty;
         }
         public Avatar(string name, string id)
         {
             _id = id;
             _name = name;
-            _mainId = "";
-            _note = "";
+            _note = string.Empty;
         }
 
         public void Unlist()
         {
-            _relation = 0;
-            _watch = false;
-            _mainId = "";
-            _note = "";
+            _watchGroup = 0;
+            _notify = false;
+            _note = string.Empty;
         }
 
         public void RecheckName()
@@ -206,10 +199,7 @@ namespace HazeronWatcher
 
         public override string ToString()
         {
-            if (String.IsNullOrEmpty(_mainId))
-                return _name;
-            else
-                return "<alt>" + _name + "</alt>";
+            return _name;
         }
     }
 }

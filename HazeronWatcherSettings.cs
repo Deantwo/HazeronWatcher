@@ -8,18 +8,25 @@ using System.IO;
 namespace HazeronWatcher
 {
     [Serializable]
+    [XmlRoot(ElementName = "HazeronWatcherSettings", Namespace = "")]
     public class HazeronWatcherSettings
     {
         [XmlElement]
         public HazeronWatcherSettingsOptions Options { get; set; }
-
-        [XmlElement]
-        public HazeronWatcherSettingsAvatars AvatarList { get; set; }
+        
+        [XmlArray("AvatarList")]
+        [XmlArrayItem("Avatar")]
+        public List<Avatar> AvatarList { get; set; }
+        
+        [XmlArray("WatchGroupList")]
+        [XmlArrayItem("WatchGroup")]
+        public List<WatchGroup> WatchGroupList { get; set; }
 
         public HazeronWatcherSettings()
         {
             Options = new HazeronWatcherSettingsOptions();
-            AvatarList = new HazeronWatcherSettingsAvatars();
+            AvatarList = new List<Avatar>();
+            WatchGroupList = new List<WatchGroup>();
         }
 
         public void Save(string filePath)
@@ -69,7 +76,7 @@ namespace HazeronWatcher
 
         public HazeronWatcherSettingsOptions()
         {
-            Version = 1;
+            Version = 2;
             ShowIdColumn = false;
             ShowWatchHighlight = true;
             ShowWatchList = true;
@@ -77,17 +84,6 @@ namespace HazeronWatcher
             PlaySound = true;
             BallonTip = true;
             MinimizeToTray = false;
-        }
-    }
-
-    public class HazeronWatcherSettingsAvatars
-    {
-        [XmlElement]
-        public List<Avatar> Avatar { get; set; }
-
-        public HazeronWatcherSettingsAvatars()
-        {
-            Avatar = new List<Avatar>();
         }
     }
 }

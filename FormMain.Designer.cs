@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -47,6 +48,7 @@
             this.menuStrip1OptionsRecentList = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1OptionsNotificationSound = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1OptionsTrayNotification = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1OptionsMinimizeTray = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1Help = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,33 +65,52 @@
             this.dgvRecent = new System.Windows.Forms.DataGridView();
             this.dgvRecentColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvRecentColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnAddAvatar = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageAvatars = new System.Windows.Forms.TabPage();
             this.cbxStandingFilter = new System.Windows.Forms.ComboBox();
-            this.chxHideNonWatched = new System.Windows.Forms.CheckBox();
             this.dgvWatch = new System.Windows.Forms.DataGridView();
             this.dgvWatchColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvWatchColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmsListRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmsListRightClickCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickAvatar = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickRecheck = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvWatchColumnGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvWatchColumnNotify = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvWatchColumnNote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddAvatar = new System.Windows.Forms.Button();
+            this.chxHideNonWatched = new System.Windows.Forms.CheckBox();
+            this.tabPageGroups = new System.Windows.Forms.TabPage();
+            this.btnGroupDelete = new System.Windows.Forms.Button();
+            this.btnGroupNew = new System.Windows.Forms.Button();
+            this.btnGroupEdit = new System.Windows.Forms.Button();
+            this.dgvGroup = new System.Windows.Forms.DataGridView();
+            this.dgvGroupColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvGroupColumnGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvGroupColumnMembers = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvGroupColumnNotify = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvGroupColumnSound = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvGroupColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmsAvatarRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsAvatarRightClickCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsAvatarRightClickAvatar = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsAvatarRightClickRecheck = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmsListRightClickStanding = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickStandingEmpire = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickStandingFriend = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickStandingUnsure = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickStandingEnemy = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickWatch = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsAvatarRightClickWatchGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsAvatarRightClickWatchGroupUnset = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsAvatarRightClickWatchGroupNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsAvatarRightClickWatchGroupSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsAvatarRightClickWatch = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmsListRightClickMain = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsListRightClickNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsAvatarRightClickNote = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.cmsNotifyIconRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsNotifyIconRightClickRestore = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1OptionsTrayNotification = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsGroupRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsGroupRightClickCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsGroupRightClickEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsGroupRightClickDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -102,9 +123,14 @@
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOnline)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPageAvatars.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).BeginInit();
-            this.cmsListRightClick.SuspendLayout();
+            this.tabPageGroups.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGroup)).BeginInit();
+            this.cmsAvatarRightClick.SuspendLayout();
             this.cmsNotifyIconRightClick.SuspendLayout();
+            this.cmsGroupRightClick.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -232,6 +258,13 @@
             this.menuStrip1OptionsNotificationSound.Text = "Notification Sound";
             this.menuStrip1OptionsNotificationSound.Click += new System.EventHandler(this.menuStrip1OptionsNotificationSound_Click);
             // 
+            // menuStrip1OptionsTrayNotification
+            // 
+            this.menuStrip1OptionsTrayNotification.Name = "menuStrip1OptionsTrayNotification";
+            this.menuStrip1OptionsTrayNotification.Size = new System.Drawing.Size(189, 22);
+            this.menuStrip1OptionsTrayNotification.Text = "Tray Notification";
+            this.menuStrip1OptionsTrayNotification.Click += new System.EventHandler(this.menuStrip1OptionsTrayNotification_Click);
+            // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
@@ -303,10 +336,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.btnAddAvatar);
-            this.splitContainer1.Panel2.Controls.Add(this.cbxStandingFilter);
-            this.splitContainer1.Panel2.Controls.Add(this.chxHideNonWatched);
-            this.splitContainer1.Panel2.Controls.Add(this.dgvWatch);
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Size = new System.Drawing.Size(392, 291);
             this.splitContainer1.SplitterDistance = 176;
             this.splitContainer1.TabIndex = 2;
@@ -356,9 +386,9 @@
             this.dgvOnline.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOnline.Size = new System.Drawing.Size(172, 192);
             this.dgvOnline.TabIndex = 1;
-            this.dgvOnline.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
+            this.dgvOnline.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAvatar_CellMouseDown);
             this.dgvOnline.Click += new System.EventHandler(this.dgv_Click);
-            this.dgvOnline.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
+            this.dgvOnline.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvAvatar_KeyDown);
             // 
             // dgvOnlineColumnId
             // 
@@ -408,9 +438,9 @@
             this.dgvRecent.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvRecent.Size = new System.Drawing.Size(172, 91);
             this.dgvRecent.TabIndex = 2;
-            this.dgvRecent.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
+            this.dgvRecent.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAvatar_CellMouseDown);
             this.dgvRecent.Click += new System.EventHandler(this.dgv_Click);
-            this.dgvRecent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
+            this.dgvRecent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvAvatar_KeyDown);
             // 
             // dgvRecentColumnId
             // 
@@ -433,17 +463,30 @@
             this.dgvRecentColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvRecentColumnAvatar.Width = 1000;
             // 
-            // btnAddAvatar
+            // tabControl1
             // 
-            this.btnAddAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddAvatar.Location = new System.Drawing.Point(3, 53);
-            this.btnAddAvatar.Name = "btnAddAvatar";
-            this.btnAddAvatar.Size = new System.Drawing.Size(195, 23);
-            this.btnAddAvatar.TabIndex = 3;
-            this.btnAddAvatar.Text = "Add Avatar via ID";
-            this.btnAddAvatar.UseVisualStyleBackColor = true;
-            this.btnAddAvatar.Click += new System.EventHandler(this.btnAddAvatar_Click);
+            this.tabControl1.Controls.Add(this.tabPageAvatars);
+            this.tabControl1.Controls.Add(this.tabPageGroups);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(208, 287);
+            this.tabControl1.TabIndex = 4;
+            // 
+            // tabPageAvatars
+            // 
+            this.tabPageAvatars.Controls.Add(this.cbxStandingFilter);
+            this.tabPageAvatars.Controls.Add(this.dgvWatch);
+            this.tabPageAvatars.Controls.Add(this.btnAddAvatar);
+            this.tabPageAvatars.Controls.Add(this.chxHideNonWatched);
+            this.tabPageAvatars.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAvatars.Name = "tabPageAvatars";
+            this.tabPageAvatars.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAvatars.Size = new System.Drawing.Size(200, 261);
+            this.tabPageAvatars.TabIndex = 0;
+            this.tabPageAvatars.Text = "Avatars";
+            this.tabPageAvatars.UseVisualStyleBackColor = true;
             // 
             // cbxStandingFilter
             // 
@@ -458,23 +501,11 @@
             "Neutral",
             "Unsure",
             "Enemy"});
-            this.cbxStandingFilter.Location = new System.Drawing.Point(3, 3);
+            this.cbxStandingFilter.Location = new System.Drawing.Point(6, 6);
             this.cbxStandingFilter.Name = "cbxStandingFilter";
-            this.cbxStandingFilter.Size = new System.Drawing.Size(195, 21);
+            this.cbxStandingFilter.Size = new System.Drawing.Size(188, 21);
             this.cbxStandingFilter.TabIndex = 2;
             this.cbxStandingFilter.SelectedIndexChanged += new System.EventHandler(this.cbxStandingFilter_SelectedIndexChanged);
-            // 
-            // chxHideNonWatched
-            // 
-            this.chxHideNonWatched.AutoCheck = false;
-            this.chxHideNonWatched.AutoSize = true;
-            this.chxHideNonWatched.Location = new System.Drawing.Point(3, 30);
-            this.chxHideNonWatched.Name = "chxHideNonWatched";
-            this.chxHideNonWatched.Size = new System.Drawing.Size(116, 17);
-            this.chxHideNonWatched.TabIndex = 1;
-            this.chxHideNonWatched.Text = "Hide non-Watched";
-            this.chxHideNonWatched.UseVisualStyleBackColor = true;
-            this.chxHideNonWatched.Click += new System.EventHandler(this.chxHideNonWatched_Click);
             // 
             // dgvWatch
             // 
@@ -488,7 +519,10 @@
             this.dgvWatch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvWatchColumnId,
-            this.dgvWatchColumnAvatar});
+            this.dgvWatchColumnAvatar,
+            this.dgvWatchColumnGroup,
+            this.dgvWatchColumnNotify,
+            this.dgvWatchColumnNote});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -497,145 +531,289 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvWatch.Location = new System.Drawing.Point(0, 82);
+            this.dgvWatch.Location = new System.Drawing.Point(6, 85);
             this.dgvWatch.Name = "dgvWatch";
             this.dgvWatch.ReadOnly = true;
             this.dgvWatch.RowHeadersVisible = false;
             this.dgvWatch.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvWatch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvWatch.Size = new System.Drawing.Size(208, 205);
+            this.dgvWatch.Size = new System.Drawing.Size(188, 170);
             this.dgvWatch.TabIndex = 0;
-            this.dgvWatch.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgv_CellMouseDown);
+            this.dgvWatch.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAvatar_CellMouseDown);
             this.dgvWatch.Click += new System.EventHandler(this.dgv_Click);
-            this.dgvWatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv_KeyDown);
+            this.dgvWatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvAvatar_KeyDown);
             // 
             // dgvWatchColumnId
             // 
             this.dgvWatchColumnId.FillWeight = 50F;
             this.dgvWatchColumnId.Frozen = true;
             this.dgvWatchColumnId.HeaderText = "ID";
-            this.dgvWatchColumnId.MinimumWidth = 50;
             this.dgvWatchColumnId.Name = "dgvWatchColumnId";
             this.dgvWatchColumnId.ReadOnly = true;
             this.dgvWatchColumnId.Width = 50;
             // 
             // dgvWatchColumnAvatar
             // 
-            this.dgvWatchColumnAvatar.FillWeight = 1000F;
-            this.dgvWatchColumnAvatar.Frozen = true;
-            this.dgvWatchColumnAvatar.HeaderText = "Watch List";
-            this.dgvWatchColumnAvatar.MinimumWidth = 1000;
+            this.dgvWatchColumnAvatar.HeaderText = "Avatar";
             this.dgvWatchColumnAvatar.Name = "dgvWatchColumnAvatar";
             this.dgvWatchColumnAvatar.ReadOnly = true;
-            this.dgvWatchColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWatchColumnAvatar.Width = 1000;
             // 
-            // cmsListRightClick
+            // dgvWatchColumnGroup
             // 
-            this.cmsListRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmsListRightClickCopy,
-            this.cmsListRightClickAvatar,
-            this.cmsListRightClickRecheck,
+            this.dgvWatchColumnGroup.HeaderText = "Group";
+            this.dgvWatchColumnGroup.Name = "dgvWatchColumnGroup";
+            this.dgvWatchColumnGroup.ReadOnly = true;
+            // 
+            // dgvWatchColumnNotify
+            // 
+            this.dgvWatchColumnNotify.HeaderText = "Notify";
+            this.dgvWatchColumnNotify.Name = "dgvWatchColumnNotify";
+            this.dgvWatchColumnNotify.ReadOnly = true;
+            // 
+            // dgvWatchColumnNote
+            // 
+            this.dgvWatchColumnNote.HeaderText = "Note";
+            this.dgvWatchColumnNote.Name = "dgvWatchColumnNote";
+            this.dgvWatchColumnNote.ReadOnly = true;
+            // 
+            // btnAddAvatar
+            // 
+            this.btnAddAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddAvatar.Location = new System.Drawing.Point(6, 56);
+            this.btnAddAvatar.Name = "btnAddAvatar";
+            this.btnAddAvatar.Size = new System.Drawing.Size(188, 23);
+            this.btnAddAvatar.TabIndex = 3;
+            this.btnAddAvatar.Text = "Add Avatar via ID";
+            this.btnAddAvatar.UseVisualStyleBackColor = true;
+            this.btnAddAvatar.Click += new System.EventHandler(this.btnAddAvatar_Click);
+            // 
+            // chxHideNonWatched
+            // 
+            this.chxHideNonWatched.AutoCheck = false;
+            this.chxHideNonWatched.AutoSize = true;
+            this.chxHideNonWatched.Location = new System.Drawing.Point(6, 33);
+            this.chxHideNonWatched.Name = "chxHideNonWatched";
+            this.chxHideNonWatched.Size = new System.Drawing.Size(116, 17);
+            this.chxHideNonWatched.TabIndex = 1;
+            this.chxHideNonWatched.Text = "Hide non-Watched";
+            this.chxHideNonWatched.UseVisualStyleBackColor = true;
+            this.chxHideNonWatched.Click += new System.EventHandler(this.chxHideNonWatched_Click);
+            // 
+            // tabPageGroups
+            // 
+            this.tabPageGroups.Controls.Add(this.btnGroupDelete);
+            this.tabPageGroups.Controls.Add(this.btnGroupNew);
+            this.tabPageGroups.Controls.Add(this.btnGroupEdit);
+            this.tabPageGroups.Controls.Add(this.dgvGroup);
+            this.tabPageGroups.Location = new System.Drawing.Point(4, 22);
+            this.tabPageGroups.Name = "tabPageGroups";
+            this.tabPageGroups.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageGroups.Size = new System.Drawing.Size(200, 261);
+            this.tabPageGroups.TabIndex = 1;
+            this.tabPageGroups.Text = "Watch Groups";
+            this.tabPageGroups.UseVisualStyleBackColor = true;
+            // 
+            // btnGroupDelete
+            // 
+            this.btnGroupDelete.Location = new System.Drawing.Point(118, 6);
+            this.btnGroupDelete.Name = "btnGroupDelete";
+            this.btnGroupDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnGroupDelete.TabIndex = 2;
+            this.btnGroupDelete.Text = "Delete";
+            this.btnGroupDelete.UseVisualStyleBackColor = true;
+            this.btnGroupDelete.Click += new System.EventHandler(this.btnGroupDelete_Click);
+            // 
+            // btnGroupNew
+            // 
+            this.btnGroupNew.Location = new System.Drawing.Point(6, 6);
+            this.btnGroupNew.Name = "btnGroupNew";
+            this.btnGroupNew.Size = new System.Drawing.Size(50, 23);
+            this.btnGroupNew.TabIndex = 2;
+            this.btnGroupNew.Text = "New";
+            this.btnGroupNew.UseVisualStyleBackColor = true;
+            this.btnGroupNew.Click += new System.EventHandler(this.btnGroupNew_Click);
+            // 
+            // btnGroupEdit
+            // 
+            this.btnGroupEdit.Location = new System.Drawing.Point(62, 6);
+            this.btnGroupEdit.Name = "btnGroupEdit";
+            this.btnGroupEdit.Size = new System.Drawing.Size(50, 23);
+            this.btnGroupEdit.TabIndex = 2;
+            this.btnGroupEdit.Text = "Edit";
+            this.btnGroupEdit.UseVisualStyleBackColor = true;
+            this.btnGroupEdit.Click += new System.EventHandler(this.btnGroupEdit_Click);
+            // 
+            // dgvGroup
+            // 
+            this.dgvGroup.AllowUserToAddRows = false;
+            this.dgvGroup.AllowUserToDeleteRows = false;
+            this.dgvGroup.AllowUserToResizeRows = false;
+            this.dgvGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvGroup.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvGroup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvGroup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvGroupColumnId,
+            this.dgvGroupColumnGroup,
+            this.dgvGroupColumnMembers,
+            this.dgvGroupColumnNotify,
+            this.dgvGroupColumnSound,
+            this.dgvGroupColumnColor});
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGroup.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvGroup.Location = new System.Drawing.Point(6, 35);
+            this.dgvGroup.Name = "dgvGroup";
+            this.dgvGroup.ReadOnly = true;
+            this.dgvGroup.RowHeadersVisible = false;
+            this.dgvGroup.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvGroup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvGroup.Size = new System.Drawing.Size(188, 220);
+            this.dgvGroup.TabIndex = 1;
+            this.dgvGroup.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvGroup_CellMouseDown);
+            this.dgvGroup.Click += new System.EventHandler(this.dgv_Click);
+            this.dgvGroup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvGroup_KeyDown);
+            // 
+            // dgvGroupColumnId
+            // 
+            this.dgvGroupColumnId.FillWeight = 50F;
+            this.dgvGroupColumnId.Frozen = true;
+            this.dgvGroupColumnId.HeaderText = "ID";
+            this.dgvGroupColumnId.Name = "dgvGroupColumnId";
+            this.dgvGroupColumnId.ReadOnly = true;
+            this.dgvGroupColumnId.Width = 50;
+            // 
+            // dgvGroupColumnGroup
+            // 
+            this.dgvGroupColumnGroup.HeaderText = "Group";
+            this.dgvGroupColumnGroup.Name = "dgvGroupColumnGroup";
+            this.dgvGroupColumnGroup.ReadOnly = true;
+            // 
+            // dgvGroupColumnMembers
+            // 
+            this.dgvGroupColumnMembers.HeaderText = "Memebers";
+            this.dgvGroupColumnMembers.Name = "dgvGroupColumnMembers";
+            this.dgvGroupColumnMembers.ReadOnly = true;
+            // 
+            // dgvGroupColumnNotify
+            // 
+            this.dgvGroupColumnNotify.HeaderText = "Notify";
+            this.dgvGroupColumnNotify.Name = "dgvGroupColumnNotify";
+            this.dgvGroupColumnNotify.ReadOnly = true;
+            // 
+            // dgvGroupColumnSound
+            // 
+            this.dgvGroupColumnSound.HeaderText = "Sound";
+            this.dgvGroupColumnSound.Name = "dgvGroupColumnSound";
+            this.dgvGroupColumnSound.ReadOnly = true;
+            // 
+            // dgvGroupColumnColor
+            // 
+            this.dgvGroupColumnColor.HeaderText = "Color";
+            this.dgvGroupColumnColor.Name = "dgvGroupColumnColor";
+            this.dgvGroupColumnColor.ReadOnly = true;
+            // 
+            // cmsAvatarRightClick
+            // 
+            this.cmsAvatarRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsAvatarRightClickCopy,
+            this.toolStripSeparator9,
+            this.cmsAvatarRightClickAvatar,
+            this.cmsAvatarRightClickRecheck,
             this.toolStripSeparator2,
-            this.cmsListRightClickStanding,
-            this.cmsListRightClickWatch,
+            this.cmsAvatarRightClickWatchGroup,
+            this.cmsAvatarRightClickWatch,
             this.toolStripSeparator6,
-            this.cmsListRightClickMain,
-            this.cmsListRightClickNote});
-            this.cmsListRightClick.Name = "contextMenuStrip1";
-            this.cmsListRightClick.Size = new System.Drawing.Size(138, 170);
-            this.cmsListRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsRightClick_Opening);
+            this.cmsAvatarRightClickNote});
+            this.cmsAvatarRightClick.Name = "contextMenuStrip1";
+            this.cmsAvatarRightClick.Size = new System.Drawing.Size(154, 154);
+            this.cmsAvatarRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsAvatarRightClick_Opening);
             // 
-            // cmsListRightClickCopy
+            // cmsAvatarRightClickCopy
             // 
-            this.cmsListRightClickCopy.Name = "cmsListRightClickCopy";
-            this.cmsListRightClickCopy.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickCopy.Text = "Copy";
-            this.cmsListRightClickCopy.Click += new System.EventHandler(this.cmsListRightClickCopy_Click);
+            this.cmsAvatarRightClickCopy.Name = "cmsAvatarRightClickCopy";
+            this.cmsAvatarRightClickCopy.Size = new System.Drawing.Size(153, 22);
+            this.cmsAvatarRightClickCopy.Text = "Copy";
+            this.cmsAvatarRightClickCopy.Click += new System.EventHandler(this.cmsAvatarRightClickCopy_Click);
             // 
-            // cmsListRightClickAvatar
+            // toolStripSeparator9
             // 
-            this.cmsListRightClickAvatar.Name = "cmsListRightClickAvatar";
-            this.cmsListRightClickAvatar.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickAvatar.Text = "Avatar Page";
-            this.cmsListRightClickAvatar.Click += new System.EventHandler(this.cmsListRightClickAvatar_Click);
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(150, 6);
             // 
-            // cmsListRightClickRecheck
+            // cmsAvatarRightClickAvatar
             // 
-            this.cmsListRightClickRecheck.Name = "cmsListRightClickRecheck";
-            this.cmsListRightClickRecheck.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickRecheck.Text = "Recheck";
-            this.cmsListRightClickRecheck.Click += new System.EventHandler(this.cmsListRightClickRecheck_Click);
+            this.cmsAvatarRightClickAvatar.Name = "cmsAvatarRightClickAvatar";
+            this.cmsAvatarRightClickAvatar.Size = new System.Drawing.Size(153, 22);
+            this.cmsAvatarRightClickAvatar.Text = "Avatar Page";
+            this.cmsAvatarRightClickAvatar.Click += new System.EventHandler(this.cmsAvatarRightClickAvatar_Click);
+            // 
+            // cmsAvatarRightClickRecheck
+            // 
+            this.cmsAvatarRightClickRecheck.Name = "cmsAvatarRightClickRecheck";
+            this.cmsAvatarRightClickRecheck.Size = new System.Drawing.Size(153, 22);
+            this.cmsAvatarRightClickRecheck.Text = "Recheck";
+            this.cmsAvatarRightClickRecheck.Click += new System.EventHandler(this.cmsAvatarRightClickRecheck_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(134, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(150, 6);
             // 
-            // cmsListRightClickStanding
+            // cmsAvatarRightClickWatchGroup
             // 
-            this.cmsListRightClickStanding.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cmsListRightClickStandingEmpire,
-            this.cmsListRightClickStandingFriend,
-            this.cmsListRightClickStandingUnsure,
-            this.cmsListRightClickStandingEnemy});
-            this.cmsListRightClickStanding.Name = "cmsListRightClickStanding";
-            this.cmsListRightClickStanding.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickStanding.Text = "Standing...";
+            this.cmsAvatarRightClickWatchGroup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsAvatarRightClickWatchGroupUnset,
+            this.cmsAvatarRightClickWatchGroupNew,
+            this.cmsAvatarRightClickWatchGroupSeparator});
+            this.cmsAvatarRightClickWatchGroup.Name = "cmsAvatarRightClickWatchGroup";
+            this.cmsAvatarRightClickWatchGroup.Size = new System.Drawing.Size(153, 22);
+            this.cmsAvatarRightClickWatchGroup.Text = "Watch Group...";
             // 
-            // cmsListRightClickStandingEmpire
+            // cmsAvatarRightClickWatchGroupUnset
             // 
-            this.cmsListRightClickStandingEmpire.Name = "cmsListRightClickStandingEmpire";
-            this.cmsListRightClickStandingEmpire.Size = new System.Drawing.Size(111, 22);
-            this.cmsListRightClickStandingEmpire.Text = "Empire";
-            this.cmsListRightClickStandingEmpire.Click += new System.EventHandler(this.cmsListRightClickStandingEmpire_Click);
+            this.cmsAvatarRightClickWatchGroupUnset.Name = "cmsAvatarRightClickWatchGroupUnset";
+            this.cmsAvatarRightClickWatchGroupUnset.Size = new System.Drawing.Size(107, 22);
+            this.cmsAvatarRightClickWatchGroupUnset.Text = "Unset";
+            this.cmsAvatarRightClickWatchGroupUnset.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupUnset_Click);
             // 
-            // cmsListRightClickStandingFriend
+            // cmsAvatarRightClickWatchGroupNew
             // 
-            this.cmsListRightClickStandingFriend.Name = "cmsListRightClickStandingFriend";
-            this.cmsListRightClickStandingFriend.Size = new System.Drawing.Size(111, 22);
-            this.cmsListRightClickStandingFriend.Text = "Friend";
-            this.cmsListRightClickStandingFriend.Click += new System.EventHandler(this.cmsListRightClickStandingFriend_Click);
+            this.cmsAvatarRightClickWatchGroupNew.Name = "cmsAvatarRightClickWatchGroupNew";
+            this.cmsAvatarRightClickWatchGroupNew.Size = new System.Drawing.Size(107, 22);
+            this.cmsAvatarRightClickWatchGroupNew.Text = "New...";
+            this.cmsAvatarRightClickWatchGroupNew.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupNew_Click);
             // 
-            // cmsListRightClickStandingUnsure
+            // cmsAvatarRightClickWatchGroupSeparator
             // 
-            this.cmsListRightClickStandingUnsure.Name = "cmsListRightClickStandingUnsure";
-            this.cmsListRightClickStandingUnsure.Size = new System.Drawing.Size(111, 22);
-            this.cmsListRightClickStandingUnsure.Text = "Unsure";
-            this.cmsListRightClickStandingUnsure.Click += new System.EventHandler(this.cmsListRightClickStandingUnsure_Click);
+            this.cmsAvatarRightClickWatchGroupSeparator.Name = "cmsAvatarRightClickWatchGroupSeparator";
+            this.cmsAvatarRightClickWatchGroupSeparator.Size = new System.Drawing.Size(104, 6);
             // 
-            // cmsListRightClickStandingEnemy
+            // cmsAvatarRightClickWatch
             // 
-            this.cmsListRightClickStandingEnemy.Name = "cmsListRightClickStandingEnemy";
-            this.cmsListRightClickStandingEnemy.Size = new System.Drawing.Size(111, 22);
-            this.cmsListRightClickStandingEnemy.Text = "Enemy";
-            this.cmsListRightClickStandingEnemy.Click += new System.EventHandler(this.cmsListRightClickStandingEnemy_Click);
-            // 
-            // cmsListRightClickWatch
-            // 
-            this.cmsListRightClickWatch.Name = "cmsListRightClickWatch";
-            this.cmsListRightClickWatch.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickWatch.Text = "Watch";
-            this.cmsListRightClickWatch.Click += new System.EventHandler(this.cmsListRightClickWatch_Click);
+            this.cmsAvatarRightClickWatch.Name = "cmsAvatarRightClickWatch";
+            this.cmsAvatarRightClickWatch.Size = new System.Drawing.Size(153, 22);
+            this.cmsAvatarRightClickWatch.Text = "Watch";
+            this.cmsAvatarRightClickWatch.Click += new System.EventHandler(this.cmsAvatarRightClickWatch_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(134, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(150, 6);
             // 
-            // cmsListRightClickMain
+            // cmsAvatarRightClickNote
             // 
-            this.cmsListRightClickMain.Name = "cmsListRightClickMain";
-            this.cmsListRightClickMain.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickMain.Text = "Main";
-            this.cmsListRightClickMain.Click += new System.EventHandler(this.cmsListRightClickMain_Click);
-            // 
-            // cmsListRightClickNote
-            // 
-            this.cmsListRightClickNote.Name = "cmsListRightClickNote";
-            this.cmsListRightClickNote.Size = new System.Drawing.Size(137, 22);
-            this.cmsListRightClickNote.Text = "Note";
-            this.cmsListRightClickNote.Click += new System.EventHandler(this.cmsListRightClickNote_Click);
+            this.cmsAvatarRightClickNote.Name = "cmsAvatarRightClickNote";
+            this.cmsAvatarRightClickNote.Size = new System.Drawing.Size(153, 22);
+            this.cmsAvatarRightClickNote.Text = "Note";
+            this.cmsAvatarRightClickNote.Click += new System.EventHandler(this.cmsAvatarRightClickNote_Click);
             // 
             // timer1
             // 
@@ -677,12 +855,42 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
-            // menuStrip1OptionsTrayNotification
+            // cmsGroupRightClick
             // 
-            this.menuStrip1OptionsTrayNotification.Name = "menuStrip1OptionsTrayNotification";
-            this.menuStrip1OptionsTrayNotification.Size = new System.Drawing.Size(189, 22);
-            this.menuStrip1OptionsTrayNotification.Text = "Tray Notification";
-            this.menuStrip1OptionsTrayNotification.Click += new System.EventHandler(this.menuStrip1OptionsTrayNotification_Click);
+            this.cmsGroupRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsGroupRightClickCopy,
+            this.toolStripSeparator11,
+            this.cmsGroupRightClickEdit,
+            this.cmsGroupRightClickDelete});
+            this.cmsGroupRightClick.Name = "contextMenuStrip1";
+            this.cmsGroupRightClick.Size = new System.Drawing.Size(153, 98);
+            this.cmsGroupRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsGroupRightClick_Opening);
+            // 
+            // cmsGroupRightClickCopy
+            // 
+            this.cmsGroupRightClickCopy.Name = "cmsGroupRightClickCopy";
+            this.cmsGroupRightClickCopy.Size = new System.Drawing.Size(152, 22);
+            this.cmsGroupRightClickCopy.Text = "Copy";
+            this.cmsGroupRightClickCopy.Click += new System.EventHandler(this.cmsGroupRightClickCopy_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
+            // 
+            // cmsGroupRightClickEdit
+            // 
+            this.cmsGroupRightClickEdit.Name = "cmsGroupRightClickEdit";
+            this.cmsGroupRightClickEdit.Size = new System.Drawing.Size(152, 22);
+            this.cmsGroupRightClickEdit.Text = "Edit";
+            this.cmsGroupRightClickEdit.Click += new System.EventHandler(this.cmsGroupRightClickEdit_Click);
+            // 
+            // cmsGroupRightClickDelete
+            // 
+            this.cmsGroupRightClickDelete.Name = "cmsGroupRightClickDelete";
+            this.cmsGroupRightClickDelete.Size = new System.Drawing.Size(152, 22);
+            this.cmsGroupRightClickDelete.Text = "Delete";
+            this.cmsGroupRightClickDelete.Click += new System.EventHandler(this.cmsGroupRightClickDelete_Click);
             // 
             // FormMain
             // 
@@ -703,7 +911,6 @@
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -712,9 +919,15 @@
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOnline)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageAvatars.ResumeLayout(false);
+            this.tabPageAvatars.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).EndInit();
-            this.cmsListRightClick.ResumeLayout(false);
+            this.tabPageGroups.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGroup)).EndInit();
+            this.cmsAvatarRightClick.ResumeLayout(false);
             this.cmsNotifyIconRightClick.ResumeLayout(false);
+            this.cmsGroupRightClick.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -735,11 +948,11 @@
         private System.Windows.Forms.DataGridView dgvOnline;
         private System.Windows.Forms.DataGridView dgvWatch;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsAvatarIds;
-        private System.Windows.Forms.ContextMenuStrip cmsListRightClick;
+        private System.Windows.Forms.ContextMenuStrip cmsAvatarRightClick;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickWatch;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickCopy;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatch;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickCopy;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ContextMenuStrip cmsNotifyIconRightClick;
         private System.Windows.Forms.ToolStripMenuItem cmsNotifyIconRightClickRestore;
@@ -751,23 +964,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1HelpHowToUse;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickAvatar;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickAvatar;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsNotificationSound;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickNote;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickMain;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickNote;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsRecentList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnAvatar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnAvatar;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStanding;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingEmpire;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingFriend;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingUnsure;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickStandingEnemy;
-        private System.Windows.Forms.ToolStripMenuItem cmsListRightClickRecheck;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatchGroup;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatchGroupUnset;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickRecheck;
         private System.Windows.Forms.CheckBox chxHideNonWatched;
         private System.Windows.Forms.ComboBox cbxStandingFilter;
         private System.Windows.Forms.Button btnAddAvatar;
@@ -780,6 +987,32 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnId;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnAvatar;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsTrayNotification;
+        private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatchGroupNew;
+        private System.Windows.Forms.ToolStripSeparator cmsAvatarRightClickWatchGroupSeparator;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPageAvatars;
+        private System.Windows.Forms.TabPage tabPageGroups;
+        private System.Windows.Forms.Button btnGroupDelete;
+        private System.Windows.Forms.Button btnGroupNew;
+        private System.Windows.Forms.Button btnGroupEdit;
+        private System.Windows.Forms.DataGridView dgvGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvGroupColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvGroupColumnGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvGroupColumnMembers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvGroupColumnNotify;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvGroupColumnSound;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvGroupColumnColor;
+        private System.Windows.Forms.ContextMenuStrip cmsGroupRightClick;
+        private System.Windows.Forms.ToolStripMenuItem cmsGroupRightClickCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem cmsGroupRightClickEdit;
+        private System.Windows.Forms.ToolStripMenuItem cmsGroupRightClickDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnAvatar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnNotify;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnNote;
     }
 }
 
