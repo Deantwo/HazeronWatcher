@@ -38,21 +38,30 @@ namespace HazeronWatcher
             this.Text = string.Format("{0} - Edit \"{1}\"", this.Text, watchGroup.Name);
             tbxName.Text = watchGroup.Name;
             foreach (Color color in cbbxColor.Items)
+            {
                 if (color.ToArgb() == watchGroup.GroupColor.ToArgb())
                 {
                     cbbxColor.SelectedItem = color;
                     break;
                 }
+            }
+            if (cbbxColor.SelectedIndex == -1)
+                nudColor.Value = watchGroup.GroupColor.R + (watchGroup.GroupColor.G * 0x0100) + (watchGroup.GroupColor.B * 0x010000);
             chbxNotification.Checked = watchGroup.Notify;
             if (watchGroup.NotifySoundFile == null)
                 cbbxSound.SelectedIndex = 0;
-            else 
-                foreach (string file in cbbxSound.Items)
-                    if (file == watchGroup.NotifySoundFile.FullName)
+            else
+            {
+                foreach (object file in cbbxSound.Items)
+                {
+                    string filename = file.ToString();
+                    if (filename == watchGroup.NotifySoundFile.Name)
                     {
                         cbbxSound.SelectedItem = file;
                         break;
                     }
+                }
+            }
             btnCreateSave.Text = "Save";
             tbxName_TextChanged(null, null);
         }
@@ -61,9 +70,10 @@ namespace HazeronWatcher
         {
             InitializeComponent();
             // Add a list of all colors to the Color combobox.
-            foreach (Color color in typeof(Color).GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.DeclaredOnly | System.Reflection.BindingFlags.Public)
+            List<Color> colors = typeof(Color).GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.DeclaredOnly | System.Reflection.BindingFlags.Public)
                                     .Select(c => (Color)c.GetValue(null, null))
-                                    .ToList())
+                                    .ToList();
+            foreach (Color color in colors)
                 cbbxColor.Items.Add(color);
             // Add all sound files to the Sound combobox.
             cbbxSound.Items.Add(DEFAULT_SOUND);
@@ -73,11 +83,27 @@ namespace HazeronWatcher
 
         private void cbbxColor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblColorTest.ForeColor = (Color)cbbxColor.SelectedItem;
+            if (cbbxColor.SelectedIndex == -1)
+                return;
+            Color color = (Color)cbbxColor.SelectedItem;
+            nudColor.ValueChanged -= nudColor_ValueChanged;
+            nudColor.Value = color.R + (color.G * 0x0100) + (color.B * 0x010000);
+            nudColor.ValueChanged += nudColor_ValueChanged;
+            lblColorTest.ForeColor = color;
+        }
+
+        private void nudColor_ValueChanged(object sender, EventArgs e)
+        {
+            Color color = Color.FromArgb((int)(0xff000000 + (int)nudColor.Value));
+            cbbxColor.SelectedIndexChanged -= cbbxColor_SelectedIndexChanged;
+            cbbxColor.SelectedIndex = -1;
+            cbbxColor.SelectedIndexChanged += cbbxColor_SelectedIndexChanged;
+            lblColorTest.ForeColor = color;
         }
 
         private void tbxName_TextChanged(object sender, EventArgs e)
         {
+            // If empty, color red and disallow create/save button.
             if (tbxName.Text.Trim() == string.Empty)
             {
                 btnCreateSave.Enabled = false;
@@ -94,7 +120,7 @@ namespace HazeronWatcher
         {
             WatchGroup watchGroup = new WatchGroup();
             watchGroup.Name = tbxName.Text.Trim();
-            watchGroup.GroupColor = (Color)cbbxColor.SelectedItem;
+            watchGroup.GroupColor = lblColorTest.ForeColor;
             watchGroup.Notify = chbxNotification.Checked;
             if ((cbbxSound.SelectedItem as string) == DEFAULT_SOUND)
                 watchGroup.NotifySoundFile = null;
@@ -108,6 +134,26 @@ namespace HazeronWatcher
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
+        }
+
+        private void btnSound_Click(object sender, EventArgs e)
+        {
+            // Get sound file.
+            FileInfo soundFile = cbbxSound.SelectedItem as FileInfo;
+            if (soundFile == null)
+                soundFile = new FileInfo(Path.Combine(_appdataFolder, "Notification.wav"));
+            // Play the sound.
+            if (soundFile != null && soundFile.Exists)
+                using (System.Media.SoundPlayer notificationSound = new System.Media.SoundPlayer(soundFile.FullName))
+                    notificationSound.Play();
+            else
+            {
+                using (System.IO.Stream s = HazeronWatcher.Properties.Resources.communi2)
+                {
+                    System.Media.SoundPlayer notificationSound = new System.Media.SoundPlayer(s);
+                    notificationSound.Play();
+                }
+            }
         }
     }
 }
