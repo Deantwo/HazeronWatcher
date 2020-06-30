@@ -16,7 +16,7 @@ namespace HazeronWatcher
             string httpHeaderLine = null;
             try
             {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(@"http://Hazeron.com/EmpireStandings2015/p" + id + ".html");
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(@"https://Hazeron.com/EmpireStandings/p" + id + ".html");
                 request.Timeout = 5000;
                 request.Method = "GET";
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -46,7 +46,7 @@ namespace HazeronWatcher
                 {
                     using (System.Net.WebClient client = new System.Net.WebClient())
                     {
-                        using (var stream = client.OpenRead(@"http://hazeron.com/status.php"))
+                        using (var stream = client.OpenRead(@"https://hazeron.com/status.php"))
                         {
                             throw new HazeronAvatarNotFoundException(id);
                         }

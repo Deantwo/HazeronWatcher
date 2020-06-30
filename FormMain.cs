@@ -14,7 +14,7 @@ namespace HazeronWatcher
 {
     public partial class FormMain : Form
     {
-        const string URL_PLAYERSON = @"http://hazeron.com/playerson.html";
+        const string URL_PLAYERSON = @"https://hazeron.com/playerson.html";
 
 #if DEBUG
         string _appdataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HazeronWatcherTest"); // %USERPROFILE%\AppData\Roaming\HazeronWatcherTest
@@ -171,7 +171,7 @@ namespace HazeronWatcher
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // Check the http://hazeron.com/playerson.html page and read the avatars.
+            // Check the https://hazeron.com/playerson.html page and read the avatars.
             RefreshOnlineAvatars();
 
             // Update the DataGridViews with colors.
@@ -244,9 +244,9 @@ namespace HazeronWatcher
                 {
                     if (httpLine == HTTPLINE_AVATAR_END)
                         break;
-                    const string EMPIRE_START = "src=\"http://Hazeron.com/EmpireStandings2015/";
+                    const string EMPIRE_START = "src=\"https://Hazeron.com/EmpireStandings/";
                     const string EMPIRE_END = ".png\"></a>";
-                    const string AVATAR_START = "href=\"http://Hazeron.com/EmpireStandings2015/p";
+                    const string AVATAR_START = "href=\"https://Hazeron.com/EmpireStandings/p";
                     const string AVATAR_MIDDLE = ".html\">";
                     const string AVATAR_END = "</a></small></td></tr>";
                     int startIndex = httpLine.IndexOf(EMPIRE_START) + EMPIRE_START.Length;
@@ -601,7 +601,7 @@ namespace HazeronWatcher
 
         private void menuStrip1HelpThread_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(@"http://hazeron.com/phpBB3/viewtopic.php?f=124&t=7642#p85789");
+            System.Diagnostics.Process.Start(@"https://www.hazeron.com/mybb/showthread.php?tid=25");
         }
 
         private void menuStrip1HelpAbout_Click(object sender, EventArgs e)
@@ -879,7 +879,7 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsAvatarRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            System.Diagnostics.Process.Start(@"http://Hazeron.com/EmpireStandings2015/p" + avatar.ID + ".html");
+            System.Diagnostics.Process.Start(@"https://Hazeron.com/EmpireStandings/p" + avatar.ID + ".html");
         }
 
         private void cmsAvatarRightClickRecheck_Click(object sender, EventArgs e)
