@@ -1,7 +1,7 @@
 HazeronWatcher
 ==============
 
-Online players monitor for [Shores of Hazeron](http://hazeron.com/).
+Online players monitor for [Shores of Hazeron](https://www.hazeron.com/).
 
 Introduction
 ==============
@@ -13,7 +13,7 @@ I was inspired a lot by the contact window used in EVE Online, so I can't take t
 What is it
 ==============
 
-**HazeronWatcher** is a simple little program written in C# that monitors the [Players Online](http://www.hazeron.com/playerson.html) page.<br>
+**HazeronWatcher** is a simple little program written in C# that monitors the [Players Online](https://www.hazeron.com/playerson.html) page.<br>
 It shows all players in a list and then allows you to set colors for each of them according to diplomatic relationship.<br>
 You can also set a player to "Watch", which will make the program notify you when he/she comes online.
 
@@ -23,14 +23,14 @@ Requirements
 - .Net Framework 4.0<br>
 (Standard on windows)
 - Internet connection<br>
-(access to [playerson](http://www.hazeron.com/playerson.html))
+(access to [playerson](https://www.hazeron.com/playerson.html))
 
 How to use
 ==============
 
 **Adding offline avatars:**
 
-1. Go to the [avatar list](http://www.hazeron.com/EmpireStandings2015/Avatars.html) on [www.Hazeron.com](http://www.Hazeron.com)
+1. Go to the [avatar list](https://www.hazeron.com/EmpireStandings/Avatars.html) on [www.Hazeron.com](https://www.hazeron.com)
 2. Get the ID of the avatar
 3. Start **HazeronWatcher** (if you hadn't already)
 4. Go to *Edit -> Add Player*
@@ -66,4 +66,4 @@ Links
 ==============
 
 - [GitHub](https://github.com/Deantwo/HazeronWatcher)
-- [Hazeron Forum Thread](http://hazeron.com/phpBB3/viewtopic.php?f=124&t=7642)
+- [Hazeron Forum Thread](https://www.hazeron.com/mybb/showthread.php?tid=25)
