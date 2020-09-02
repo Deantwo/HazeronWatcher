@@ -30,6 +30,7 @@ namespace HazeronWatcher
         int _numOnline = 0;
 
         Dictionary<string, Avatar> _avatarList;
+        Dictionary<int, Empire> _empireList;
         Dictionary<int, WatchGroup> _watchGroupList;
 
         Icon _iconLit = HazeronWatcher.Properties.Resources.Psyker_s_lit_tray_icon;
@@ -59,6 +60,7 @@ namespace HazeronWatcher
                 _settingsXml = new HazeronWatcherSettings();
             // Get data from the settings.
             _avatarList = _settingsXml.AvatarList.ToDictionary(x => x.ID);
+            _empireList = _settingsXml.EmpireList.ToDictionary(x => x.ID);
             _watchGroupList = _settingsXml.WatchGroupList.ToDictionary(x => x.ID);
             menuStrip1OptionsAvatarIds.Checked = !_settingsXml.Options.ShowIdColumn;
             menuStrip1OptionsAvatarIds_Click(null, null);
@@ -120,6 +122,7 @@ namespace HazeronWatcher
             // Add data to the DataGridView.
             foreach (Avatar avatar in _avatarList.Values)
                 AvatarDgvAddAvatar(avatar);
+            EmpireDgvUpdate();
             foreach (WatchGroup watchGroup in _watchGroupList.Values)
                 GroupDgvAddGroup(watchGroup);
             GroupDgvUpdate();
@@ -150,10 +153,14 @@ namespace HazeronWatcher
             dgvRecent.DefaultCellStyle.BackColor = Color.Black;
             dgvRecent.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
             dgvRecent.Columns["dgvRecentColumnId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
-            dgvWatch.DefaultCellStyle.BackColor = Color.Black;
-            dgvWatch.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
-            dgvWatch.Columns["dgvWatchColumnId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
-            dgvWatch.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvAvatarWatch.DefaultCellStyle.BackColor = Color.Black;
+            dgvAvatarWatch.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
+            dgvAvatarWatch.Columns["dgvAvatarWatchColumnId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
+            dgvAvatarWatch.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dgvEmpireWatch.DefaultCellStyle.BackColor = Color.Black;
+            dgvEmpireWatch.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
+            dgvEmpireWatch.Columns["dgvEmpireWatchColumnId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
+            dgvEmpireWatch.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvGroup.DefaultCellStyle.BackColor = Color.Black;
             dgvGroup.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30, 30);
             dgvGroup.Columns["dgvGroupColumnId"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
@@ -161,8 +168,6 @@ namespace HazeronWatcher
             dgvGroup.Columns["dgvGroupColumnMembers"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvGroup.Columns["dgvGroupColumnColor"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
             dgvGroup.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-
-            cbxStandingFilter.SelectedIndex = 0;
 
             // Run the tick once and start the looping timer.
             timer1_Tick(null, null);
@@ -255,6 +260,14 @@ namespace HazeronWatcher
                     startIndex = httpLine.LastIndexOf(AVATAR_START) + AVATAR_START.Length;
                     endIndex = httpLine.LastIndexOf(AVATAR_MIDDLE) - startIndex;
                     string avatarId = httpLine.Substring(startIndex, endIndex);
+                    Empire empire;
+                    if (!_empireList.ContainsKey(empireId))
+                    {
+                        empire = new Empire(empireId);
+                        _empireList.Add(empireId, empire);
+                    }
+                    else
+                        empire = _empireList[empireId];
                     Avatar avatar;
                     if (!_avatarList.ContainsKey(avatarId))
                     {
@@ -397,6 +410,29 @@ namespace HazeronWatcher
             return avatar;
         }
 
+        public Empire GetEmpire(int id)
+        {
+            Empire empire;
+            if (_empireList.ContainsKey(id))
+                empire = _empireList[id];
+            else
+            {
+                try
+                {
+                    empire = Empire.GetEmpire(id);
+                }
+                catch (HazeronAvatarNotFoundException)
+                {
+                    MessageBox.Show(this,
+                        "There is no empire with that ID."
+                        , "Empire Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
+                _empireList.Add(id, empire);
+            }
+            return empire;
+        }
+
         #region WatchGroups
         private WatchGroup NewWatchGroup()
         {
@@ -482,11 +518,6 @@ namespace HazeronWatcher
         #endregion
 
         #region Avatar Buttons
-        private void cbxStandingFilter_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AvatarDgvUpdate();
-        }
-
         private void chxHideNonWatched_Click(object sender, EventArgs e)
         {
             chxHideNonWatched.Checked = !chxHideNonWatched.Checked;
@@ -509,6 +540,27 @@ namespace HazeronWatcher
                 return;
             avatar.Notify = true;
             AvatarDgvUpdate();
+        }
+        #endregion
+
+        #region Empire Buttons
+        private void btnAddEmpire_Click(object sender, EventArgs e)
+        {
+            FormInput inputDialog = new FormInput("Add Empire", "Enter the empire's ID.");
+            if (inputDialog.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
+                return;
+            string id = inputDialog.ReturnInput.Trim();
+            int idNum;
+            if (!int.TryParse(id, out idNum))
+            {
+                MessageBox.Show(this, "Invalid input, please enter a valid empire ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Empire empire = GetEmpire(idNum);
+            if (empire == null)
+                return;
+            empire.Notify = true;
+            EmpireDgvUpdate();
         }
         #endregion
 
@@ -547,7 +599,8 @@ namespace HazeronWatcher
         {
             menuStrip1OptionsAvatarIds.Checked = !menuStrip1OptionsAvatarIds.Checked;
             dgvOnlineColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
-            dgvWatchColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
+            dgvAvatarWatchColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
+            dgvEmpireWatchColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
             dgvRecentColumnId.Visible = menuStrip1OptionsAvatarIds.Checked;
         }
 
@@ -646,8 +699,10 @@ namespace HazeronWatcher
         {
             if (sender != null && (sender as DataGridView) != dgvOnline)
                 dgvOnline.ClearSelection();
-            if (sender != null && (sender as DataGridView) != dgvWatch)
-                dgvWatch.ClearSelection();
+            if (sender != null && (sender as DataGridView) != dgvAvatarWatch)
+                dgvAvatarWatch.ClearSelection();
+            if (sender != null && (sender as DataGridView) != dgvEmpireWatch)
+                dgvEmpireWatch.ClearSelection();
             if (sender != null && (sender as DataGridView) != dgvRecent)
                 dgvRecent.ClearSelection();
             if (sender != null && (sender as DataGridView) != dgvGroup)
@@ -661,12 +716,14 @@ namespace HazeronWatcher
             avatar.OnlineRow.Visible = false;
             avatar.OnlineRow.Cells["dgvOnlineColumnID"].Value = avatar.ID;
             avatar.OnlineRow.Cells["dgvOnlineColumnAvatar"].Value = avatar;
+            avatar.OnlineRow.Cells["dgvOnlineColumnEmpire"].Value = _empireList.ContainsKey(avatar.Empire) ? _empireList[avatar.Empire] : null;
             dgvOnline.Sort(dgvOnlineColumnAvatar, ListSortDirection.Ascending);
             // Recent list
             avatar.RecentRow = dgvRecent.Rows[dgvRecent.Rows.Add()];
             avatar.RecentRow.Visible = false;
             avatar.RecentRow.Cells["dgvRecentColumnID"].Value = avatar.ID;
             avatar.RecentRow.Cells["dgvRecentColumnAvatar"].Value = avatar;
+            avatar.RecentRow.Cells["dgvRecentColumnEmpire"].Value = _empireList.ContainsKey(avatar.Empire) ? _empireList[avatar.Empire] : null;
             dgvRecent.Sort(dgvRecentColumnAvatar, ListSortDirection.Ascending);
         }
 
@@ -674,15 +731,24 @@ namespace HazeronWatcher
         {
             foreach (Avatar avatar in _avatarList.Values)
             {
+                // Get colors.
                 Color groupColor;
                 if (avatar.WatchGroup != 0)
                     groupColor = _watchGroupList[avatar.WatchGroup].GroupColor;
                 else
                     groupColor = Color.White;
 
+                Color groupEmpireColor;
+                if (avatar.Empire != 0 && _empireList[avatar.Empire].WatchGroup != 0)
+                    groupEmpireColor = _watchGroupList[_empireList[avatar.Empire].WatchGroup].GroupColor;
+                else
+                    groupEmpireColor = Color.White;
+
                 int notifyColorOffset;
                 if (menuStrip1OptionsWatchHighlight.Checked && avatar.Notify)
                     notifyColorOffset = 40;
+                else if (menuStrip1OptionsWatchHighlight.Checked && _empireList.ContainsKey(avatar.Empire) && _empireList[avatar.Empire].Notify)
+                    notifyColorOffset = 20;
                 else
                     notifyColorOffset = 0;
 
@@ -692,44 +758,51 @@ namespace HazeronWatcher
                 avatar.OnlineRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + notifyColorOffset, 0 + notifyColorOffset); // Black
                 avatar.OnlineRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + notifyColorOffset, 30 + notifyColorOffset); // Dark Gray
                 foreach (DataGridViewCell cell in avatar.OnlineRow.Cells)
+                {
                     cell.ToolTipText = avatar.Note;
+                }
+
+                // Update empires.
+                avatar.OnlineRow.Cells[nameof(dgvOnlineColumnEmpire)].Value = _empireList.ContainsKey(avatar.Empire) ? _empireList[avatar.Empire] : null;
+                avatar.OnlineRow.Cells[nameof(dgvOnlineColumnEmpire)].Style.ForeColor = groupEmpireColor;
+                avatar.OnlineRow.Cells[nameof(dgvOnlineColumnEmpire)].Style.SelectionForeColor = groupEmpireColor;
+                avatar.RecentRow.Cells[nameof(dgvRecentColumnEmpire)].Value = _empireList.ContainsKey(avatar.Empire) ? _empireList[avatar.Empire] : null;
+                avatar.RecentRow.Cells[nameof(dgvRecentColumnEmpire)].Style.ForeColor = groupEmpireColor;
+                avatar.RecentRow.Cells[nameof(dgvRecentColumnEmpire)].Style.SelectionForeColor = groupEmpireColor;
 
                 // Is that avatar watch listed in anyway?
                 if (avatar.IsWatchListed)
                 {
-                    if (avatar.WatchRow == null)
+                    if (avatar.AvatarWatchRow == null)
                     {
-                        dgvWatch.Rows.Add();
-                        avatar.WatchRow = dgvWatch.Rows[dgvWatch.RowCount - 1];
-                        avatar.WatchRow.Cells["dgvWatchColumnId"].Value = avatar.ID;
-                        avatar.WatchRow.Cells["dgvWatchColumnAvatar"].Value = avatar;
-                        dgvWatch.Sort(dgvWatchColumnAvatar, ListSortDirection.Ascending);
+                        dgvAvatarWatch.Rows.Add();
+                        avatar.AvatarWatchRow = dgvAvatarWatch.Rows[dgvAvatarWatch.RowCount - 1];
+                        avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnId"].Value = avatar.ID;
+                        avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnAvatar"].Value = avatar;
+                        dgvAvatarWatch.Sort(dgvAvatarWatchColumnAvatar, ListSortDirection.Ascending);
                     }
-                    avatar.WatchRow.Visible = (avatar.Notify || !chxHideNonWatched.Checked)
-                                           && (cbxStandingFilter.SelectedItem == "Show all"
-                                            || (avatar.WatchGroup == 0 && cbxStandingFilter.SelectedItem == "None")
-                                              );
-                    // Update colors and note for dgvWatch
-                    avatar.WatchRow.DefaultCellStyle.ForeColor = groupColor;
-                    avatar.WatchRow.DefaultCellStyle.SelectionForeColor = groupColor;
-                    avatar.WatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + notifyColorOffset, 0 + notifyColorOffset); // Black
-                    avatar.WatchRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + notifyColorOffset, 30 + notifyColorOffset); // Dark Gray
+                    avatar.AvatarWatchRow.Visible = (avatar.Notify || !chxHideNonWatched.Checked);
+                    // Update colors and note for dgvAvatarWatch
+                    avatar.AvatarWatchRow.DefaultCellStyle.ForeColor = groupColor;
+                    avatar.AvatarWatchRow.DefaultCellStyle.SelectionForeColor = groupColor;
+                    avatar.AvatarWatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + notifyColorOffset, 0 + notifyColorOffset); // Black
+                    avatar.AvatarWatchRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + notifyColorOffset, 30 + notifyColorOffset); // Dark Gray
                     if (avatar.WatchGroup != 0)
-                        avatar.WatchRow.Cells["dgvWatchColumnGroup"].Value = _watchGroupList[avatar.WatchGroup].Name;
+                        avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnGroup"].Value = _watchGroupList[avatar.WatchGroup].Name;
                     else
-                        avatar.WatchRow.Cells["dgvWatchColumnGroup"].Value = null;
-                    avatar.WatchRow.Cells["dgvWatchColumnNotify"].Value = avatar.Notify;
+                        avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnGroup"].Value = null;
+                    avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnNotify"].Value = avatar.Notify;
                     if (avatar.Note.Length < 50)
-                        avatar.WatchRow.Cells["dgvWatchColumnNote"].Value = avatar.Note;
+                        avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnNote"].Value = avatar.Note;
                     else
-                        avatar.WatchRow.Cells["dgvWatchColumnNote"].Value = avatar.Note.Remove(50) + " ...";
-                    foreach (DataGridViewCell cell in avatar.WatchRow.Cells)
+                        avatar.AvatarWatchRow.Cells["dgvAvatarWatchColumnNote"].Value = avatar.Note.Remove(50) + " ...";
+                    foreach (DataGridViewCell cell in avatar.AvatarWatchRow.Cells)
                         cell.ToolTipText = avatar.Note;
                 }
-                else if (avatar.WatchRow != null)
+                else if (avatar.AvatarWatchRow != null)
                 {
-                    dgvWatch.Rows.Remove(avatar.WatchRow);
-                    avatar.WatchRow = null;
+                    dgvAvatarWatch.Rows.Remove(avatar.AvatarWatchRow);
+                    avatar.AvatarWatchRow = null;
                 }
 
                 // Update colors and note for dgvRecent
@@ -743,7 +816,64 @@ namespace HazeronWatcher
 
             // Invalidate the tables so "ToString()" methods updates.
             dgvOnline.Invalidate();
-            dgvWatch.Invalidate();
+            dgvAvatarWatch.Invalidate();
+        }
+
+        public void EmpireDgvUpdate()
+        {
+            foreach (Empire empire in _empireList.Values)
+            {
+                Color groupColor;
+                if (empire.WatchGroup != 0)
+                    groupColor = _watchGroupList[empire.WatchGroup].GroupColor;
+                else
+                    groupColor = Color.White;
+
+                int notifyColorOffset;
+                if (menuStrip1OptionsWatchHighlight.Checked && empire.Notify)
+                    notifyColorOffset = 40;
+                else
+                    notifyColorOffset = 0;
+
+                // Is that empire watch listed in anyway?
+                if (empire.IsWatchListed)
+                {
+                    if (empire.EmpireWatchRow == null)
+                    {
+                        dgvEmpireWatch.Rows.Add();
+                        empire.EmpireWatchRow = dgvEmpireWatch.Rows[dgvEmpireWatch.RowCount - 1];
+                        empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnId"].Value = empire.ID;
+                        empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnEmpire"].Value = empire;
+                        dgvEmpireWatch.Sort(dgvEmpireWatchColumnEmpire, ListSortDirection.Ascending);
+                    }
+                    empire.EmpireWatchRow.Visible = (empire.Notify || !chxHideNonWatched.Checked);
+                    // Update colors and note for dgvEmpireWatch
+                    empire.EmpireWatchRow.DefaultCellStyle.ForeColor = groupColor;
+                    empire.EmpireWatchRow.DefaultCellStyle.SelectionForeColor = groupColor;
+                    empire.EmpireWatchRow.DefaultCellStyle.BackColor = Color.FromArgb(0, 0 + notifyColorOffset, 0 + notifyColorOffset); // Black
+                    empire.EmpireWatchRow.DefaultCellStyle.SelectionBackColor = Color.FromArgb(30, 30 + notifyColorOffset, 30 + notifyColorOffset); // Dark Gray
+                    if (empire.WatchGroup != 0)
+                        empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnGroup"].Value = _watchGroupList[empire.WatchGroup].Name;
+                    else
+                        empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnGroup"].Value = null;
+                    empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnNotify"].Value = empire.Notify;
+                    if (empire.Note.Length < 50)
+                        empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnNote"].Value = empire.Note;
+                    else
+                        empire.EmpireWatchRow.Cells["dgvEmpireWatchColumnNote"].Value = empire.Note.Remove(50) + " ...";
+                    foreach (DataGridViewCell cell in empire.EmpireWatchRow.Cells)
+                        cell.ToolTipText = empire.Note;
+                }
+                else if (empire.EmpireWatchRow != null)
+                {
+                    dgvEmpireWatch.Rows.Remove(empire.EmpireWatchRow);
+                    empire.EmpireWatchRow = null;
+                }
+            }
+
+            // Invalidate the tables so "ToString()" methods updates.
+            dgvOnline.Invalidate();
+            dgvEmpireWatch.Invalidate();
         }
 
         public void GroupDgvAddGroup(WatchGroup group)
@@ -812,7 +942,7 @@ namespace HazeronWatcher
                 dgv.CurrentCell = currentCell;
                 currentCell.Selected = true;
 
-                //Show the ContextMenuStrip.
+                // Show the ContextMenuStrip.
                 dgv.ContextMenuStrip = cmsAvatarRightClick;
                 Point p = dgv.PointToClient(Control.MousePosition);
                 dgv.ContextMenuStrip.Show(dgv, p);
@@ -829,7 +959,7 @@ namespace HazeronWatcher
             {
                 if ((e.KeyCode == Keys.F10 && !e.Control && e.Shift) || e.KeyCode == Keys.Apps)
                 {
-                    //Show the ContextMenuStrip.
+                    // Show the ContextMenuStrip.
                     dgv.ContextMenuStrip = cmsAvatarRightClick;
                     Rectangle r = dgv.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
                     Point p = new Point(r.X, r.Y + r.Height);
@@ -912,7 +1042,7 @@ namespace HazeronWatcher
                         "The avatar may have been deleted."
                         , "Avatar Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            GroupDgvUpdate();
+            AvatarDgvUpdate();
         }
 
         private void cmsAvatarRightClickWatchGroupUnset_Click(object sender, EventArgs e)
@@ -967,10 +1097,163 @@ namespace HazeronWatcher
         private void cmsAvatarRightClickNote_Click(object sender, EventArgs e)
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsAvatarRightClickSourceControl as DataGridView);
-            Avatar player = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            FormInput inputBox = new FormInput(player.Name + " Note", "Writie notes for the character below." + Environment.NewLine + "Player: " + player.Name + " (" + player.ID + ")", player.Note, FormInputOptions.Multiline);
+            Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
+            FormInput inputBox = new FormInput(avatar.Name + " Note", "Writie notes for the avatar below." + Environment.NewLine + "Avatar: " + avatar.Name + " (" + avatar.ID + ")", avatar.Note, FormInputOptions.Multiline);
             if (inputBox.ShowDialog(this) == DialogResult.OK)
-                player.Note = inputBox.ReturnInput;
+                avatar.Note = inputBox.ReturnInput;
+            GroupDgvUpdate();
+        }
+        #endregion
+
+        #region Empire DataGridView ContextMenu RightClick
+        private Control _cmsEmpireRightClickSourceControl;
+
+        private void dgvEmpire_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        { // Based on: http://stackoverflow.com/questions/1718389/right-click-context-menu-for-datagrid.
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && e.Button == MouseButtons.Right)
+            {
+                DataGridView dgv = (sender as DataGridView);
+                _cmsEmpireRightClickSourceControl = (dgv as Control);
+
+                // Get and set current cell from mouse location.
+                DataGridViewCell currentCell = dgv[e.ColumnIndex, e.RowIndex];
+                dgv.ClearSelection();
+                dgv.CurrentCell = currentCell;
+                currentCell.Selected = true;
+
+                // Show the ContextMenuStrip.
+                dgv.ContextMenuStrip = cmsEmpireRightClick;
+                Point p = dgv.PointToClient(Control.MousePosition);
+                dgv.ContextMenuStrip.Show(dgv, p);
+                dgv.ContextMenuStrip = null;
+            }
+        }
+
+        private void dgvEmpire_KeyDown(object sender, KeyEventArgs e)
+        { // Based on: http://stackoverflow.com/questions/1718389/right-click-context-menu-for-datagrid.
+            DataGridView dgv = (sender as DataGridView);
+            DataGridViewCell currentCell = dgv.CurrentCell;
+            _cmsEmpireRightClickSourceControl = (dgv as Control);
+            if (currentCell != null)
+            {
+                if ((e.KeyCode == Keys.F10 && !e.Control && e.Shift) || e.KeyCode == Keys.Apps)
+                {
+                    // Show the ContextMenuStrip.
+                    dgv.ContextMenuStrip = cmsEmpireRightClick;
+                    Rectangle r = dgv.GetCellDisplayRectangle(currentCell.ColumnIndex, currentCell.RowIndex, false);
+                    Point p = new Point(r.X, r.Y + r.Height);
+                    dgv.ContextMenuStrip.Show(dgv, p);
+                    dgv.ContextMenuStrip = null;
+                }
+                else if (e.KeyCode == Keys.C && e.Control && !e.Shift)
+                    cmsEmpireRightClickCopy_Click(sender, null);
+            }
+        }
+
+        private void cmsEmpireRightClick_Opening(object sender, CancelEventArgs e)
+        {
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+            cmsEmpireRightClickWatchGroup.Checked = empire.WatchGroup != 0;
+            cmsEmpireRightClickWatchGroupUnset.Enabled = empire.WatchGroup != 0;
+            cmsEmpireRightClickWatch.Checked = empire.Notify;
+            cmsEmpireRightClickWatch.Text = (empire.Notify ? "Remove from" : "Add to") + " Watch";
+            cmsEmpireRightClickNote.Checked = !String.IsNullOrEmpty(empire.Note);
+            cmsEmpireRightClickNote.Text = (String.IsNullOrEmpty(empire.Note) ? "Add" : "Edit") + " Note";
+        }
+
+        private void cmsEmpireRightClickCopy_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void cmsEmpireRightClickRecheck_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+            try
+            {
+                empire.RecheckName();
+            }
+            catch (HazeronEmpireNotFoundException)
+            {
+                if (empire.IsWatchListed)
+                {
+                    DialogResult confimation = MessageBox.Show(this,
+                        "There is no empire with that ID." + Environment.NewLine +
+                        "The empire may have been deleted." + Environment.NewLine +
+                        "" + Environment.NewLine +
+                        "Would you like to remove the empire from watch list?"
+                        , "Empire Not Found, Unwatch?", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    if (confimation == DialogResult.Yes)
+                    {
+                        empire.Unlist();
+                    }
+                }
+                else
+                    MessageBox.Show(this,
+                        "There is no empire with that ID." + Environment.NewLine +
+                        "The empire may have been deleted."
+                        , "Empire Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            EmpireDgvUpdate();
+        }
+
+        private void cmsEmpireRightClickWatchGroupUnset_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+
+            // Set empire WatchGroup to none (0).
+            empire.WatchGroup = 0;
+
+            GroupDgvUpdate();
+        }
+
+        private void cmsEmpireRightClickWatchGroupNew_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+
+            // Create the WatchGroup.
+            WatchGroup newWatchGroup = NewWatchGroup();
+            if (newWatchGroup == null)
+                return;
+
+            // Set WatchGroup of Empire to newly created WatchGroup.
+            empire.WatchGroup = newWatchGroup.ID;
+
+            GroupDgvUpdate();
+        }
+
+        private void cmsEmpireRightClickWatchGroupSet_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+
+            // Get menu item.
+            ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
+
+            // Set WatchGroup of Empire to specified WatchGroup.
+            empire.WatchGroup = (int)menuItem.Tag;
+
+            GroupDgvUpdate();
+        }
+
+        private void cmsEmpireRightClickWatch_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+            empire.Notify = !empire.Notify;
+            GroupDgvUpdate();
+        }
+
+        private void cmsEmpireRightClickNote_Click(object sender, EventArgs e)
+        { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
+            DataGridView dgv = (_cmsEmpireRightClickSourceControl as DataGridView);
+            Empire empire = (Empire)dgv.CurrentRow.Cells[1].Value;
+            FormInput inputBox = new FormInput(empire.Name + " Note", "Writie notes for the empire below." + Environment.NewLine + "Empire: " + empire.Name + " (" + empire.ID + ")", empire.Note, FormInputOptions.Multiline);
+            if (inputBox.ShowDialog(this) == DialogResult.OK)
+                empire.Note = inputBox.ReturnInput;
             GroupDgvUpdate();
         }
         #endregion
@@ -1108,6 +1391,7 @@ namespace HazeronWatcher
             if (!Directory.Exists(_appdataFolder))
                 Directory.CreateDirectory(_appdataFolder);
             _settingsXml.AvatarList = _avatarList.Values.Where(x => x.IsWatchListed).ToList();
+            _settingsXml.EmpireList = _empireList.Values.Where(x => x.IsWatchListed).ToList();
             _settingsXml.WatchGroupList = _watchGroupList.Values.ToList();
             _settingsXml.Options.ShowIdColumn = menuStrip1OptionsAvatarIds.Checked;
             _settingsXml.Options.ShowWatchHighlight = menuStrip1OptionsWatchHighlight.Checked;

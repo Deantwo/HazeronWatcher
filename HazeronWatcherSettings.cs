@@ -18,6 +18,10 @@ namespace HazeronWatcher
         [XmlArrayItem("Avatar")]
         public List<Avatar> AvatarList { get; set; }
         
+        [XmlArray("EmpireList")]
+        [XmlArrayItem("Empire")]
+        public List<Empire> EmpireList { get; set; }
+        
         [XmlArray("WatchGroupList")]
         [XmlArrayItem("WatchGroup")]
         public List<WatchGroup> WatchGroupList { get; set; }
@@ -26,6 +30,7 @@ namespace HazeronWatcher
         {
             Options = new HazeronWatcherSettingsOptions();
             AvatarList = new List<Avatar>();
+            EmpireList = new List<Empire>();
             WatchGroupList = new List<WatchGroup>();
         }
 

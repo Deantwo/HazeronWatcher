@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -62,20 +63,29 @@
             this.dgvOnline = new System.Windows.Forms.DataGridView();
             this.dgvOnlineColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvOnlineColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvOnlineColumnEmpire = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvRecent = new System.Windows.Forms.DataGridView();
             this.dgvRecentColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvRecentColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRecentColumnEmpire = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageAvatars = new System.Windows.Forms.TabPage();
-            this.cbxStandingFilter = new System.Windows.Forms.ComboBox();
-            this.dgvWatch = new System.Windows.Forms.DataGridView();
-            this.dgvWatchColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvWatchColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvWatchColumnGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvWatchColumnNotify = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvWatchColumnNote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAvatarWatch = new System.Windows.Forms.DataGridView();
+            this.dgvAvatarWatchColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAvatarWatchColumnAvatar = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAvatarWatchColumnGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAvatarWatchColumnNotify = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAvatarWatchColumnNote = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddAvatar = new System.Windows.Forms.Button();
             this.chxHideNonWatched = new System.Windows.Forms.CheckBox();
+            this.tabPageEmpires = new System.Windows.Forms.TabPage();
+            this.dgvEmpireWatch = new System.Windows.Forms.DataGridView();
+            this.dgvEmpireWatchColumnId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvEmpireWatchColumnEmpire = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvEmpireWatchColumnGroup = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvEmpireWatchColumnNotify = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvEmpireWatchColumnNote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddEmpire = new System.Windows.Forms.Button();
             this.tabPageGroups = new System.Windows.Forms.TabPage();
             this.btnGroupDelete = new System.Windows.Forms.Button();
             this.btnGroupNew = new System.Windows.Forms.Button();
@@ -111,6 +121,18 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsGroupRightClickEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsGroupRightClickDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsEmpireRightClick = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsEmpireRightClickCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsEmpireRightClickRecheck = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsEmpireRightClickWatchGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsEmpireRightClickWatchGroupUnset = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsEmpireRightClickWatchGroupNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsEmpireRightClickWatch = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmsEmpireRightClickNote = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -125,12 +147,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRecent)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPageAvatars.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAvatarWatch)).BeginInit();
+            this.tabPageEmpires.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEmpireWatch)).BeginInit();
             this.tabPageGroups.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGroup)).BeginInit();
             this.cmsAvatarRightClick.SuspendLayout();
             this.cmsNotifyIconRightClick.SuspendLayout();
             this.cmsGroupRightClick.SuspendLayout();
+            this.cmsEmpireRightClick.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -186,13 +211,13 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(131, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(132, 6);
             // 
             // menuStrip1FileExit
             // 
             this.menuStrip1FileExit.Name = "menuStrip1FileExit";
             this.menuStrip1FileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.menuStrip1FileExit.Size = new System.Drawing.Size(134, 22);
+            this.menuStrip1FileExit.Size = new System.Drawing.Size(135, 22);
             this.menuStrip1FileExit.Text = "Exit";
             this.menuStrip1FileExit.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
@@ -292,26 +317,26 @@
             // menuStrip1HelpGithub
             // 
             this.menuStrip1HelpGithub.Name = "menuStrip1HelpGithub";
-            this.menuStrip1HelpGithub.Size = new System.Drawing.Size(156, 22);
+            this.menuStrip1HelpGithub.Size = new System.Drawing.Size(155, 22);
             this.menuStrip1HelpGithub.Text = "GitHub Repo";
             this.menuStrip1HelpGithub.Click += new System.EventHandler(this.menuStrip1HelpGithub_Click);
             // 
             // menuStrip1HelpThread
             // 
             this.menuStrip1HelpThread.Name = "menuStrip1HelpThread";
-            this.menuStrip1HelpThread.Size = new System.Drawing.Size(156, 22);
+            this.menuStrip1HelpThread.Size = new System.Drawing.Size(155, 22);
             this.menuStrip1HelpThread.Text = "Forum Thread";
             this.menuStrip1HelpThread.Click += new System.EventHandler(this.menuStrip1HelpThread_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(153, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(152, 6);
             // 
             // menuStrip1HelpAbout
             // 
             this.menuStrip1HelpAbout.Name = "menuStrip1HelpAbout";
-            this.menuStrip1HelpAbout.Size = new System.Drawing.Size(156, 22);
+            this.menuStrip1HelpAbout.Size = new System.Drawing.Size(155, 22);
             this.menuStrip1HelpAbout.Text = "About";
             this.menuStrip1HelpAbout.Click += new System.EventHandler(this.menuStrip1HelpAbout_Click);
             // 
@@ -319,7 +344,7 @@
             // 
             this.menuStrip1HelpHowToUse.Name = "menuStrip1HelpHowToUse";
             this.menuStrip1HelpHowToUse.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.menuStrip1HelpHowToUse.Size = new System.Drawing.Size(156, 22);
+            this.menuStrip1HelpHowToUse.Size = new System.Drawing.Size(155, 22);
             this.menuStrip1HelpHowToUse.Text = "How To Use";
             this.menuStrip1HelpHowToUse.Click += new System.EventHandler(this.menuStrip1HelpHowToUse_Click);
             // 
@@ -368,15 +393,16 @@
             this.dgvOnline.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOnline.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvOnlineColumnId,
-            this.dgvOnlineColumnAvatar});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvOnlineColumnAvatar,
+            this.dgvOnlineColumnEmpire});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOnline.Location = new System.Drawing.Point(0, 0);
             this.dgvOnline.Name = "dgvOnline";
@@ -402,14 +428,18 @@
             // 
             // dgvOnlineColumnAvatar
             // 
-            this.dgvOnlineColumnAvatar.FillWeight = 1000F;
-            this.dgvOnlineColumnAvatar.Frozen = true;
+            this.dgvOnlineColumnAvatar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvOnlineColumnAvatar.HeaderText = "Avatars Online";
-            this.dgvOnlineColumnAvatar.MinimumWidth = 1000;
             this.dgvOnlineColumnAvatar.Name = "dgvOnlineColumnAvatar";
             this.dgvOnlineColumnAvatar.ReadOnly = true;
-            this.dgvOnlineColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnlineColumnAvatar.Width = 1000;
+            // 
+            // dgvOnlineColumnEmpire
+            // 
+            this.dgvOnlineColumnEmpire.HeaderText = "Empire";
+            this.dgvOnlineColumnEmpire.Name = "dgvOnlineColumnEmpire";
+            this.dgvOnlineColumnEmpire.ReadOnly = true;
+            this.dgvOnlineColumnEmpire.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvOnlineColumnEmpire.Width = 50;
             // 
             // dgvRecent
             // 
@@ -420,15 +450,16 @@
             this.dgvRecent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRecent.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvRecentColumnId,
-            this.dgvRecentColumnAvatar});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvRecentColumnAvatar,
+            this.dgvRecentColumnEmpire});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle7;
             this.dgvRecent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRecent.Location = new System.Drawing.Point(0, 0);
             this.dgvRecent.Name = "dgvRecent";
@@ -454,18 +485,22 @@
             // 
             // dgvRecentColumnAvatar
             // 
-            this.dgvRecentColumnAvatar.FillWeight = 1000F;
-            this.dgvRecentColumnAvatar.Frozen = true;
+            this.dgvRecentColumnAvatar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dgvRecentColumnAvatar.HeaderText = "Recently Online";
-            this.dgvRecentColumnAvatar.MinimumWidth = 1000;
             this.dgvRecentColumnAvatar.Name = "dgvRecentColumnAvatar";
             this.dgvRecentColumnAvatar.ReadOnly = true;
-            this.dgvRecentColumnAvatar.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRecentColumnAvatar.Width = 1000;
+            // 
+            // dgvRecentColumnEmpire
+            // 
+            this.dgvRecentColumnEmpire.HeaderText = "Empire";
+            this.dgvRecentColumnEmpire.Name = "dgvRecentColumnEmpire";
+            this.dgvRecentColumnEmpire.ReadOnly = true;
+            this.dgvRecentColumnEmpire.Width = 50;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageAvatars);
+            this.tabControl1.Controls.Add(this.tabPageEmpires);
             this.tabControl1.Controls.Add(this.tabPageGroups);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -476,8 +511,7 @@
             // 
             // tabPageAvatars
             // 
-            this.tabPageAvatars.Controls.Add(this.cbxStandingFilter);
-            this.tabPageAvatars.Controls.Add(this.dgvWatch);
+            this.tabPageAvatars.Controls.Add(this.dgvAvatarWatch);
             this.tabPageAvatars.Controls.Add(this.btnAddAvatar);
             this.tabPageAvatars.Controls.Add(this.chxHideNonWatched);
             this.tabPageAvatars.Location = new System.Drawing.Point(4, 22);
@@ -488,101 +522,82 @@
             this.tabPageAvatars.Text = "Avatars";
             this.tabPageAvatars.UseVisualStyleBackColor = true;
             // 
-            // cbxStandingFilter
+            // dgvAvatarWatch
             // 
-            this.cbxStandingFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxStandingFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxStandingFilter.FormattingEnabled = true;
-            this.cbxStandingFilter.Items.AddRange(new object[] {
-            "Show all",
-            "Empire",
-            "Friend",
-            "Neutral",
-            "Unsure",
-            "Enemy"});
-            this.cbxStandingFilter.Location = new System.Drawing.Point(6, 6);
-            this.cbxStandingFilter.Name = "cbxStandingFilter";
-            this.cbxStandingFilter.Size = new System.Drawing.Size(188, 21);
-            this.cbxStandingFilter.TabIndex = 2;
-            this.cbxStandingFilter.SelectedIndexChanged += new System.EventHandler(this.cbxStandingFilter_SelectedIndexChanged);
-            // 
-            // dgvWatch
-            // 
-            this.dgvWatch.AllowUserToAddRows = false;
-            this.dgvWatch.AllowUserToDeleteRows = false;
-            this.dgvWatch.AllowUserToResizeRows = false;
-            this.dgvWatch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvAvatarWatch.AllowUserToAddRows = false;
+            this.dgvAvatarWatch.AllowUserToDeleteRows = false;
+            this.dgvAvatarWatch.AllowUserToResizeRows = false;
+            this.dgvAvatarWatch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvWatch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvWatch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgvWatchColumnId,
-            this.dgvWatchColumnAvatar,
-            this.dgvWatchColumnGroup,
-            this.dgvWatchColumnNotify,
-            this.dgvWatchColumnNote});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvWatch.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvWatch.Location = new System.Drawing.Point(6, 85);
-            this.dgvWatch.Name = "dgvWatch";
-            this.dgvWatch.ReadOnly = true;
-            this.dgvWatch.RowHeadersVisible = false;
-            this.dgvWatch.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvWatch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvWatch.Size = new System.Drawing.Size(188, 170);
-            this.dgvWatch.TabIndex = 0;
-            this.dgvWatch.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAvatar_CellMouseDown);
-            this.dgvWatch.Click += new System.EventHandler(this.dgv_Click);
-            this.dgvWatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvAvatar_KeyDown);
+            this.dgvAvatarWatch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvAvatarWatch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAvatarWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvAvatarWatchColumnId,
+            this.dgvAvatarWatchColumnAvatar,
+            this.dgvAvatarWatchColumnGroup,
+            this.dgvAvatarWatchColumnNotify,
+            this.dgvAvatarWatchColumnNote});
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAvatarWatch.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dgvAvatarWatch.Location = new System.Drawing.Point(3, 58);
+            this.dgvAvatarWatch.Name = "dgvAvatarWatch";
+            this.dgvAvatarWatch.ReadOnly = true;
+            this.dgvAvatarWatch.RowHeadersVisible = false;
+            this.dgvAvatarWatch.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvAvatarWatch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAvatarWatch.Size = new System.Drawing.Size(191, 200);
+            this.dgvAvatarWatch.TabIndex = 0;
+            this.dgvAvatarWatch.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvAvatar_CellMouseDown);
+            this.dgvAvatarWatch.Click += new System.EventHandler(this.dgv_Click);
+            this.dgvAvatarWatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvAvatar_KeyDown);
             // 
-            // dgvWatchColumnId
+            // dgvAvatarWatchColumnId
             // 
-            this.dgvWatchColumnId.FillWeight = 50F;
-            this.dgvWatchColumnId.Frozen = true;
-            this.dgvWatchColumnId.HeaderText = "ID";
-            this.dgvWatchColumnId.Name = "dgvWatchColumnId";
-            this.dgvWatchColumnId.ReadOnly = true;
-            this.dgvWatchColumnId.Width = 50;
+            this.dgvAvatarWatchColumnId.FillWeight = 50F;
+            this.dgvAvatarWatchColumnId.Frozen = true;
+            this.dgvAvatarWatchColumnId.HeaderText = "ID";
+            this.dgvAvatarWatchColumnId.Name = "dgvAvatarWatchColumnId";
+            this.dgvAvatarWatchColumnId.ReadOnly = true;
+            this.dgvAvatarWatchColumnId.Width = 50;
             // 
-            // dgvWatchColumnAvatar
+            // dgvAvatarWatchColumnAvatar
             // 
-            this.dgvWatchColumnAvatar.HeaderText = "Avatar";
-            this.dgvWatchColumnAvatar.Name = "dgvWatchColumnAvatar";
-            this.dgvWatchColumnAvatar.ReadOnly = true;
+            this.dgvAvatarWatchColumnAvatar.HeaderText = "Avatar";
+            this.dgvAvatarWatchColumnAvatar.Name = "dgvAvatarWatchColumnAvatar";
+            this.dgvAvatarWatchColumnAvatar.ReadOnly = true;
             // 
-            // dgvWatchColumnGroup
+            // dgvAvatarWatchColumnGroup
             // 
-            this.dgvWatchColumnGroup.HeaderText = "Group";
-            this.dgvWatchColumnGroup.Name = "dgvWatchColumnGroup";
-            this.dgvWatchColumnGroup.ReadOnly = true;
+            this.dgvAvatarWatchColumnGroup.HeaderText = "Group";
+            this.dgvAvatarWatchColumnGroup.Name = "dgvAvatarWatchColumnGroup";
+            this.dgvAvatarWatchColumnGroup.ReadOnly = true;
             // 
-            // dgvWatchColumnNotify
+            // dgvAvatarWatchColumnNotify
             // 
-            this.dgvWatchColumnNotify.HeaderText = "Notify";
-            this.dgvWatchColumnNotify.Name = "dgvWatchColumnNotify";
-            this.dgvWatchColumnNotify.ReadOnly = true;
+            this.dgvAvatarWatchColumnNotify.HeaderText = "Notify";
+            this.dgvAvatarWatchColumnNotify.Name = "dgvAvatarWatchColumnNotify";
+            this.dgvAvatarWatchColumnNotify.ReadOnly = true;
             // 
-            // dgvWatchColumnNote
+            // dgvAvatarWatchColumnNote
             // 
-            this.dgvWatchColumnNote.HeaderText = "Note";
-            this.dgvWatchColumnNote.Name = "dgvWatchColumnNote";
-            this.dgvWatchColumnNote.ReadOnly = true;
+            this.dgvAvatarWatchColumnNote.HeaderText = "Note";
+            this.dgvAvatarWatchColumnNote.Name = "dgvAvatarWatchColumnNote";
+            this.dgvAvatarWatchColumnNote.ReadOnly = true;
             // 
             // btnAddAvatar
             // 
             this.btnAddAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddAvatar.Location = new System.Drawing.Point(6, 56);
+            this.btnAddAvatar.Location = new System.Drawing.Point(3, 29);
             this.btnAddAvatar.Name = "btnAddAvatar";
-            this.btnAddAvatar.Size = new System.Drawing.Size(188, 23);
+            this.btnAddAvatar.Size = new System.Drawing.Size(191, 23);
             this.btnAddAvatar.TabIndex = 3;
             this.btnAddAvatar.Text = "Add Avatar via ID";
             this.btnAddAvatar.UseVisualStyleBackColor = true;
@@ -592,13 +607,105 @@
             // 
             this.chxHideNonWatched.AutoCheck = false;
             this.chxHideNonWatched.AutoSize = true;
-            this.chxHideNonWatched.Location = new System.Drawing.Point(6, 33);
+            this.chxHideNonWatched.Location = new System.Drawing.Point(6, 6);
             this.chxHideNonWatched.Name = "chxHideNonWatched";
             this.chxHideNonWatched.Size = new System.Drawing.Size(116, 17);
             this.chxHideNonWatched.TabIndex = 1;
             this.chxHideNonWatched.Text = "Hide non-Watched";
             this.chxHideNonWatched.UseVisualStyleBackColor = true;
             this.chxHideNonWatched.Click += new System.EventHandler(this.chxHideNonWatched_Click);
+            // 
+            // tabPageEmpires
+            // 
+            this.tabPageEmpires.Controls.Add(this.dgvEmpireWatch);
+            this.tabPageEmpires.Controls.Add(this.btnAddEmpire);
+            this.tabPageEmpires.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEmpires.Name = "tabPageEmpires";
+            this.tabPageEmpires.Size = new System.Drawing.Size(200, 261);
+            this.tabPageEmpires.TabIndex = 2;
+            this.tabPageEmpires.Text = "Empires";
+            this.tabPageEmpires.UseVisualStyleBackColor = true;
+            // 
+            // dgvEmpireWatch
+            // 
+            this.dgvEmpireWatch.AllowUserToAddRows = false;
+            this.dgvEmpireWatch.AllowUserToDeleteRows = false;
+            this.dgvEmpireWatch.AllowUserToResizeRows = false;
+            this.dgvEmpireWatch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvEmpireWatch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvEmpireWatch.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEmpireWatch.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvEmpireWatchColumnId,
+            this.dgvEmpireWatchColumnEmpire,
+            this.dgvEmpireWatchColumnGroup,
+            this.dgvEmpireWatchColumnNotify,
+            this.dgvEmpireWatchColumnNote});
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvEmpireWatch.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dgvEmpireWatch.Location = new System.Drawing.Point(3, 32);
+            this.dgvEmpireWatch.Name = "dgvEmpireWatch";
+            this.dgvEmpireWatch.ReadOnly = true;
+            this.dgvEmpireWatch.RowHeadersVisible = false;
+            this.dgvEmpireWatch.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvEmpireWatch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmpireWatch.Size = new System.Drawing.Size(191, 226);
+            this.dgvEmpireWatch.TabIndex = 4;
+            this.dgvEmpireWatch.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvEmpire_CellMouseDown);
+            this.dgvEmpireWatch.Click += new System.EventHandler(this.dgv_Click);
+            this.dgvEmpireWatch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvEmpire_KeyDown);
+            // 
+            // dgvEmpireWatchColumnId
+            // 
+            this.dgvEmpireWatchColumnId.FillWeight = 50F;
+            this.dgvEmpireWatchColumnId.Frozen = true;
+            this.dgvEmpireWatchColumnId.HeaderText = "ID";
+            this.dgvEmpireWatchColumnId.Name = "dgvEmpireWatchColumnId";
+            this.dgvEmpireWatchColumnId.ReadOnly = true;
+            this.dgvEmpireWatchColumnId.Width = 50;
+            // 
+            // dgvEmpireWatchColumnEmpire
+            // 
+            this.dgvEmpireWatchColumnEmpire.HeaderText = "Empire";
+            this.dgvEmpireWatchColumnEmpire.Name = "dgvEmpireWatchColumnEmpire";
+            this.dgvEmpireWatchColumnEmpire.ReadOnly = true;
+            // 
+            // dgvEmpireWatchColumnGroup
+            // 
+            this.dgvEmpireWatchColumnGroup.HeaderText = "Group";
+            this.dgvEmpireWatchColumnGroup.Name = "dgvEmpireWatchColumnGroup";
+            this.dgvEmpireWatchColumnGroup.ReadOnly = true;
+            // 
+            // dgvEmpireWatchColumnNotify
+            // 
+            this.dgvEmpireWatchColumnNotify.HeaderText = "Notify";
+            this.dgvEmpireWatchColumnNotify.Name = "dgvEmpireWatchColumnNotify";
+            this.dgvEmpireWatchColumnNotify.ReadOnly = true;
+            // 
+            // dgvEmpireWatchColumnNote
+            // 
+            this.dgvEmpireWatchColumnNote.HeaderText = "Note";
+            this.dgvEmpireWatchColumnNote.Name = "dgvEmpireWatchColumnNote";
+            this.dgvEmpireWatchColumnNote.ReadOnly = true;
+            // 
+            // btnAddEmpire
+            // 
+            this.btnAddEmpire.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddEmpire.Location = new System.Drawing.Point(3, 3);
+            this.btnAddEmpire.Name = "btnAddEmpire";
+            this.btnAddEmpire.Size = new System.Drawing.Size(191, 23);
+            this.btnAddEmpire.TabIndex = 5;
+            this.btnAddEmpire.Text = "Add Empire via ID";
+            this.btnAddEmpire.UseVisualStyleBackColor = true;
+            this.btnAddEmpire.Click += new System.EventHandler(this.btnAddEmpire_Click);
             // 
             // tabPageGroups
             // 
@@ -661,14 +768,14 @@
             this.dgvGroupColumnNotify,
             this.dgvGroupColumnSound,
             this.dgvGroupColumnColor});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGroup.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGroup.DefaultCellStyle = dataGridViewCellStyle10;
             this.dgvGroup.Location = new System.Drawing.Point(6, 35);
             this.dgvGroup.Name = "dgvGroup";
             this.dgvGroup.ReadOnly = true;
@@ -780,21 +887,21 @@
             // cmsAvatarRightClickWatchGroupUnset
             // 
             this.cmsAvatarRightClickWatchGroupUnset.Name = "cmsAvatarRightClickWatchGroupUnset";
-            this.cmsAvatarRightClickWatchGroupUnset.Size = new System.Drawing.Size(107, 22);
+            this.cmsAvatarRightClickWatchGroupUnset.Size = new System.Drawing.Size(180, 22);
             this.cmsAvatarRightClickWatchGroupUnset.Text = "Unset";
             this.cmsAvatarRightClickWatchGroupUnset.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupUnset_Click);
             // 
             // cmsAvatarRightClickWatchGroupNew
             // 
             this.cmsAvatarRightClickWatchGroupNew.Name = "cmsAvatarRightClickWatchGroupNew";
-            this.cmsAvatarRightClickWatchGroupNew.Size = new System.Drawing.Size(107, 22);
+            this.cmsAvatarRightClickWatchGroupNew.Size = new System.Drawing.Size(180, 22);
             this.cmsAvatarRightClickWatchGroupNew.Text = "New...";
             this.cmsAvatarRightClickWatchGroupNew.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupNew_Click);
             // 
             // cmsAvatarRightClickWatchGroupSeparator
             // 
             this.cmsAvatarRightClickWatchGroupSeparator.Name = "cmsAvatarRightClickWatchGroupSeparator";
-            this.cmsAvatarRightClickWatchGroupSeparator.Size = new System.Drawing.Size(104, 6);
+            this.cmsAvatarRightClickWatchGroupSeparator.Size = new System.Drawing.Size(177, 6);
             // 
             // cmsAvatarRightClickWatch
             // 
@@ -863,34 +970,121 @@
             this.cmsGroupRightClickEdit,
             this.cmsGroupRightClickDelete});
             this.cmsGroupRightClick.Name = "contextMenuStrip1";
-            this.cmsGroupRightClick.Size = new System.Drawing.Size(153, 98);
+            this.cmsGroupRightClick.Size = new System.Drawing.Size(108, 76);
             this.cmsGroupRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsGroupRightClick_Opening);
             // 
             // cmsGroupRightClickCopy
             // 
             this.cmsGroupRightClickCopy.Name = "cmsGroupRightClickCopy";
-            this.cmsGroupRightClickCopy.Size = new System.Drawing.Size(152, 22);
+            this.cmsGroupRightClickCopy.Size = new System.Drawing.Size(107, 22);
             this.cmsGroupRightClickCopy.Text = "Copy";
             this.cmsGroupRightClickCopy.Click += new System.EventHandler(this.cmsGroupRightClickCopy_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(104, 6);
             // 
             // cmsGroupRightClickEdit
             // 
             this.cmsGroupRightClickEdit.Name = "cmsGroupRightClickEdit";
-            this.cmsGroupRightClickEdit.Size = new System.Drawing.Size(152, 22);
+            this.cmsGroupRightClickEdit.Size = new System.Drawing.Size(107, 22);
             this.cmsGroupRightClickEdit.Text = "Edit";
             this.cmsGroupRightClickEdit.Click += new System.EventHandler(this.cmsGroupRightClickEdit_Click);
             // 
             // cmsGroupRightClickDelete
             // 
             this.cmsGroupRightClickDelete.Name = "cmsGroupRightClickDelete";
-            this.cmsGroupRightClickDelete.Size = new System.Drawing.Size(152, 22);
+            this.cmsGroupRightClickDelete.Size = new System.Drawing.Size(107, 22);
             this.cmsGroupRightClickDelete.Text = "Delete";
             this.cmsGroupRightClickDelete.Click += new System.EventHandler(this.cmsGroupRightClickDelete_Click);
+            // 
+            // cmsEmpireRightClick
+            // 
+            this.cmsEmpireRightClick.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsEmpireRightClickCopy,
+            this.toolStripSeparator10,
+            this.cmsEmpireRightClickRecheck,
+            this.toolStripSeparator12,
+            this.cmsEmpireRightClickWatchGroup,
+            this.cmsEmpireRightClickWatch,
+            this.toolStripSeparator14,
+            this.cmsEmpireRightClickNote});
+            this.cmsEmpireRightClick.Name = "contextMenuStrip1";
+            this.cmsEmpireRightClick.Size = new System.Drawing.Size(154, 132);
+            this.cmsEmpireRightClick.Opening += new System.ComponentModel.CancelEventHandler(this.cmsEmpireRightClick_Opening);
+            // 
+            // cmsEmpireRightClickCopy
+            // 
+            this.cmsEmpireRightClickCopy.Name = "cmsEmpireRightClickCopy";
+            this.cmsEmpireRightClickCopy.Size = new System.Drawing.Size(153, 22);
+            this.cmsEmpireRightClickCopy.Text = "Copy";
+            this.cmsEmpireRightClickCopy.Click += new System.EventHandler(this.cmsEmpireRightClickCopy_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(150, 6);
+            // 
+            // cmsEmpireRightClickRecheck
+            // 
+            this.cmsEmpireRightClickRecheck.Name = "cmsEmpireRightClickRecheck";
+            this.cmsEmpireRightClickRecheck.Size = new System.Drawing.Size(153, 22);
+            this.cmsEmpireRightClickRecheck.Text = "Recheck";
+            this.cmsEmpireRightClickRecheck.Click += new System.EventHandler(this.cmsEmpireRightClickRecheck_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(150, 6);
+            // 
+            // cmsEmpireRightClickWatchGroup
+            // 
+            this.cmsEmpireRightClickWatchGroup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsEmpireRightClickWatchGroupUnset,
+            this.cmsEmpireRightClickWatchGroupNew,
+            this.toolStripSeparator13});
+            this.cmsEmpireRightClickWatchGroup.Name = "cmsEmpireRightClickWatchGroup";
+            this.cmsEmpireRightClickWatchGroup.Size = new System.Drawing.Size(153, 22);
+            this.cmsEmpireRightClickWatchGroup.Text = "Watch Group...";
+            // 
+            // cmsEmpireRightClickWatchGroupUnset
+            // 
+            this.cmsEmpireRightClickWatchGroupUnset.Name = "cmsEmpireRightClickWatchGroupUnset";
+            this.cmsEmpireRightClickWatchGroupUnset.Size = new System.Drawing.Size(180, 22);
+            this.cmsEmpireRightClickWatchGroupUnset.Text = "Unset";
+            this.cmsEmpireRightClickWatchGroupUnset.Click += new System.EventHandler(this.cmsEmpireRightClickWatchGroupUnset_Click);
+            // 
+            // cmsEmpireRightClickWatchGroupNew
+            // 
+            this.cmsEmpireRightClickWatchGroupNew.Name = "cmsEmpireRightClickWatchGroupNew";
+            this.cmsEmpireRightClickWatchGroupNew.Size = new System.Drawing.Size(180, 22);
+            this.cmsEmpireRightClickWatchGroupNew.Text = "New...";
+            this.cmsEmpireRightClickWatchGroupNew.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupNew_Click);
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(177, 6);
+            // 
+            // cmsEmpireRightClickWatch
+            // 
+            this.cmsEmpireRightClickWatch.Name = "cmsEmpireRightClickWatch";
+            this.cmsEmpireRightClickWatch.Size = new System.Drawing.Size(153, 22);
+            this.cmsEmpireRightClickWatch.Text = "Watch";
+            this.cmsEmpireRightClickWatch.Click += new System.EventHandler(this.cmsEmpireRightClickWatch_Click);
+            // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(150, 6);
+            // 
+            // cmsEmpireRightClickNote
+            // 
+            this.cmsEmpireRightClickNote.Name = "cmsEmpireRightClickNote";
+            this.cmsEmpireRightClickNote.Size = new System.Drawing.Size(153, 22);
+            this.cmsEmpireRightClickNote.Text = "Note";
+            this.cmsEmpireRightClickNote.Click += new System.EventHandler(this.cmsEmpireRightClickNote_Click);
             // 
             // FormMain
             // 
@@ -922,12 +1116,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageAvatars.ResumeLayout(false);
             this.tabPageAvatars.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAvatarWatch)).EndInit();
+            this.tabPageEmpires.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEmpireWatch)).EndInit();
             this.tabPageGroups.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvGroup)).EndInit();
             this.cmsAvatarRightClick.ResumeLayout(false);
             this.cmsNotifyIconRightClick.ResumeLayout(false);
             this.cmsGroupRightClick.ResumeLayout(false);
+            this.cmsEmpireRightClick.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -946,7 +1143,7 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.DataGridView dgvOnline;
-        private System.Windows.Forms.DataGridView dgvWatch;
+        private System.Windows.Forms.DataGridView dgvAvatarWatch;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsAvatarIds;
         private System.Windows.Forms.ContextMenuStrip cmsAvatarRightClick;
         private System.Windows.Forms.Timer timer1;
@@ -970,13 +1167,10 @@
         private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickNote;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsRecentList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnAvatar;
         private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatchGroup;
         private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatchGroupUnset;
         private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickRecheck;
         private System.Windows.Forms.CheckBox chxHideNonWatched;
-        private System.Windows.Forms.ComboBox cbxStandingFilter;
         private System.Windows.Forms.Button btnAddAvatar;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsWatchList;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -984,8 +1178,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsMinimizeTray;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnAvatar;
         private System.Windows.Forms.ToolStripMenuItem menuStrip1OptionsTrayNotification;
         private System.Windows.Forms.ToolStripMenuItem cmsAvatarRightClickWatchGroupNew;
         private System.Windows.Forms.ToolStripSeparator cmsAvatarRightClickWatchGroupSeparator;
@@ -1008,11 +1200,37 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem cmsGroupRightClickEdit;
         private System.Windows.Forms.ToolStripMenuItem cmsGroupRightClickDelete;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnAvatar;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnGroup;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnNotify;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvWatchColumnNote;
+        private System.Windows.Forms.TabPage tabPageEmpires;
+        private System.Windows.Forms.DataGridView dgvEmpireWatch;
+        private System.Windows.Forms.Button btnAddEmpire;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnAvatar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvRecentColumnEmpire;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnAvatar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvOnlineColumnEmpire;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvEmpireWatchColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvEmpireWatchColumnEmpire;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvEmpireWatchColumnGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvEmpireWatchColumnNotify;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvEmpireWatchColumnNote;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvAvatarWatchColumnId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvAvatarWatchColumnAvatar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvAvatarWatchColumnGroup;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvAvatarWatchColumnNotify;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dgvAvatarWatchColumnNote;
+        private System.Windows.Forms.ContextMenuStrip cmsEmpireRightClick;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickCopy;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickRecheck;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickWatchGroup;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickWatchGroupUnset;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickWatchGroupNew;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickWatch;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickNote;
     }
 }
 

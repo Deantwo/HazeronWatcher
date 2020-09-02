@@ -156,12 +156,12 @@ namespace HazeronWatcher
             set { _onlineRow = value; }
         }
 
-        protected System.Windows.Forms.DataGridViewRow _watchRow;
+        protected System.Windows.Forms.DataGridViewRow _avatarWatchRow;
         [XmlIgnore]
-        public System.Windows.Forms.DataGridViewRow WatchRow
+        public System.Windows.Forms.DataGridViewRow AvatarWatchRow
         {
-            get { return _watchRow; }
-            set { _watchRow = value; }
+            get { return _avatarWatchRow; }
+            set { _avatarWatchRow = value; }
         }
 
         protected System.Windows.Forms.DataGridViewRow _recentRow;
@@ -173,10 +173,8 @@ namespace HazeronWatcher
         }
 
         public Avatar()
+            : this(string.Empty, "A")
         {
-            _id = "A";
-            _name = string.Empty;
-            _note = string.Empty;
         }
         public Avatar(string name, string id)
         {

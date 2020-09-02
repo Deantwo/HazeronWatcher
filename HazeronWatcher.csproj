@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Empire.cs" />
     <Compile Include="FormInput.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +73,7 @@
     </Compile>
     <Compile Include="Hazeron.cs" />
     <Compile Include="HazeronAvatarNotFoundException.cs" />
+    <Compile Include="HazeronEmpireNotFoundException.cs" />
     <Compile Include="HazeronWatcherSettings.cs" />
     <Compile Include="Avatar.cs" />
     <Compile Include="HazeronWebsiteNotFoundException.cs" />
