@@ -247,7 +247,7 @@ namespace HazeronWatcher
                     const string EMPIRE_START = "src=\"https://Hazeron.com/EmpireStandings/";
                     const string EMPIRE_END = ".png\"></a>";
                     const string AVATAR_START = "href=\"https://Hazeron.com/EmpireStandings/p";
-                    const string AVATAR_MIDDLE = ".html\">";
+                    const string AVATAR_MIDDLE = ".php\">";
                     const string AVATAR_END = "</a></small></td></tr>";
                     int startIndex = httpLine.IndexOf(EMPIRE_START) + EMPIRE_START.Length;
                     int endIndex = httpLine.IndexOf(EMPIRE_END) - startIndex;
@@ -275,6 +275,7 @@ namespace HazeronWatcher
                     const string AVATARS_START = "<div style=\"text-align: center; font-family: sans-serif;\"><big style=\"color: #ffffff; font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
                     const string AVATARS_END = " avatars are currently online.</span><br><br>";
                     string numberAvatars = httpLine.Remove(httpLine.Length - AVATARS_END.Length).Substring(AVATARS_START.Length);
+                    // If no avatars are online, the site might not say a number at all. "No avatars online"
                     //if (numberAvatars != "No")
                     //    _numOnline = Convert.ToInt32(numberAvatars);
                     //else
@@ -879,7 +880,7 @@ namespace HazeronWatcher
         { // http://stackoverflow.com/questions/4886327/determine-what-control-the-contextmenustrip-was-used-on
             DataGridView dgv = (_cmsAvatarRightClickSourceControl as DataGridView);
             Avatar avatar = (Avatar)dgv.CurrentRow.Cells[1].Value;
-            System.Diagnostics.Process.Start(@"https://Hazeron.com/EmpireStandings/p" + avatar.ID + ".html");
+            System.Diagnostics.Process.Start(@"https://Hazeron.com/EmpireStandings/p" + avatar.ID + ".php");
         }
 
         private void cmsAvatarRightClickRecheck_Click(object sender, EventArgs e)

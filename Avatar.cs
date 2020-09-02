@@ -16,7 +16,7 @@ namespace HazeronWatcher
             string httpHeaderLine = null;
             try
             {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(@"https://Hazeron.com/EmpireStandings/p" + id + ".html");
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(@"https://Hazeron.com/EmpireStandings/p" + id + ".php");
                 request.Timeout = 5000;
                 request.Method = "GET";
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
