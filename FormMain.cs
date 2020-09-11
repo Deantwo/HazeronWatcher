@@ -14,7 +14,7 @@ namespace HazeronWatcher
 {
     public partial class FormMain : Form
     {
-        const string URL_PLAYERSON = @"https://hazeron.com/playerson.html";
+        const string URL_PLAYERSON = @"https://hazeron.com/playerson.php";
 
 #if DEBUG
         string _appdataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HazeronWatcherTest"); // %USERPROFILE%\AppData\Roaming\HazeronWatcherTest
@@ -176,7 +176,7 @@ namespace HazeronWatcher
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            // Check the https://hazeron.com/playerson.html page and read the avatars.
+            // Check the https://hazeron.com/playerson.php page and read the avatars.
             RefreshOnlineAvatars();
 
             // Update the DataGridViews with colors.
