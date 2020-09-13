@@ -285,7 +285,7 @@ namespace HazeronWatcher
                 }
                 else if (httpLine.EndsWith(" avatars are currently online.</span><br><br>"))
                 {
-                    const string AVATARS_START = "<div style=\"text-align: center; font-family: sans-serif;\"><big style=\"color: #ffffff; font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
+                    const string AVATARS_START = "<br><div style=\"text-align: center; font-family: sans-serif;\"><big style=\"color: #ffffff; font-weight: bold;\">Avatars Online</big></div><br><span style=\"font-family: sans-serif;\">";
                     const string AVATARS_END = " avatars are currently online.</span><br><br>";
                     string numberAvatars = httpLine.Remove(httpLine.Length - AVATARS_END.Length).Substring(AVATARS_START.Length);
                     // If no avatars are online, the site might not say a number at all. "No avatars online"
