@@ -13,49 +13,49 @@ I was inspired a lot by the contact window used in EVE Online, so I can't take t
 What is it
 ==============
 
-**HazeronWatcher** is a simple little program written in C# that monitors the [Players Online](https://www.hazeron.com/playerson.html) page.<br>
-It shows all players in a list and then allows you to set colors for each of them according to diplomatic relationship.<br>
-You can also set a player to "Watch", which will make the program notify you when he/she comes online.
+**HazeronWatcher** is a simple little program written in C# that monitors the [Players Online](https://www.hazeron.com/playerson.php) webpage.<br>
+It shows all online avatars in a list and then allows adding them to watch groups with custom colors and custom online notification sounds.
 
 Requirements
 ==============
 
-- .Net Framework 4.0<br>
+- .Net Framework 4.7.2<br>
 (Standard on windows)
 - Internet connection<br>
-(access to [playerson](https://www.hazeron.com/playerson.html))
+(access to [playerson](https://www.hazeron.com/playerson.php))
 
 How to use
 ==============
 
 **Adding offline avatars:**
 
-1. Go to the [avatar list](https://www.hazeron.com/EmpireStandings/Avatars.html) on [www.Hazeron.com](https://www.hazeron.com)
+1. Go to the [avatar list](https://www.hazeron.com/EmpireStandings/Avatars.php) on [www.Hazeron.com](https://www.hazeron.com)
 2. Get the ID of the avatar
 3. Start **HazeronWatcher** (if you hadn't already)
-4. Go to *Edit -> Add Player*
+4. Click the *Add avatar via ID* button above the watchlist
 5. Enter the avatar's ID
 6. Click OK
 
-**Change notification sound:**
+**Custom notification sound:**
 
 1. Open HazeronWatcher's AppData folder<br>
+*File -> Open AppData Folder*<br>
 Windows: ```%USERPROFILE%\AppData\Roaming\HazeronWatcher```
-2. Move the desired .wav file to the folder
-3. Rename the file to ```notification.wav```
+2. Move or copy the desired .wav file to the folder
 
 Features
 ==============
 
-- Color code players so you can easily see them on the list (be it friend or foe)
-- Get notifications when selected players come online
-- Customizable notification sound
-- Writing of notes for characters
+- Create watch groups and add avatars to them
+- Get notifications when selected avatars come online
+- Customizable notification sounds
+- Writing of notes for avatars
 
 Planned
 ==============
 
 - Merging of characters/alts into one
+- Show which empire an avatar belong to and all adding whole empire to watch group
 
 Want to help
 ==============

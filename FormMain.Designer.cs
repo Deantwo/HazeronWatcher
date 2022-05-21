@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -133,6 +133,7 @@
             this.cmsEmpireRightClickWatch = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsEmpireRightClickNote = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1FileOpenAppdata = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -202,6 +203,7 @@
             // menuStrip1File
             // 
             this.menuStrip1File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip1FileOpenAppdata,
             this.toolStripSeparator5,
             this.menuStrip1FileExit});
             this.menuStrip1File.Name = "menuStrip1File";
@@ -211,13 +213,13 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(185, 6);
             // 
             // menuStrip1FileExit
             // 
             this.menuStrip1FileExit.Name = "menuStrip1FileExit";
             this.menuStrip1FileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.menuStrip1FileExit.Size = new System.Drawing.Size(135, 22);
+            this.menuStrip1FileExit.Size = new System.Drawing.Size(188, 22);
             this.menuStrip1FileExit.Text = "Exit";
             this.menuStrip1FileExit.Click += new System.EventHandler(this.menuStrip1FileExit_Click);
             // 
@@ -395,14 +397,14 @@
             this.dgvOnlineColumnId,
             this.dgvOnlineColumnAvatar,
             this.dgvOnlineColumnEmpire});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvOnline.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvOnline.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOnline.Location = new System.Drawing.Point(0, 0);
             this.dgvOnline.Name = "dgvOnline";
@@ -452,14 +454,14 @@
             this.dgvRecentColumnId,
             this.dgvRecentColumnAvatar,
             this.dgvRecentColumnEmpire});
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRecent.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvRecent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvRecent.Location = new System.Drawing.Point(0, 0);
             this.dgvRecent.Name = "dgvRecent";
@@ -538,14 +540,14 @@
             this.dgvAvatarWatchColumnGroup,
             this.dgvAvatarWatchColumnNotify,
             this.dgvAvatarWatchColumnNote});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvAvatarWatch.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvAvatarWatch.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvAvatarWatch.Location = new System.Drawing.Point(3, 58);
             this.dgvAvatarWatch.Name = "dgvAvatarWatch";
             this.dgvAvatarWatch.ReadOnly = true;
@@ -642,14 +644,14 @@
             this.dgvEmpireWatchColumnGroup,
             this.dgvEmpireWatchColumnNotify,
             this.dgvEmpireWatchColumnNote});
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvEmpireWatch.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvEmpireWatch.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvEmpireWatch.Location = new System.Drawing.Point(3, 32);
             this.dgvEmpireWatch.Name = "dgvEmpireWatch";
             this.dgvEmpireWatch.ReadOnly = true;
@@ -768,14 +770,14 @@
             this.dgvGroupColumnNotify,
             this.dgvGroupColumnSound,
             this.dgvGroupColumnColor});
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvGroup.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvGroup.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvGroup.Location = new System.Drawing.Point(6, 35);
             this.dgvGroup.Name = "dgvGroup";
             this.dgvGroup.ReadOnly = true;
@@ -887,21 +889,21 @@
             // cmsAvatarRightClickWatchGroupUnset
             // 
             this.cmsAvatarRightClickWatchGroupUnset.Name = "cmsAvatarRightClickWatchGroupUnset";
-            this.cmsAvatarRightClickWatchGroupUnset.Size = new System.Drawing.Size(180, 22);
+            this.cmsAvatarRightClickWatchGroupUnset.Size = new System.Drawing.Size(107, 22);
             this.cmsAvatarRightClickWatchGroupUnset.Text = "Unset";
             this.cmsAvatarRightClickWatchGroupUnset.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupUnset_Click);
             // 
             // cmsAvatarRightClickWatchGroupNew
             // 
             this.cmsAvatarRightClickWatchGroupNew.Name = "cmsAvatarRightClickWatchGroupNew";
-            this.cmsAvatarRightClickWatchGroupNew.Size = new System.Drawing.Size(180, 22);
+            this.cmsAvatarRightClickWatchGroupNew.Size = new System.Drawing.Size(107, 22);
             this.cmsAvatarRightClickWatchGroupNew.Text = "New...";
             this.cmsAvatarRightClickWatchGroupNew.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupNew_Click);
             // 
             // cmsAvatarRightClickWatchGroupSeparator
             // 
             this.cmsAvatarRightClickWatchGroupSeparator.Name = "cmsAvatarRightClickWatchGroupSeparator";
-            this.cmsAvatarRightClickWatchGroupSeparator.Size = new System.Drawing.Size(177, 6);
+            this.cmsAvatarRightClickWatchGroupSeparator.Size = new System.Drawing.Size(104, 6);
             // 
             // cmsAvatarRightClickWatch
             // 
@@ -1051,21 +1053,21 @@
             // cmsEmpireRightClickWatchGroupUnset
             // 
             this.cmsEmpireRightClickWatchGroupUnset.Name = "cmsEmpireRightClickWatchGroupUnset";
-            this.cmsEmpireRightClickWatchGroupUnset.Size = new System.Drawing.Size(180, 22);
+            this.cmsEmpireRightClickWatchGroupUnset.Size = new System.Drawing.Size(107, 22);
             this.cmsEmpireRightClickWatchGroupUnset.Text = "Unset";
             this.cmsEmpireRightClickWatchGroupUnset.Click += new System.EventHandler(this.cmsEmpireRightClickWatchGroupUnset_Click);
             // 
             // cmsEmpireRightClickWatchGroupNew
             // 
             this.cmsEmpireRightClickWatchGroupNew.Name = "cmsEmpireRightClickWatchGroupNew";
-            this.cmsEmpireRightClickWatchGroupNew.Size = new System.Drawing.Size(180, 22);
+            this.cmsEmpireRightClickWatchGroupNew.Size = new System.Drawing.Size(107, 22);
             this.cmsEmpireRightClickWatchGroupNew.Text = "New...";
             this.cmsEmpireRightClickWatchGroupNew.Click += new System.EventHandler(this.cmsAvatarRightClickWatchGroupNew_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(104, 6);
             // 
             // cmsEmpireRightClickWatch
             // 
@@ -1085,6 +1087,13 @@
             this.cmsEmpireRightClickNote.Size = new System.Drawing.Size(153, 22);
             this.cmsEmpireRightClickNote.Text = "Note";
             this.cmsEmpireRightClickNote.Click += new System.EventHandler(this.cmsEmpireRightClickNote_Click);
+            // 
+            // menuStrip1FileOpenAppdata
+            // 
+            this.menuStrip1FileOpenAppdata.Name = "menuStrip1FileOpenAppdata";
+            this.menuStrip1FileOpenAppdata.Size = new System.Drawing.Size(188, 22);
+            this.menuStrip1FileOpenAppdata.Text = "Open AppData Folder";
+            this.menuStrip1FileOpenAppdata.Click += new System.EventHandler(this.menuStrip1FileOpenAppdata_Click);
             // 
             // FormMain
             // 
@@ -1231,6 +1240,7 @@
         private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickWatch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripMenuItem cmsEmpireRightClickNote;
+        private System.Windows.Forms.ToolStripMenuItem menuStrip1FileOpenAppdata;
     }
 }
 

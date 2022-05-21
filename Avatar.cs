@@ -16,7 +16,7 @@ namespace HazeronWatcher
             string httpHeaderLine = null;
             try
             {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(@"https://Hazeron.com/EmpireStandings/p" + id + ".php");
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create($@"https://Hazeron.com/EmpireStandings/p{id}.php");
                 request.Timeout = 5000;
                 request.Method = "GET";
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -42,21 +42,25 @@ namespace HazeronWatcher
             }
             if (httpHeaderLine == null)
             {
+                // If the website wasn't found, check if the website is down or not.
                 try
                 {
                     using (System.Net.WebClient client = new System.Net.WebClient())
                     {
                         using (var stream = client.OpenRead(@"https://hazeron.com/status.php"))
                         {
+                            // The website is not down, so the avatar really doesn't exist.
                             throw new HazeronAvatarNotFoundException(id);
                         }
                     }
                 }
                 catch (System.Net.WebException ex)
                 {
+                    // The website is down, so the avatar might still exist.
                     throw new HazeronWebsiteNotFoundException(ex);
                 }
             }
+
             const string start = "<title>Shores of Hazeron - ";
             const string end = "</title>";
             int startIndex = httpHeaderLine.IndexOf(start) + start.Length;

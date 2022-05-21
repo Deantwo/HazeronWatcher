@@ -169,6 +169,10 @@ namespace HazeronWatcher
             dgvGroup.Columns["dgvGroupColumnColor"].DefaultCellStyle.Font = new Font("Lucida Console", 9);
             dgvGroup.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
+            // Disable Empire features.
+            dgvOnline.Columns["dgvOnlineColumnEmpire"].Visible = false;
+            tabControl1.TabPages.Remove(tabPageEmpires);
+
             // Run the tick once and start the looping timer.
             timer1_Tick(null, null);
             timer1.Start();
@@ -249,25 +253,25 @@ namespace HazeronWatcher
                 {
                     if (httpLine == HTTPLINE_AVATAR_END)
                         break;
-                    const string EMPIRE_START = "src=\"https://Hazeron.com/EmpireStandings/";
-                    const string EMPIRE_END = ".png\"></a>";
-                    const string AVATAR_START = "href=\"https://Hazeron.com/EmpireStandings/p";
+                    //const string EMPIRE_START = "src=\"https://Hazeron.com/EmpireStandings/";
+                    //const string EMPIRE_END = ".png\"></a>";
+                    const string AVATAR_START = "<a class=\"ll\" href=\"https://Hazeron.com/EmpireStandings/p";
                     const string AVATAR_MIDDLE = ".php\">";
                     const string AVATAR_END = "</a></small></td></tr>";
-                    int startIndex = httpLine.IndexOf(EMPIRE_START) + EMPIRE_START.Length;
-                    int endIndex = httpLine.IndexOf(EMPIRE_END) - startIndex;
-                    int empireId = Convert.ToInt32(httpLine.Substring(startIndex, endIndex));
-                    startIndex = httpLine.LastIndexOf(AVATAR_START) + AVATAR_START.Length;
-                    endIndex = httpLine.LastIndexOf(AVATAR_MIDDLE) - startIndex;
+                    //int startIndex = httpLine.IndexOf(EMPIRE_START) + EMPIRE_START.Length;
+                    //int endIndex = httpLine.IndexOf(EMPIRE_END) - startIndex;
+                    //int empireId = Convert.ToInt32(httpLine.Substring(startIndex, endIndex));
+                    int startIndex = httpLine.LastIndexOf(AVATAR_START) + AVATAR_START.Length;
+                    int endIndex = httpLine.LastIndexOf(AVATAR_MIDDLE) - startIndex;
                     string avatarId = httpLine.Substring(startIndex, endIndex);
-                    Empire empire;
-                    if (!_empireList.ContainsKey(empireId))
-                    {
-                        empire = new Empire(empireId);
-                        _empireList.Add(empireId, empire);
-                    }
-                    else
-                        empire = _empireList[empireId];
+                    //Empire empire;
+                    //if (!_empireList.ContainsKey(empireId))
+                    //{
+                    //    empire = new Empire(empireId);
+                    //    _empireList.Add(empireId, empire);
+                    //}
+                    //else
+                    //    empire = _empireList[empireId];
                     Avatar avatar;
                     if (!_avatarList.ContainsKey(avatarId))
                     {
@@ -280,7 +284,7 @@ namespace HazeronWatcher
                     }
                     else
                         avatar = _avatarList[avatarId];
-                    avatar.Empire = empireId;
+                    //avatar.Empire = empireId;
                     onlineNow.Add(avatarId);
                 }
                 else if (httpLine.EndsWith(" avatars are currently online.</span><br><br>"))
@@ -590,6 +594,11 @@ namespace HazeronWatcher
         #endregion
 
         #region menuStrip1
+        private void menuStrip1FileOpenAppdata_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(_appdataFolder);
+        }
+
         private void menuStrip1FileExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -687,9 +696,9 @@ namespace HazeronWatcher
                 "" + Environment.NewLine +
                 "Change notifiication sound:" + Environment.NewLine +
                 "1.  Open HazeronWatcher's AppData folder" + Environment.NewLine +
+                "     File -> Open AppData Folder" + Environment.NewLine +
                 "     \"" + _appdataFolder + "\"" + Environment.NewLine +
-                "2.  Move the desired .wav file to the folder" + Environment.NewLine +
-                "3.  Rename the file to \"Notification.wav\""
+                "2.  Move or copy the desired .wav file to the folder"
                 , "How to use HazeronWatcher", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button1);
         }
         #endregion
