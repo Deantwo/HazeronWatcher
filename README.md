@@ -56,8 +56,9 @@ Features
 Planned
 ==============
 
+- Add empires to watch groups
+- Add empire flags
 - Merging of characters/alts into one
-- Show which empire an avatar belong to and all adding whole empire to watch group
 
 Want to help
 ==============
