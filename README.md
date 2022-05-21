@@ -46,6 +46,8 @@ Windows: ```%USERPROFILE%\AppData\Roaming\HazeronWatcher```
 Features
 ==============
 
+- List all online avatars
+- List all recently online avatars
 - Create watch groups and add avatars to them
 - Get notifications when selected avatars come online
 - Customizable notification sounds
